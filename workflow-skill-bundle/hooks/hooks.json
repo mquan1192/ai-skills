@@ -1,0 +1,53 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -I -S -c \"import os,runpy;p=os.path.join(os.environ.get('CLAUDE_PROJECT_DIR') or '.','.claude','hooks','turnlog.py');os.path.isfile(p) and runpy.run_path(p,run_name='__main__')\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -I -S -c \"import os,runpy;p=os.path.join(os.environ.get('CLAUDE_PROJECT_DIR') or '.','.claude','hooks','turnlog.py');os.path.isfile(p) and runpy.run_path(p,run_name='__main__')\"",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "python -I -S -c \"import os,runpy;p=os.path.join(os.environ.get('CLAUDE_PROJECT_DIR') or '.','.claude','hooks','ctxwatch.py');os.path.isfile(p) and runpy.run_path(p,run_name='__main__')\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -I -S -c \"import os,runpy;p=os.path.join(os.environ.get('CLAUDE_PROJECT_DIR') or '.','.claude','hooks','turnlog.py');os.path.isfile(p) and runpy.run_path(p,run_name='__main__')\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -I -S -c \"import os,runpy;p=os.path.join(os.environ.get('CLAUDE_PROJECT_DIR') or '.','.claude','hooks','turnlog.py');os.path.isfile(p) and runpy.run_path(p,run_name='__main__')\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+# AI model files: too large for git (model.onnx ~470 MB). Get them with
+# kb-skill-bundle/tools/download-models.sh / .ps1 or the model zip on Releases.
+*.onnx
+multilingual-e5-small/
+KB-Model_*.zip
+
+# Release zips go on the Releases page, not in git
+*-Bundle_v*.zip
+*.zip.sha256
+
+# Local / runtime data
+.qkb/*
+!.qkb/.gitignore
+!.qkb/config.example.json
+*.local.txt
+__pycache__/
+*.pyc
+.env
+.env.*

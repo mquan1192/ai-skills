@@ -1,0 +1,27 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -I -S -c \"import os,runpy;p=os.path.join(os.environ.get('CLAUDE_PROJECT_DIR') or '.','.claude','hooks','stylewatch.py');os.path.isfile(p) and runpy.run_path(p,run_name='__main__')\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -I -S -c \"import os,runpy;p=os.path.join(os.environ.get('CLAUDE_PROJECT_DIR') or '.','.claude','hooks','stylewatch.py');os.path.isfile(p) and runpy.run_path(p,run_name='__main__')\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

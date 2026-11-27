@@ -1,0 +1,283 @@
+{
+  "product": "workflow-skill-bundle",
+  "version": "1.1.1",
+  "note": "install.py kiểm SHA-256 mọi file trong danh sách này trước khi cài",
+  "files": {
+    "AGENTS.md": {
+      "sha256": "0b3156e4db0d0bd5e0904461e94ca1133a83d1b8236dd6fa4fc68b28cb10af21",
+      "bytes": 7503
+    },
+    "CHANGELOG.md": {
+      "sha256": "4061311e1ae4002846048a14d81fa261189e1b7e539d9cf62857d4612e345e9c",
+      "bytes": 6651
+    },
+    "DOC-TRUOC.md": {
+      "sha256": "e61086f9a93b6efe4b9de63bb9ce903d80586038fa74a48099802e91c253040d",
+      "bytes": 5056
+    },
+    "LICENSE": {
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    "README.md": {
+      "sha256": "9d045e00742af0492fc4769a8972fe17b562f36f83370522e16138f555a9f02e",
+      "bytes": 8585
+    },
+    "README_VN.md": {
+      "sha256": "b16ace903bfb42199e0ee31b935513877605a1ea0ac00c17c917f5a3a54b8c3d",
+      "bytes": 16483
+    },
+    "SECURITY.md": {
+      "sha256": "0f7960569d1b3252d715969ec52e5289634fabc3969a3492560f78a8f090beac",
+      "bytes": 3023
+    },
+    "config/workflow.config.example.json": {
+      "sha256": "39e5b7ac28b95cd44fffafbd8c4605c2165f17cdefa1282be41204aa9becaadf",
+      "bytes": 3083
+    },
+    "docs/quy-trinh.md": {
+      "sha256": "573585cadf05a1a222fb0e5b62ac1be0ee25a2459fe3075f3025780e37ea8a64",
+      "bytes": 2054
+    },
+    "docs/vi-du-demo.md": {
+      "sha256": "86f0f62d2bec51337dc1ea7de99ca44aefda5c00e868c3c661f8dc918c1eef62",
+      "bytes": 2087
+    },
+    "hooks/ctxwatch.py": {
+      "sha256": "baa19c1702df7121be17c28dcbf96b39685f1f444b4b9488117768d13d023f99",
+      "bytes": 6073
+    },
+    "hooks/hooks.json": {
+      "sha256": "a544a5068bfb2fd146bfb95a233f09ea4d7b0cf18a87fa5c0f6ad8cdce5c5433",
+      "bytes": 1784
+    },
+    "hooks/test_ctxwatch.py": {
+      "sha256": "6f2e6b1e24fbdb0a16a49c7a91d838e29ba3268e4de53a9d64d895408cb35d61",
+      "bytes": 5125
+    },
+    "hooks/test_turnlog.py": {
+      "sha256": "5f74db10b3fecd5a64a00c28769fb08f1fd033c968ca31df073e498509238c3e",
+      "bytes": 4037
+    },
+    "hooks/turnlog.py": {
+      "sha256": "c4c9f6d09fa906fc0f0d4ccf309484cca6b34626372f554f6a006f8885daef5e",
+      "bytes": 4343
+    },
+    "install.py": {
+      "sha256": "d31fbbe112518d79f409d72a81d3f7e05de12dd527b4a7f6748847adbfce21e2",
+      "bytes": 28746
+    },
+    "scripts/CardFlow.psm1": {
+      "sha256": "fb719f54d072408a908f05cbffb32aafaea1f9bc2e3e0a9564cb8686a3444d23",
+      "bytes": 83761
+    },
+    "scripts/README_VN.md": {
+      "sha256": "4f561c446da8fc1e95602304a2c3f76ba1cef6258ba5d8ca0885847f2af8f271",
+      "bytes": 10118
+    },
+    "scripts/board.ps1": {
+      "sha256": "7fbe25da53b687c81fc25bca5862427735f193c47277b7fb69110a3ec818d96f",
+      "bytes": 781
+    },
+    "scripts/checkpoint.ps1": {
+      "sha256": "d73082c52b3a1da5dce64348844ceb2546b879079bbd757af792a19de2d73adb",
+      "bytes": 1049
+    },
+    "scripts/gate.ps1": {
+      "sha256": "1e906ddb4388df05891bbd731d8e860586e0ba528d9c0d3060d24d93e0137017",
+      "bytes": 1279
+    },
+    "scripts/intake.ps1": {
+      "sha256": "070ce1b5534ee4bfa408f13b7210c661d3c9b5c6101bb72a24dc3f5f7d392354",
+      "bytes": 805
+    },
+    "scripts/manifest.ps1": {
+      "sha256": "178818ce2cd1255ddb2c001410db5b34bdbe2d6d241d74e3b0943e6be1b2e273",
+      "bytes": 1281
+    },
+    "scripts/release.ps1": {
+      "sha256": "22041d014a343df1c810ccfa4ad54b773d021cf6d1d51976c4edb4e78f62310d",
+      "bytes": 1426
+    },
+    "scripts/stale.ps1": {
+      "sha256": "5fb5e8c04a101c9220d0eb5cda90ae541a1339d15fde36952293b23e1a45553b",
+      "bytes": 1072
+    },
+    "scripts/steplog.ps1": {
+      "sha256": "5848e8557cbe3f787216a0a35afb0daccfe69a3852314f8d0efd477e6d611beb",
+      "bytes": 38029
+    },
+    "scripts/tests/_lib.ps1": {
+      "sha256": "97f47f288ce3bfa723d268951d6ef0e9834848b66061bfe135367801fe45dc5b",
+      "bytes": 11459
+    },
+    "scripts/tests/board.Tests.ps1": {
+      "sha256": "f6499387998e6c8795da007b1157467dea9986e7b61110f587af82608b73cef7",
+      "bytes": 2404
+    },
+    "scripts/tests/checkpoint.Tests.ps1": {
+      "sha256": "61bcb88d5f3d50592e8ed3e1454a43d45438764f4d9182fd8ab45dcd507881ca",
+      "bytes": 3240
+    },
+    "scripts/tests/config.Tests.ps1": {
+      "sha256": "be4d6c8eb5680961b07a346b47af7840beb8e0214f9a13007e8fd7ac0df41762",
+      "bytes": 6885
+    },
+    "scripts/tests/gate.Tests.ps1": {
+      "sha256": "f4b945b923d548c2b4403a165215d1455c570ec4e385a8cdc301f01af2fc1587",
+      "bytes": 9110
+    },
+    "scripts/tests/intake.Tests.ps1": {
+      "sha256": "b6cb5722ddb759a6a89203807773bdf7707d4ba50c0de06b83bf209817bc320d",
+      "bytes": 4001
+    },
+    "scripts/tests/manifest.Tests.ps1": {
+      "sha256": "9fde3c75c216402b3c98feeecbfdbd9ce80055e161a12603e7e884b4eaf11a0e",
+      "bytes": 13367
+    },
+    "scripts/tests/names.Tests.ps1": {
+      "sha256": "42f37fb624235528dcc31f5a48c92ffc67abd39f6df701fa4ad8f47d1c84cad9",
+      "bytes": 5530
+    },
+    "scripts/tests/pathlist.Tests.ps1": {
+      "sha256": "ff69d6a2b7d3d4b61b4290fd0978048605d8295eeae1cc07a64cd2f292b3ab9a",
+      "bytes": 7586
+    },
+    "scripts/tests/ps7.Tests.ps1": {
+      "sha256": "fc559a91dfda2e57254e26b4cc32d719c55d61949109449ab18c96733d5b5b7c",
+      "bytes": 4034
+    },
+    "scripts/tests/release.Tests.ps1": {
+      "sha256": "4e7b176d6bba1c8ae0420a1bb0936e66c15b37dde462ad7edab9ca99e8235498",
+      "bytes": 25067
+    },
+    "scripts/tests/stale.Tests.ps1": {
+      "sha256": "b3fd82f28f6b6ebfd839e989622763a7a20d1bfaf805a78c92b659452b2d35d9",
+      "bytes": 2595
+    },
+    "scripts/tests/steplog.Tests.ps1": {
+      "sha256": "9563d29966999e4e5cf13154c49e50b738f4ba846dfb227aed104214c8e52534",
+      "bytes": 31449
+    },
+    "scripts/tests/ticket.Tests.ps1": {
+      "sha256": "dee7fe326993707524138919b92f6c05c3e5471fea0e964a1c80e20b89822a23",
+      "bytes": 19509
+    },
+    "scripts/ticket.ps1": {
+      "sha256": "522a2f303255c3c2b568bc363fe40ed5fc3b80eb0fcb057d552701a127112e0e",
+      "bytes": 1782
+    },
+    "skills/q-wf-card/SKILL.md": {
+      "sha256": "42d27c912ab4c9c15bb77e6d27e730775c3242e8d2af3c84e659565445122b7c",
+      "bytes": 6507
+    },
+    "skills/q-wf-lead/SKILL.md": {
+      "sha256": "24f8bd93e5486eb1a27416bccb5a9d1b3f1a7110a4cc86fbeb1b838e74b44698",
+      "bytes": 7809
+    },
+    "skills/q-wf-team/SKILL.md": {
+      "sha256": "41974540a2f9bdd3ac8222396858e8c089513e6bd7df377b296e4fecc44ac7f4",
+      "bytes": 8629
+    },
+    "skills/q-wf-team/references/quy-tac-bo-sung.md": {
+      "sha256": "1d7a2ad689876c2d8fbe909587b67a5ec97143421975856ff4b9695c4aab1d65",
+      "bytes": 5917
+    },
+    "skills/q-wf-team/references/xac-nhan-va-qa.md": {
+      "sha256": "525889a1d325b58adad0c72efd56a1623208209b4434d588ba8abad9877c9c75",
+      "bytes": 5919
+    },
+    "templates/CLAUDE-fragment.md": {
+      "sha256": "42073cb91b479c430b01509516516689bcac18e516eaefc73ef2a0fcde8fc314",
+      "bytes": 2305
+    },
+    "templates/NAMES.md": {
+      "sha256": "ad91a03e22f31305e7751e8cdaa3150cb647b9d0b6eb43230533060e09f18e37",
+      "bytes": 3845
+    },
+    "templates/POLICY.default.md": {
+      "sha256": "26c5e3a4602beb29a2731beb882735ff35a0fb3235397596beab58e698cfcfd3",
+      "bytes": 1152
+    },
+    "templates/ROLES.md": {
+      "sha256": "c443251f02e3285b0c85eb814df756aae04ea166a003616ff8fef1dd0b42c6bf",
+      "bytes": 3843
+    },
+    "templates/RULES-HISTORY.md": {
+      "sha256": "50126e786e7687020e023d0c072de4789e663f7b754b610d8d375e88c55d0e01",
+      "bytes": 1236
+    },
+    "templates/cards/README.md": {
+      "sha256": "41dfb15495d36c2672acf84890ff2de3289f545459530bdcaff402aa80238474",
+      "bytes": 3937
+    },
+    "templates/cards/_TEMPLATE/CARD.md": {
+      "sha256": "67bd4510c8c5603a301be855ebbddbc796bbab65a089a713a5f8c23a9ded0156",
+      "bytes": 2068
+    },
+    "templates/cards/_TEMPLATE/log.md": {
+      "sha256": "a107be5d89db86fd18debe72da57a784d8bdf6a8e71d0a6e1d789aa26fb745f6",
+      "bytes": 211
+    },
+    "templates/lead/INBOX.md": {
+      "sha256": "c9fc98de93ba22d1f9823f25def3b19767b885b6af0afb3a6e1131d3769e0fc5",
+      "bytes": 2156
+    },
+    "templates/lead/backlog.md": {
+      "sha256": "677895366f468daaf637bc8b9e4743ff23a1fef7d926d17f863a9f7c703ef22c",
+      "bytes": 713
+    },
+    "templates/lead/board.md": {
+      "sha256": "95fd06e62de5e4d86f6f6b774f1458770e87706438fb2df0fc9b956c3e48d77f",
+      "bytes": 1186
+    },
+    "templates/lead/sprint/RETRO-YYYY-Www.md": {
+      "sha256": "c244e58e3041d4e3ada8f9a83852df4defc2292aac89b624bbd3b115174a0b59",
+      "bytes": 1620
+    },
+    "templates/lead/sprint/SPRINT-YYYY-Www.md": {
+      "sha256": "3e786216f7c61945843a8f7048e09145c963a13d4feb341dde8b5577b6025236",
+      "bytes": 1301
+    },
+    "templates/roles/NOTES_ROLE.md": {
+      "sha256": "4fab753fd55fdbee9f9d4f8d83198f4b83ef0a6c7023bd00add743856ee7d31f",
+      "bytes": 442
+    },
+    "templates/roles/QUEUE_ROLE.md": {
+      "sha256": "ac35498ca633c6e80befa13c19050e5376204861e92eb9e7110f2c3ae05cbd0e",
+      "bytes": 1367
+    },
+    "tests/ctxwatch.Tests.ps1": {
+      "sha256": "ff80a2e7db3decc4139896624eae87b430d4b7d83f71cb3708d832dcbb416d04",
+      "bytes": 503
+    },
+    "tests/install.Tests.ps1": {
+      "sha256": "3474ec2f230517a43f913580c691b14bd8b0b72be21ffad30228f7a350392c2a",
+      "bytes": 689
+    },
+    "tests/scan_terms.Tests.ps1": {
+      "sha256": "6d0bbbca842374317cc52e4445f6b91ea830db0eca390fa96cf419e5e3c20f5d",
+      "bytes": 507
+    },
+    "tests/test_install.py": {
+      "sha256": "74bc5363ba5b74476d8f78089ab441f107936a55d9cb0f187e88b7d086ef372b",
+      "bytes": 16478
+    },
+    "tests/turnlog.Tests.ps1": {
+      "sha256": "5e033f337b55c1997a7b419954ef8281ecc4e686fff43d893c4b8e3b39fa7efd",
+      "bytes": 501
+    },
+    "tools/make_manifest.py": {
+      "sha256": "92e2f128dc881d8dd448b1f680d3c4b96567f88be0c6d338bf8c8743eff9a06d",
+      "bytes": 998
+    },
+    "tools/scan_terms.py": {
+      "sha256": "bcf1ca22dcad368e6717ee9fc820614a8038b88066177d2a29ae4e37e7b27144",
+      "bytes": 7282
+    },
+    "tools/test_scan_terms.py": {
+      "sha256": "bcdc78fcc71e2045c55bcc89485cc5c6335ddbbde36159f7821455bd4d7f9f6a",
+      "bytes": 7130
+    }
+  }
+}

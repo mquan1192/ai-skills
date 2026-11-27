@@ -1,0 +1,26 @@
+{
+  "_comment": "Models the KB bundle may use later (bundle 1.0 does not use a model yet). IT fills every sha256 (and bytes when known) from the source page before running tools/download-models.ps1 or .sh. The scripts refuse to download while a sha256 is empty.",
+  "version": 1,
+  "default": "multilingual-e5-small",
+  "allowed_extensions": [".onnx", ".json"],
+  "models": {
+    "multilingual-e5-small": {
+      "source_page": "https://huggingface.co/intfloat/multilingual-e5-small",
+      "licence": "MIT (check the model card on the source page)",
+      "revision": "",
+      "_revision": "IT: commit ID of the repository at download time (shown on the source page); recorded for audit",
+      "use": "Offline, CPU only, multilingual sentence vectors (VI / EN / JA) for semantic search in a later bundle version",
+      "dest": "multilingual-e5-small",
+      "files": [
+        {"path": "onnx/model.onnx", "url": "https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/onnx/model.onnx",
+         "approx_mb": 470, "bytes": null, "sha256": "", "required": true},
+        {"path": "tokenizer.json", "url": "https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/tokenizer.json",
+         "approx_mb": 17.1, "bytes": null, "sha256": "", "required": true},
+        {"path": "config.json", "url": "https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/config.json",
+         "approx_mb": 1, "bytes": null, "sha256": "", "required": false},
+        {"path": "tokenizer_config.json", "url": "https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/tokenizer_config.json",
+         "approx_mb": 1, "bytes": null, "sha256": "", "required": false}
+      ]
+    }
+  }
+}

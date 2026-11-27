@@ -1,0 +1,97 @@
+{
+  "dataset": "questions.json",
+  "questions": 9,
+  "corpus_bytes": 1802,
+  "corpus_chars": 1752,
+  "files": 11,
+  "sections": 17,
+  "nodes": 41,
+  "edges": 37,
+  "index_bytes": 147456,
+  "indexed_content_bytes": 1618,
+  "recall_at_5": 1.0,
+  "relevant_section_precision": 0.8777777777777778,
+  "evidence_traceability": 1.0,
+  "baseline_recall_at_5": 1.0,
+  "baseline_precision": 0.4037037037037037,
+  "average_search_ms": 0.6209088884740291,
+  "baseline_average_search_ms": 0.024626777303637937,
+  "average_output_chars": 1160.888888888889,
+  "average_estimated_tokens_utf8_upper": 1171.3333333333333,
+  "context_reduction_chars": 0.33739218670725524,
+  "build_seconds": 0.01981395799884922,
+  "last_update_seconds": 0.007439127999532502,
+  "results": [
+    {
+      "query": "Authentication UserService",
+      "recall_at_5": 1.0,
+      "precision": 0.5,
+      "baseline_recall_at_5": 1.0,
+      "output_chars": 1338
+    },
+    {
+      "query": "Audit workflow",
+      "recall_at_5": 1.0,
+      "precision": 1.0,
+      "baseline_recall_at_5": 1.0,
+      "output_chars": 1054
+    },
+    {
+      "query": "Delete endpoint audit_events",
+      "recall_at_5": 1.0,
+      "precision": 1.0,
+      "baseline_recall_at_5": 1.0,
+      "output_chars": 844
+    },
+    {
+      "query": "UserService",
+      "recall_at_5": 1.0,
+      "precision": 0.4,
+      "baseline_recall_at_5": 1.0,
+      "output_chars": 2859
+    },
+    {
+      "query": "ADR-002 supersedes",
+      "recall_at_5": 1.0,
+      "precision": 1.0,
+      "baseline_recall_at_5": 1.0,
+      "output_chars": 744
+    },
+    {
+      "query": "REQ-USER-01 Implementation",
+      "recall_at_5": 1.0,
+      "precision": 1.0,
+      "baseline_recall_at_5": 1.0,
+      "output_chars": 856
+    },
+    {
+      "query": "Audit mismatch",
+      "recall_at_5": 1.0,
+      "precision": 1.0,
+      "baseline_recall_at_5": 1.0,
+      "output_chars": 934
+    },
+    {
+      "query": "Constraints audit history",
+      "recall_at_5": 1.0,
+      "precision": 1.0,
+      "baseline_recall_at_5": 1.0,
+      "output_chars": 783
+    },
+    {
+      "query": "監査ログ",
+      "recall_at_5": 1.0,
+      "precision": 1.0,
+      "baseline_recall_at_5": 1.0,
+      "output_chars": 1036
+    }
+  ],
+  "scope_note": "Measured labeled local retrieval only; not answer accuracy, semantic discovery equivalence, real-project token savings or end-to-end model cost",
+  "report": ".qkb/exports/benchmark.json",
+  "dataset_kind": "synthetic fixture, not user project",
+  "incremental_changed_documents": 1,
+  "environment": {
+    "python": "3.12.3",
+    "platform": "Linux x86_64"
+  }
+}

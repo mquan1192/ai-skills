@@ -1,0 +1,43 @@
+{
+  "description": "KB hooks (observe mode by default): status line at session start, KB-first hint for project questions, search / stale / request reminders.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {"type": "command", "command": "python -I -S \"${CLAUDE_PLUGIN_ROOT}/hooks/kbwatch.py\"", "timeout": 5}
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {"type": "command", "command": "python -I -S \"${CLAUDE_PLUGIN_ROOT}/hooks/kbroute.py\"", "timeout": 5}
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Grep|Glob",
+        "hooks": [
+          {"type": "command", "command": "python -I -S \"${CLAUDE_PLUGIN_ROOT}/hooks/kbguard.py\" pre", "timeout": 5}
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {"type": "command", "command": "python -I -S \"${CLAUDE_PLUGIN_ROOT}/hooks/kbguard.py\" post", "timeout": 5}
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {"type": "command", "command": "python -I -S \"${CLAUDE_PLUGIN_ROOT}/hooks/kbguard.py\" stop", "timeout": 5}
+        ]
+      }
+    ]
+  }
+}

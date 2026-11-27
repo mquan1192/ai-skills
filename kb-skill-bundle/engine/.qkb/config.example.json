@@ -1,0 +1,15 @@
+{
+  "project_name": "MyProject",
+  "knowledge_paths": ["docs", "knowledge", "requirements"],
+  "source_paths": ["src"],
+  "network_enabled": false,
+  "auto_modify_docs": false,
+  "semantic_mode": "approval_required",
+  "query_top_k": 5,
+  "query_max_chars": 5000,
+  "graph_default_depth": 2,
+  "chunk_lines": 100,
+  "exclude_patterns": [],
+  "fts_enabled": true,
+  "usage_log": {"path": "process-log/kb-usage", "query_text": true}
+}

@@ -1,0 +1,51 @@
+{
+  "_ghi_chu": "Cấu hình gói quy trình (workflow skill bundle v1.1). install.py chép file này thành .workflow/workflow.config.json trong dự án đích. Sửa các giá trị cho dự án của bạn; tên khóa giữ nguyên. Đường dẫn tương đối tính từ thư mục gốc dự án, dùng dấu /.",
+  "schema": 1,
+  "project_name": "demo",
+  "owner_name": "chủ dự án",
+  "approval_name": "owner",
+  "language": "vi",
+  "policy_file": "docs/process/POLICY.md",
+
+  "paths": {
+    "cards": "docs/cards",
+    "process_docs": "docs/process",
+    "roles_docs": "docs/process/roles",
+    "lead": "lead",
+    "tasks": "",
+    "scripts": "scripts/process",
+    "process_log": "process-log",
+    "trash": "_trash"
+  },
+
+  "roles": {
+    "LEAD":   { "session_title": "Điều phối",      "session_id": "", "model": "Opus · high",   "writes": ["lead/", "docs/cards/*/CARD.md", "docs/process/STATUS.md"] },
+    "DOCS":   { "session_title": "Tài liệu",       "session_id": "", "model": "Opus · medium", "writes": ["docs/process/", "docs/cards/README.md", "docs/cards/_TEMPLATE/", "scripts/process/", "AGENTS.md", "CLAUDE.md", ".claude/"] },
+    "SECRETARY": { "session_title": "Thư ký",   "session_id": "", "model": "Sonnet · medium", "writes": ["lead/INBOX.md", "lead/confirms.md"] },
+    "BUILD":  { "session_title": "Dev chính",      "session_id": "", "model": "Opus · high",   "writes": ["<task>/out/"] },
+    "BUILD_M":{ "session_title": "Dev phụ 1",      "session_id": "", "model": "Opus · medium", "writes": ["<task>/out/_m/<part>/"] },
+    "BUILD_S":{ "session_title": "Dev phụ 2",      "session_id": "", "model": "Sonnet · high", "writes": ["<task>/out/_s/<part>/"] },
+    "REVIEW": { "session_title": "Kiểm tra",       "session_id": "", "model": "Opus · high",   "writes": ["<task>/qa/"] },
+    "REVIEW_S": { "session_title": "Kiểm tra nhẹ", "session_id": "", "model": "Sonnet · high", "writes": ["<task>/qa/"] },
+    "OPS":    { "session_title": "Vận hành",       "session_id": "", "model": "Sonnet · high", "writes": ["<task>/qa/install/"] }
+  },
+
+  "session_map_file": ".workflow/sessions.local.json",
+
+  "protected_paths": ["AGENTS.md", "CLAUDE.md", ".claude/", "scripts/process/", ".github/workflows/", "hooks/", "migrations/"],
+  "shared_paths": ["docs/process/", "docs/cards/README.md", "docs/cards/_TEMPLATE/"],
+  "shared_paths_except": ["docs/process/STATUS.md", "docs/process/PROGRESS.md", "docs/process/roles/"],
+
+  "qa_levels": ["NO-QA", "LIGHT", "FULL"],
+  "gate": { "hosts": ["ps7"] },
+  "stale": { "sent_minutes": 30, "accepted_hours": 3 },
+  "steplog": { "purge_enabled": true, "purge_days": 90 },
+  "sprint": { "length_days": 5, "report_day": "Friday" },
+
+  "report": { "batch_minute": 30, "from": "09:30", "to": "17:30", "max_waiting_items": 3 },
+  "docs": { "publish_windows": ["12:00", "17:30"] },
+  "context": { "enabled": true, "warn_tokens": 250000, "strong_tokens": 500000 },
+  "limits": { "start_file_kb": 10, "rules_file_kb": 25 },
+  "guard_rule_enabled": true,
+  "writing_style_skill": "q-doc-edit"
+}

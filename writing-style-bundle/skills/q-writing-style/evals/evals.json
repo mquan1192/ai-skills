@@ -1,0 +1,1023 @@
+{
+  "skill": "q-writing-style",
+  "about": "Bộ kiểm thử của kỹ năng văn phong. Nội dung đều là dữ liệu bịa, trung tính. Mỗi kiểm tra có loại (meaning, numbers, status, completeness, length, naturalness); kiểm tra \"must\" = true là phải giữ (sự kiện, số, điều kiện, mức chắc chắn) và phải đạt hết. Khi thêm ca mới, dùng cùng các trường và chỉ dùng nội dung trung tính hoặc đã được duyệt.",
+  "grading": "Mỗi ca chạy bằng một agent mới chỉ đọc thư mục kỹ năng này cùng lời nhắc và đầu vào của ca. Chấm từng kiểm tra đạt / không đạt, rồi cho điểm 1-5 cho: chính xác, đầy đủ, rõ ràng, ngắn gọn, tự nhiên.",
+  "cases": [
+    {
+      "id": "C1",
+      "title": "Rút gọn một email gửi đối tác",
+      "spec_item": 1,
+      "language": "VI",
+      "mode": "polish",
+      "prompt": "Rút gọn email này, giữ đủ ý, văn phong lịch sự với đối tác.",
+      "input": "Kính gửi chị Lan,\n\nEm xin phép được gửi email này để thông báo về việc giao 2 máy quét mã vạch model M1 mà Công ty A đã đặt ở bên chị. Theo thông tin bộ phận kho của bên chị trao đổi chiều hôm qua thì ngày giao dự kiến lùi từ 10/12 sang 14/12, nguyên nhân có thể do lô hàng đang chờ thông quan nhưng chưa được xác nhận chính thức. Nếu máy giao sau 17/12 thì kế hoạch thử nghiệm của bên em phải lùi 1 tuần. Em mong chị xác nhận ngày giao chính thức trước 11/12 để bên em chủ động sắp xếp.\n\nEm cảm ơn chị nhiều.\nTrân trọng,\nHoa",
+      "checks": [
+        {
+          "id": "C1-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "Giữ đúng: 2 máy quét, model M1, 10/12 → 14/12, 17/12, 1 tuần, 11/12."
+        },
+        {
+          "id": "C1-2",
+          "kind": "status",
+          "must": true,
+          "text": "Thông quan vẫn chỉ là nguyên nhân có thể, chưa xác nhận chính thức; không viết thành nguyên nhân đã rõ."
+        },
+        {
+          "id": "C1-3",
+          "kind": "meaning",
+          "must": true,
+          "text": "Lời nhờ xác nhận ngày giao chính thức trước 11/12 vẫn còn và vẫn hướng tới chị Lan."
+        },
+        {
+          "id": "C1-4",
+          "kind": "completeness",
+          "must": true,
+          "text": "Giữ điều kiện \"giao sau 17/12 thì kế hoạch thử nghiệm lùi 1 tuần\" và việc thông tin lấy từ bộ phận kho của bên chị Lan."
+        },
+        {
+          "id": "C1-5",
+          "kind": "length",
+          "must": false,
+          "text": "Ngắn hơn rõ rệt bản gốc (khoảng 60% hoặc ít hơn) mà không bỏ ý."
+        },
+        {
+          "id": "C1-6",
+          "kind": "naturalness",
+          "must": false,
+          "text": "Văn phong lịch sự, tự nhiên, không rập khuôn; có lời chào và lời cảm ơn ngắn."
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "title": "Sắp xếp ghi chú họp rời rạc",
+      "spec_item": 2,
+      "language": "VI",
+      "mode": "restructure",
+      "prompt": "Sắp xếp ghi chú họp này thành các mục rõ ràng để gửi cả nhóm. Giữ đúng mức chắc chắn của từng ý.",
+      "input": "họp hôm qua: Hoa làm xong phần nhập liệu rồi, còn phần báo cáo chưa, Nam bảo chắc tuần sau mới xong; test thì chạy 30 ca, 4 ca lỗi, 1 ca chưa biết nguyên nhân; hạn nộp 20/12 chưa chốt, đang đợi khách trả lời; việc mua thêm máy chủ thì chưa quyết, mới chỉ đề xuất",
+      "checks": [
+        {
+          "id": "C2-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "Giữ đúng: 30 ca, 4 ca lỗi, 1 ca chưa rõ nguyên nhân, hạn 20/12."
+        },
+        {
+          "id": "C2-2",
+          "kind": "status",
+          "must": true,
+          "text": "\"Chắc tuần sau mới xong\" vẫn là dự đoán; hạn 20/12 vẫn là chưa chốt, đang đợi khách; mua máy chủ vẫn là đề xuất, chưa phải quyết định."
+        },
+        {
+          "id": "C2-3",
+          "kind": "meaning",
+          "must": true,
+          "text": "Mỗi ý nằm đúng mục (tiến độ, kiểm thử, hạn nộp, đề xuất); không gán thêm người phụ trách hay hạn mới."
+        },
+        {
+          "id": "C2-4",
+          "kind": "completeness",
+          "must": true,
+          "text": "Đủ 4 nội dung: nhập liệu / báo cáo, kết quả kiểm thử, hạn nộp, mua máy chủ."
+        },
+        {
+          "id": "C2-5",
+          "kind": "length",
+          "must": false,
+          "text": "Gọn: mỗi ý một dòng, không thêm lời dẫn hay nhận xét ngoài ghi chú."
+        },
+        {
+          "id": "C2-6",
+          "kind": "naturalness",
+          "must": false,
+          "text": "Mục và dòng rõ ràng, không rườm rà, không giọng báo cáo cho một ghi chú nội bộ."
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "title": "Tóm tắt kết quả thử tải (tiếng Chị)",
+      "spec_item": 3,
+      "language": "EN",
+      "mode": "summarize",
+      "prompt": "Summarize in 3 short lines for the team lead. Do not add anything the text does not say.",
+      "input": "The load test of the order service ran 3 times on the staging server. Average response time was 420 ms, with a range of 380-510 ms. The error rate was 0.8% in run 2 only; runs 1 and 3 had no errors. No run was made on production hardware, and the cause of the errors in run 2 has not been identified yet.",
+      "checks": [
+        {
+          "id": "C3-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "Keeps 3 runs, 420 ms average, 380-510 ms range, 0.8% in run 2 only; no new numbers or percentages."
+        },
+        {
+          "id": "C3-2",
+          "kind": "status",
+          "must": true,
+          "text": "The cause of the run 2 errors stays \"not identified yet\"; nothing suggests the problem is fixed or explained."
+        },
+        {
+          "id": "C3-3",
+          "kind": "meaning",
+          "must": true,
+          "text": "The limit stays: staging server only, no run on production hardware."
+        },
+        {
+          "id": "C3-4",
+          "kind": "completeness",
+          "must": true,
+          "text": "Covers response time, error rate, the cause, and the limit; none of the four is dropped."
+        },
+        {
+          "id": "C3-5",
+          "kind": "length",
+          "must": false,
+          "text": "At most 3 short lines, clearly shorter than the source."
+        },
+        {
+          "id": "C3-6",
+          "kind": "naturalness",
+          "must": false,
+          "text": "Plain working English, active voice, no filler or marketing tone."
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "title": "Viết lại số liệu khảo sát thành báo cáo (cấu trúc báo cáo tiếng Việt)",
+      "spec_item": 4,
+      "language": "VI",
+      "mode": "rewrite",
+      "prompt": "Viết lại thành một báo cáo ngắn bằng tiếng Việt, theo cấu trúc báo cáo của nhóm.",
+      "input": "Khảo sát máy in tầng 2 từ 01/12 đến 07/12/2026: 1234 lượt in, 37 lượt lỗi kẹt giấy, tức khoảng 3% (người ghi tự tính), thời gian sửa trung bình 12,5 phút. Chỉ khảo sát 1 tuần, chưa chia theo loại giấy. Đề xuất thay con lăn kéo giấy, chưa duyệt.",
+      "checks": [
+        {
+          "id": "C4-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "Giữ đúng: 1.234 lượt in (dấu chấm hàng nghìn), 37 lượt lỗi, khoảng 3%, 12,5 phút, từ 01/12/2026 đến 07/12/2026; không tính thêm số mới."
+        },
+        {
+          "id": "C4-2",
+          "kind": "status",
+          "must": true,
+          "text": "Việc thay con lăn kéo giấy vẫn là đề xuất chưa duyệt; con số 3% vẫn là số do người ghi tự tính."
+        },
+        {
+          "id": "C4-3",
+          "kind": "meaning",
+          "must": true,
+          "text": "Có đủ mục đích / phạm vi, phương pháp, kết quả với câu dẫn trước số liệu và nhãn Nhận xét, điều kiện, kết luận và nhãn Định hướng."
+        },
+        {
+          "id": "C4-4",
+          "kind": "meaning",
+          "must": true,
+          "text": "Giọng trung tính, dựa trên số liệu; không câu văn nói, không đánh giá cảm tính."
+        },
+        {
+          "id": "C4-5",
+          "kind": "completeness",
+          "must": true,
+          "text": "Giữ giới hạn: chỉ khảo sát 1 tuần, chưa chia theo loại giấy."
+        },
+        {
+          "id": "C4-6",
+          "kind": "length",
+          "must": false,
+          "text": "Báo cáo ngắn, mỗi mục vài câu; không thêm mục không cần."
+        },
+        {
+          "id": "C4-7",
+          "kind": "naturalness",
+          "must": false,
+          "text": "Tiêu đề và nhãn ngắn dạng danh từ, không dấu chấm cuối; ngày dd/mm/yyyy."
+        }
+      ]
+    },
+    {
+      "id": "C5",
+      "title": "Giữ mức chắc chắn và đề xuất (tiếng Chị)",
+      "spec_item": 5,
+      "language": "EN",
+      "mode": "polish",
+      "prompt": "Polish this message. Keep it short and clear.",
+      "input": "We think maybe the delay could possibly be caused by the network, but we have not confirmed it yet. We suggest to switch to the backup line, and we will wait for your approval before doing anything. The next check is planned after the vendor replies.",
+      "checks": [
+        {
+          "id": "C5-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "No numbers or dates in the source: none may be added (no deadline, no duration)."
+        },
+        {
+          "id": "C5-2",
+          "kind": "status",
+          "must": true,
+          "text": "The network stays a possible cause, not confirmed; switching to the backup line stays a suggestion, not a decision."
+        },
+        {
+          "id": "C5-3",
+          "kind": "meaning",
+          "must": true,
+          "text": "It is still clear that nothing will be done before the reader approves."
+        },
+        {
+          "id": "C5-4",
+          "kind": "completeness",
+          "must": true,
+          "text": "The condition \"the next check is planned after the vendor replies\" is kept, and still has no date."
+        },
+        {
+          "id": "C5-5",
+          "kind": "length",
+          "must": false,
+          "text": "Clearly shorter than the source (about half)."
+        },
+        {
+          "id": "C5-6",
+          "kind": "naturalness",
+          "must": false,
+          "text": "Natural plain English; no stacked hedges (\"maybe ... could possibly\"), but no stronger claim either."
+        }
+      ]
+    },
+    {
+      "id": "C6",
+      "title": "Rút gọn thông báo trạng thái (tiếng Nhật)",
+      "spec_item": 6,
+      "language": "JA",
+      "mode": "polish",
+      "prompt": "丁寧さを保ったまま、簡潔で自然な文章に直してください。",
+      "input": "お世話になっております。先日ご依頼いただきました件につきまして、現在、担当者にて確認を進めている状況でございますが、原因については現時点では特定できておりませんので、特定でき次第、改めてご連絡させていただきたいと存じます。なお、影響範囲は3拠点の可能性がございます。",
+      "checks": [
+        {
+          "id": "C6-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "「3拠点」はそのまま残す(数を変えない、断定しない)。"
+        },
+        {
+          "id": "C6-2",
+          "kind": "status",
+          "must": true,
+          "text": "「確認中」「原因は未特定」「3拠点の可能性」の状態を保つ。「可能性がある」を「である」に上げない。"
+        },
+        {
+          "id": "C6-3",
+          "kind": "meaning",
+          "must": true,
+          "text": "原因が特定でき次第あらためて連絡する、という約束が残っている。"
+        },
+        {
+          "id": "C6-4",
+          "kind": "completeness",
+          "must": true,
+          "text": "依頼の件、確認中、原因未特定、影響範囲(可能性)、再連絡の5点がすべて残っている。"
+        },
+        {
+          "id": "C6-5",
+          "kind": "length",
+          "must": false,
+          "text": "元の文より明確に短い。"
+        },
+        {
+          "id": "C6-6",
+          "kind": "naturalness",
+          "must": false,
+          "text": "です・ます調で、謙譲を保ちつつ「ご確認のほど」等の重なりがない。"
+        }
+      ]
+    },
+    {
+      "id": "C7",
+      "title": "Bỏ câu chung chung, một tên một vật, số khớp nhau",
+      "spec_item": 7,
+      "language": "VI",
+      "mode": "restructure",
+      "prompt": "Sắp xếp lại đoạn này cho rõ. Không bịa số liệu, không bịa người phụ trách hay hạn.",
+      "input": "Hệ thống mới nhanh và ổn định hơn nhiều, xử lý tốt các trường hợp ngoại lệ, sẽ xem xét thêm sau. Gói cập nhật được gửi cho khách, khách cài bản cập nhật vào ngày 15/12; trong gói có 8 mục, nhưng khách báo chỉ áp dụng được 7 mục.",
+      "checks": [
+        {
+          "id": "C7-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "Giữ đúng: 15/12, 8 mục, 7 mục; chỗ lệch 8 so với 7 được nêu rõ, không tự làm tròn cho khớp; không thêm con số cho \"nhanh\", \"ổn định\"."
+        },
+        {
+          "id": "C7-2",
+          "kind": "status",
+          "must": true,
+          "text": "\"Nhanh\", \"ổn định\" chưa có số đo: ghi \"chưa đo\" hoặc giữ từ và đánh dấu; \"sẽ xem xét thêm sau\" không biến thành cam kết có hạn hay có người phụ trách."
+        },
+        {
+          "id": "C7-3",
+          "kind": "meaning",
+          "must": true,
+          "text": "Dùng một tên cho một vật (\"gói cập nhật\"), không đổi sang \"bản cập nhật\" hay tên khác trong cùng văn bản."
+        },
+        {
+          "id": "C7-4",
+          "kind": "meaning",
+          "must": true,
+          "text": "Câu \"xử lý tốt các trường hợp ngoại lệ\" được nêu cụ thể nếu nguồn có, nếu không thì thành câu hỏi mở \"Cần xác nhận: …\"."
+        },
+        {
+          "id": "C7-5",
+          "kind": "completeness",
+          "must": true,
+          "text": "Giữ nội dung: hệ thống mới, gói cập nhật gửi cho khách, ngày cài 15/12, số mục trong gói và số mục áp dụng."
+        },
+        {
+          "id": "C7-6",
+          "kind": "length",
+          "must": false,
+          "text": "Không dài hơn bản gốc quá nhiều, dù có thêm câu hỏi mở."
+        },
+        {
+          "id": "C7-7",
+          "kind": "naturalness",
+          "must": false,
+          "text": "Không dùng khuôn \"không chỉ ... mà còn ...\", \"đóng vai trò\", \"có thể nói rằng\"."
+        }
+      ]
+    },
+    {
+      "id": "C8",
+      "title": "Viết lại ghi chú đánh giá nhà cung cấp thành báo cáo",
+      "spec_item": 4,
+      "language": "VI",
+      "mode": "rewrite",
+      "prompt": "Viết lại thành báo cáo ngắn bằng tiếng Việt, giữ nguyên số liệu và mức chắc chắn.",
+      "input": "đánh giá nhà cung cấp B: giao đúng hạn 18/20 đơn, 2 đơn trễ lần lượt 3 và 5 ngày, giá thấp hơn nhà cung cấp C khoảng 8% (theo báo giá ngày 01/12/2026), chưa có đánh giá chất lượng mẫu, chị Lan nghĩ nên chọn B nhưng chưa có quyết định",
+      "checks": [
+        {
+          "id": "C8-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "Giữ đúng: 18 / 20 đơn đúng hạn, 2 đơn trễ 3 và 5 ngày, khoảng 8%, báo giá ngày 01/12/2026; không tính thêm tỷ lệ phần trăm đúng hạn."
+        },
+        {
+          "id": "C8-2",
+          "kind": "status",
+          "must": true,
+          "text": "Ý kiến \"nên chọn B\" của chị Lan vẫn là ý kiến cá nhân, chưa phải quyết định; chất lượng mẫu vẫn là chưa có đánh giá (không viết thành tốt hay kém)."
+        },
+        {
+          "id": "C8-3",
+          "kind": "meaning",
+          "must": true,
+          "text": "Có mục đích, kết quả (câu dẫn + nhãn Nhận xét), kết luận chung và nhãn Định hướng; giọng trung tính."
+        },
+        {
+          "id": "C8-4",
+          "kind": "meaning",
+          "must": true,
+          "text": "Kết luận không vượt quá dữ liệu: nêu rõ thiếu đánh giá chất lượng mẫu."
+        },
+        {
+          "id": "C8-5",
+          "kind": "completeness",
+          "must": true,
+          "text": "Đủ 4 nhóm thông tin: giao hàng, giá, chất lượng (chưa có), ý kiến / quyết định."
+        },
+        {
+          "id": "C8-6",
+          "kind": "length",
+          "must": false,
+          "text": "Ngắn, các mục vài câu."
+        },
+        {
+          "id": "C8-7",
+          "kind": "naturalness",
+          "must": false,
+          "text": "Số kiểu Việt, ngày dd/mm/yyyy, tiêu đề ngắn dạng danh từ."
+        }
+      ]
+    },
+    {
+      "id": "C9",
+      "title": "Rút gọn báo cáo cho cấp trên (tiếng Nhật, giữ khiêm nhường)",
+      "spec_item": 6,
+      "language": "JA",
+      "mode": "polish",
+      "prompt": "上司宛ての報告として、簡潔に直してください。丁寧さは保ってください。",
+      "input": "部長、お疲れ様です。先日の障害の件でございますが、サーバーAの再起動を12月3日の夜に実施いたしました。その後、2時間ほど様子を見ましたが、同様のエラーは再発しておりません。ただし、1回の再起動のみの結果であり、恒久対策かどうかはまだ判断できません。引き続き、明日まで経過を確認いたします。",
+      "checks": [
+        {
+          "id": "C9-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "「サーバーA」「12月3日の夜」「2時間」「1回」「明日まで」を変えない。"
+        },
+        {
+          "id": "C9-2",
+          "kind": "status",
+          "must": true,
+          "text": "「再発していない」は2時間の観察結果にとどめる。恒久対策とは言い切らず、「判断できない」を残す。"
+        },
+        {
+          "id": "C9-3",
+          "kind": "meaning",
+          "must": true,
+          "text": "謙譲の動詞(実施いたしました、確認いたします)を常体に変えない。"
+        },
+        {
+          "id": "C9-4",
+          "kind": "completeness",
+          "must": true,
+          "text": "実施内容、観察結果、限界(1回のみ・恒久対策は未判断)、今後の確認の4点が残っている。"
+        },
+        {
+          "id": "C9-5",
+          "kind": "length",
+          "must": false,
+          "text": "元の文より短い。"
+        },
+        {
+          "id": "C9-6",
+          "kind": "naturalness",
+          "must": false,
+          "text": "上司宛てとして自然な敬語で、ご確認・ご対応の重なりがない。"
+        }
+      ]
+    },
+    {
+      "id": "C10",
+      "title": "Không nâng cấp trạng thái \"may improve\" (tiếng Chị)",
+      "spec_item": 5,
+      "language": "EN",
+      "mode": "polish",
+      "prompt": "Polish this short update. Keep the claims exactly as strong as the source.",
+      "input": "The patch may improve startup time. In our single test on device M1 it dropped from 9.2 s to 7.9 s. We have not tested other devices. Please let us know if you want us to roll it out.",
+      "checks": [
+        {
+          "id": "C10-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "Keeps 9.2 s, 7.9 s, device M1, \"single test\"; no difference or percentage is calculated."
+        },
+        {
+          "id": "C10-2",
+          "kind": "status",
+          "must": true,
+          "text": "\"May improve\" is not upgraded to \"improves\" or \"improved\"; the result is from one test on one device only."
+        },
+        {
+          "id": "C10-3",
+          "kind": "meaning",
+          "must": true,
+          "text": "The decision to roll out stays with the reader (\"let us know if you want\"); it is not announced as planned."
+        },
+        {
+          "id": "C10-4",
+          "kind": "completeness",
+          "must": true,
+          "text": "The limit \"not tested on other devices\" is kept."
+        },
+        {
+          "id": "C10-5",
+          "kind": "length",
+          "must": false,
+          "text": "Shorter or equal; no new sentence added."
+        },
+        {
+          "id": "C10-6",
+          "kind": "naturalness",
+          "must": false,
+          "text": "Plain, natural English; no marketing tone."
+        }
+      ]
+    },
+    {
+      "id": "C11",
+      "title": "Tin nhắn ngắn: gọn nhưng giữ đủ ý, không dựng khung báo cáo",
+      "spec_item": 1,
+      "language": "VI",
+      "mode": "polish",
+      "prompt": "Sửa lại tin nhắn chat này cho gọn và lịch sự.",
+      "input": "Chị Hoa ơi, em báo là file đối chiếu em làm xong rồi nhưng còn 2 dòng em chưa chắc, dòng 14 và dòng 31, chị xem giúp em trước 16:00 chiều nay được không ạ, nếu không kịp thì em để sang mai cũng được.",
+      "checks": [
+        {
+          "id": "C11-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "Giữ đúng: 2 dòng, dòng 14 và dòng 31, 16:00 chiều nay."
+        },
+        {
+          "id": "C11-2",
+          "kind": "status",
+          "must": true,
+          "text": "Hai dòng vẫn là \"em chưa chắc\"; việc để sang mai là phương án nếu chị Hoa không kịp, không phải hạn mới."
+        },
+        {
+          "id": "C11-3",
+          "kind": "meaning",
+          "must": true,
+          "text": "Vẫn là tin chat ngắn, không thêm tiêu đề hay mục kiểu báo cáo (không dựng cấu trúc quá mức)."
+        },
+        {
+          "id": "C11-4",
+          "kind": "completeness",
+          "must": true,
+          "text": "Giữ lời nhờ kiểm tra trước 16:00 và phương án \"sang mai\"."
+        },
+        {
+          "id": "C11-5",
+          "kind": "length",
+          "must": false,
+          "text": "Ngắn hơn bản gốc, 2–3 câu."
+        },
+        {
+          "id": "C11-6",
+          "kind": "naturalness",
+          "must": false,
+          "text": "Văn nói thân thiện đúng quan hệ đồng nghiệp, có \"chị / em\"; không cứng."
+        }
+      ]
+    },
+    {
+      "id": "C12",
+      "title": "Dịch và chỉnh một đoạn ngắn Việt → Nhật",
+      "spec_item": 3,
+      "language": "VI → JA",
+      "mode": "translate",
+      "prompt": "Dịch sang tiếng Nhật (văn phong lịch sự với khách hàng) và chỉnh cho tự nhiên.",
+      "input": "Bản sửa lỗi đã được gửi qua email sáng nay. Xin chị kiểm tra giúp trước thứ Sáu; nếu có vấn đề, chúng tôi sẽ sửa lại trong tuần sau.",
+      "checks": [
+        {
+          "id": "C12-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "\"Thứ Sáu\" và \"tuần sau\" giữ ở dạng tương đối (金曜日までに、来週)，không đổi thành ngày lịch cụ thể."
+        },
+        {
+          "id": "C12-2",
+          "kind": "status",
+          "must": true,
+          "text": "Điều kiện \"nếu có vấn đề thì mới sửa lại\" được giữ; \"sáng nay\" và \"đã gửi\" không đổi thì; không nâng mức cam kết."
+        },
+        {
+          "id": "C12-3",
+          "kind": "meaning",
+          "must": true,
+          "text": "Dùng です・ます và 謙譲語 cho phía \"chúng tôi\" (ご確認をお願いいたします, 修正いたします); không dịch từng chữ từ tiếng Việt."
+        },
+        {
+          "id": "C12-4",
+          "kind": "completeness",
+          "must": true,
+          "text": "Đủ 3 ý: đã gửi bản sửa qua email sáng nay, nhờ kiểm tra trước thứ Sáu, sẽ sửa lại tuần sau nếu có vấn đề."
+        },
+        {
+          "id": "C12-5",
+          "kind": "length",
+          "must": false,
+          "text": "Ngắn gọn như bản gốc, không thêm lời mở đầu thừa."
+        },
+        {
+          "id": "C12-6",
+          "kind": "naturalness",
+          "must": false,
+          "text": "Tiếng Nhật kinh doanh tự nhiên, không lặp ご確認 / ご対応."
+        }
+      ]
+    },
+    {
+      "id": "C13",
+      "title": "Tự soát tiếng Nhật theo bảng ng-vocab-ja",
+      "spec_item": 8,
+      "language": "JA",
+      "mode": "polish",
+      "prompt": "ng-vocab-ja.md の自己点検表に沿って、情報のない言葉を削るか事実に置き換えてください。意味は変えないでください。",
+      "input": "結論から言うと、このツールは非常に画期的であり、チームの生産性を大幅に向上させる可能性があります。重要なのは、導入コストが約30万円である点です。ケースバイケースですが、3か月で回収できる見込みです。",
+      "checks": [
+        {
+          "id": "C13-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "「約30万円」「3か月」を変えない。「画期的」「大幅」に根拠のない数字を足さない。"
+        },
+        {
+          "id": "C13-2",
+          "kind": "status",
+          "must": true,
+          "text": "「可能性があります」「見込みです」は確定に上げない(「向上する」「回収できる」と断定しない)。"
+        },
+        {
+          "id": "C13-3",
+          "kind": "meaning",
+          "must": true,
+          "text": "導入コストと回収見込みの2点が残っている。「結論から言うと」「重要なのは」「非常に」のように情報のない言葉は消えている。"
+        },
+        {
+          "id": "C13-4",
+          "kind": "completeness",
+          "must": true,
+          "text": "内容は4点: ツールの効果の可能性、導入コスト、回収見込み、場合による(条件は原文にないので作らない)。"
+        },
+        {
+          "id": "C13-5",
+          "kind": "length",
+          "must": false,
+          "text": "元の文より短い。"
+        },
+        {
+          "id": "C13-6",
+          "kind": "naturalness",
+          "must": false,
+          "text": "常体・敬体は原文(です・ます)のまま、自然な技術文書の日本語。"
+        }
+      ]
+    },
+    {
+      "id": "C14",
+      "title": "Tự soát tiếng Việt theo bảng ng-vocab-vi",
+      "spec_item": 8,
+      "language": "VI",
+      "mode": "polish",
+      "prompt": "Soát đoạn này theo bảng tự soát của ng-vocab-vi.md: bỏ từ không mang thông tin, chỉ sửa câu chữ, không đổi nghĩa.",
+      "input": "Có thể thấy rằng hệ thống mới đóng vai trò quan trọng trong việc nâng cao hiệu quả. Nói một cách thẳng thắn thì kết quả rất tốt: thời gian xử lý giảm từ 2,1 giây xuống 0,4 giây sau 50 lần chạy. Tùy từng trường hợp mà chọn cấu hình A hoặc B. Tóm lại, như đã nói ở trên, nên dùng cấu hình A cho kho nhỏ.",
+      "checks": [
+        {
+          "id": "C14-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "Giữ đúng: 2,1 giây → 0,4 giây, 50 lần chạy; không thêm số cho \"hiệu quả\", \"rất tốt\"."
+        },
+        {
+          "id": "C14-2",
+          "kind": "status",
+          "must": true,
+          "text": "\"Nên dùng cấu hình A cho kho nhỏ\" vẫn là khuyến nghị; \"tùy từng trường hợp\" không được thay bằng điều kiện bịa ra (nguồn không nêu điều kiện: giữ và đánh dấu cần xác nhận)."
+        },
+        {
+          "id": "C14-3",
+          "kind": "meaning",
+          "must": true,
+          "text": "Các lời dẫn rỗng (\"Có thể thấy rằng\", \"Nói một cách thẳng thắn thì\", \"Tóm lại, như đã nói ở trên\") và \"đóng vai trò\" được bỏ; chủ thể và hành động được nêu rõ."
+        },
+        {
+          "id": "C14-4",
+          "kind": "completeness",
+          "must": true,
+          "text": "Còn đủ 4 ý: hệ thống mới, kết quả đo, việc chọn cấu hình A hoặc B, khuyến nghị cấu hình A cho kho nhỏ."
+        },
+        {
+          "id": "C14-5",
+          "kind": "length",
+          "must": false,
+          "text": "Ngắn hơn rõ rệt bản gốc."
+        },
+        {
+          "id": "C14-6",
+          "kind": "naturalness",
+          "must": false,
+          "text": "Câu ngắn, chủ động, không văn nói, không rập khuôn."
+        }
+      ]
+    },
+    {
+      "id": "C15",
+      "title": "Tự soát EN theo bảng ng-vocab-en",
+      "spec_item": 8,
+      "language": "EN",
+      "mode": "polish",
+      "prompt": "Run the self-check of ng-vocab-en.md on this paragraph: remove words that carry no information, change wording only, keep the meaning.",
+      "input": "It is worth noting that the new parser is a game-changing, extremely robust solution. The nightly build time dropped from 42 min to 31 min over 5 runs. It depends on the project whether to enable it. In conclusion, as mentioned above, we suggest enabling it for the two smaller projects first.",
+      "checks": [
+        {
+          "id": "C15-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "Keeps 42 min, 31 min, 5 runs, \"two smaller projects\"; no number is added for \"game-changing\" or \"robust\"."
+        },
+        {
+          "id": "C15-2",
+          "kind": "status",
+          "must": true,
+          "text": "\"We suggest\" stays a suggestion; \"it depends on the project\" is kept as an open point (the source gives no condition), not replaced by an invented condition."
+        },
+        {
+          "id": "C15-3",
+          "kind": "meaning",
+          "must": true,
+          "text": "The empty lead-in, \"In conclusion, as mentioned above\" and the inflated adjectives are gone; the actor and the action are stated plainly."
+        },
+        {
+          "id": "C15-4",
+          "kind": "completeness",
+          "must": true,
+          "text": "All four points remain: the new parser, the build-time measurement, the dependence on the project, the suggestion for the two smaller projects."
+        },
+        {
+          "id": "C15-5",
+          "kind": "length",
+          "must": false,
+          "text": "Clearly shorter than the source."
+        },
+        {
+          "id": "C15-6",
+          "kind": "naturalness",
+          "must": false,
+          "text": "Plain working English, active voice, no filler."
+        }
+      ]
+    },
+    {
+      "id": "C16",
+      "title": "Sau khi dịch sang EN: tự soát theo ngôn ngữ đích",
+      "spec_item": 8,
+      "language": "VI → EN",
+      "mode": "translate",
+      "prompt": "Bản dịch EN dưới đây đã xong. Tự soát theo ngôn ngữ đích (EN): chỉ sửa câu chữ, không đổi nghĩa, thuật ngữ theo glossary.",
+      "input": "Glossary: \"gói cập nhật\" = \"update package\".\n\nNguồn (VI): Gói cập nhật gồm 12 mục. Khách cài vào ngày 15/12; 11 mục được áp dụng, 1 mục chưa rõ lý do.\n\nBản dịch (EN): It is worth noting that the patch bundle contains 12 items. The customer installed it on 15/12, and 11 items were applied, whereas the reason why 1 item was not applied is very unclear.",
+      "checks": [
+        {
+          "id": "C16-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "Giữ đúng: 12 items, 15/12, 11 items, 1 item; không đổi con số nào."
+        },
+        {
+          "id": "C16-2",
+          "kind": "status",
+          "must": true,
+          "text": "\"Chưa rõ lý do\" vẫn là chưa rõ (the reason is not known yet); không viết thành có lý do hay không có lý do."
+        },
+        {
+          "id": "C16-3",
+          "kind": "meaning",
+          "must": true,
+          "text": "Thuật ngữ theo glossary: \"update package\" (không \"patch bundle\"); dùng một tên suốt đoạn."
+        },
+        {
+          "id": "C16-4",
+          "kind": "meaning",
+          "must": true,
+          "text": "Lời dẫn rỗng (\"It is worth noting that\") và \"very\" được bỏ mà không đổi nghĩa."
+        },
+        {
+          "id": "C16-5",
+          "kind": "completeness",
+          "must": true,
+          "text": "Đủ 4 ý: gói gồm 12 mục, ngày khách cài 15/12, 11 mục được áp dụng, 1 mục chưa rõ lý do."
+        },
+        {
+          "id": "C16-6",
+          "kind": "length",
+          "must": false,
+          "text": "Ngắn hơn bản dịch nháp."
+        },
+        {
+          "id": "C16-7",
+          "kind": "naturalness",
+          "must": false,
+          "text": "Văn bản EN tự nhiên, chủ động, không dịch sát từng chữ từ tiếng Việt."
+        }
+      ]
+    },
+    {
+      "id": "C17",
+      "title": "Sau khi dịch sang tiếng Nhật: tự soát, giữ văn thể",
+      "spec_item": 8,
+      "language": "EN → JA",
+      "mode": "translate",
+      "prompt": "翻訳は済んでいます。日本語として自己点検し、文章だけを直してください。意味は変えず、用語は用語集に従い、文体は原文(翻訳案)に合わせてください。",
+      "input": "用語集: \"update package\" = 「更新パッケージ」\n\n原文(EN): The update package has 12 items. The customer installed it on December 15; 11 items were applied. The reason for the remaining item is not yet known.\n\n翻訳案(JA): 重要なのは、アップデートパッケージが12個の項目を含んでいることを示唆している。顧客は12月15日にインストールし、11項目が適用された。残りの1項目の理由は現時点では非常に不明である。",
+      "checks": [
+        {
+          "id": "C17-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "「12」「12月15日」「11」「1」を変えない。"
+        },
+        {
+          "id": "C17-2",
+          "kind": "status",
+          "must": true,
+          "text": "理由は「未確認(不明)」のまま。理由があるとも、ないとも書かない。"
+        },
+        {
+          "id": "C17-3",
+          "kind": "meaning",
+          "must": true,
+          "text": "用語は用語集どおり「更新パッケージ」(「アップデートパッケージ」にしない)。"
+        },
+        {
+          "id": "C17-4",
+          "kind": "meaning",
+          "must": true,
+          "text": "「重要なのは」「示唆している」「非常に」のような情報のない表現が消え、主語が明確になっている。"
+        },
+        {
+          "id": "C17-5",
+          "kind": "completeness",
+          "must": true,
+          "text": "4点が残っている: パッケージは12項目、12月15日に顧客がインストール、11項目を適用、残り1項目の理由は未確認。"
+        },
+        {
+          "id": "C17-6",
+          "kind": "length",
+          "must": false,
+          "text": "翻訳案より短いか同程度。"
+        },
+        {
+          "id": "C17-7",
+          "kind": "naturalness",
+          "must": false,
+          "text": "文体は翻訳案(である調)のまま統一され、自然な技術文書の日本語になっている。"
+        }
+      ]
+    },
+    {
+      "id": "C18",
+      "title": "Humanize đoạn giới thiệu tính năng, giữ số liệu",
+      "spec_item": 9,
+      "language": "VI",
+      "mode": "humanize",
+      "prompt": "Đoạn này đọc như văn AI, sửa cho tự nhiên, không đổi ý và không đổi khung.",
+      "input": "Tính năng xuất báo cáo mới không chỉ là một cải tiến nhỏ, mà là một bước ngoặt trong hành trình nâng tầm trải nghiệm người dùng. Thời gian xuất một báo cáo 500 dòng giảm từ 40 giây xuống 6 giây. Người dùng có thể chọn định dạng PDF, Excel hoặc CSV. Đó mới là điều thực sự quan trọng.",
+      "checks": [
+        {
+          "id": "C18-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "Giữ 500 dòng, 40 giây → 6 giây."
+        },
+        {
+          "id": "C18-2",
+          "kind": "meaning",
+          "must": true,
+          "text": "Giữ ba định dạng PDF, Excel, CSV; không thêm định dạng hay lợi ích khác."
+        },
+        {
+          "id": "C18-3",
+          "kind": "naturalness",
+          "must": true,
+          "text": "Bỏ \"không chỉ… mà là\", \"bước ngoặt\", \"hành trình nâng tầm\", câu chốt \"Đó mới là điều thực sự quan trọng\"."
+        },
+        {
+          "id": "C18-4",
+          "kind": "completeness",
+          "must": true,
+          "text": "Không thêm nhận xét đánh giá mới (ví dụ \"nhanh hơn đáng kể\") thay cho con số."
+        },
+        {
+          "id": "C18-5",
+          "kind": "length",
+          "must": false,
+          "text": "Ngắn hơn bản gốc."
+        }
+      ]
+    },
+    {
+      "id": "C19",
+      "title": "Plain English cho bước runbook",
+      "spec_item": 10,
+      "language": "EN",
+      "mode": "plain",
+      "prompt": "Rewrite this runbook step in plain English.",
+      "input": "You'll want to make sure that you've backed up the database prior to running the migration, which should take around 15 minutes on the staging cluster — it's crucial to seamlessly avoid any data loss!",
+      "checks": [
+        {
+          "id": "C19-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "Keeps \"15 minutes\" and \"staging cluster\"."
+        },
+        {
+          "id": "C19-2",
+          "kind": "meaning",
+          "must": true,
+          "text": "The backup comes before the migration; the risk is data loss."
+        },
+        {
+          "id": "C19-3",
+          "kind": "naturalness",
+          "must": true,
+          "text": "No \"should\", no contraction, no em dash, no \"crucial\" or \"seamlessly\"; imperative steps."
+        },
+        {
+          "id": "C19-4",
+          "kind": "completeness",
+          "must": true,
+          "text": "Does not invent a backup command or host that the source does not give."
+        },
+        {
+          "id": "C19-5",
+          "kind": "length",
+          "must": false,
+          "text": "Each sentence 20 words or fewer."
+        }
+      ]
+    },
+    {
+      "id": "C20",
+      "title": "Dịch thư tiếng Nhật sang tiếng Việt, giữ mức chắc chắn",
+      "spec_item": 11,
+      "language": "JA → VI",
+      "mode": "translate",
+      "prompt": "Dịch mail này sang tiếng Việt để gửi lại nhóm dev, giọng nội bộ.",
+      "input": "お疲れ様です。田中です。\n先日ご依頼いただいたログイン画面の件ですが、お客様側でパスワード要件を検討中のため、仕様確定は来週になる見込みです。\n確定し次第、改めてご連絡いたします。\nよろしくお願いいたします。",
+      "checks": [
+        {
+          "id": "C20-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "Giữ \"tuần sau\" như nguồn, không đổi thành ngày lịch."
+        },
+        {
+          "id": "C20-2",
+          "kind": "status",
+          "must": true,
+          "text": "\"検討中\" là đang cân nhắc; \"見込み\" là dự kiến — không viết thành đã chốt."
+        },
+        {
+          "id": "C20-3",
+          "kind": "meaning",
+          "must": true,
+          "text": "Giữ: khách hàng đang cân nhắc yêu cầu mật khẩu; anh/chị Tanaka sẽ báo lại khi chốt."
+        },
+        {
+          "id": "C20-4",
+          "kind": "naturalness",
+          "must": false,
+          "text": "Giọng nội bộ tự nhiên; không dịch từng chữ \"お疲れ様です\", \"よろしくお願いいたします\"."
+        }
+      ]
+    },
+    {
+      "id": "C21",
+      "title": "Viết theo mẫu giọng văn: giữ gạch ngang của tác giả",
+      "spec_item": 12,
+      "language": "VI",
+      "mode": "voice",
+      "prompt": "Đây là mẫu giọng văn của tôi. Viết lại đoạn nháp theo đúng giọng đó.",
+      "input": "Mẫu: \"Tuần này nhóm sửa 12 lỗi — phần lớn ở màn hình nhập kho. Chưa có lỗi nghiêm trọng. Việc tiếp theo: dọn log.\"\n\nNháp: Trong tuần vừa qua, nhóm phát triển đã tiến hành khắc phục thành công tổng cộng 8 lỗi, trong đó phần lớn tập trung ở màn hình báo cáo, và hiện tại vẫn chưa ghi nhận bất kỳ lỗi nghiêm trọng nào. Bước tiếp theo sẽ là tối ưu truy vấn.",
+      "checks": [
+        {
+          "id": "C21-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "Giữ 8 lỗi (không lấy 12 từ mẫu), màn hình báo cáo."
+        },
+        {
+          "id": "C21-2",
+          "kind": "meaning",
+          "must": true,
+          "text": "Giữ \"chưa có lỗi nghiêm trọng\" và việc tiếp theo là tối ưu truy vấn."
+        },
+        {
+          "id": "C21-3",
+          "kind": "naturalness",
+          "must": true,
+          "text": "Câu ngắn như mẫu; được dùng gạch ngang như mẫu; bỏ \"tiến hành\", \"thành công\", \"tổng cộng\"."
+        },
+        {
+          "id": "C21-4",
+          "kind": "completeness",
+          "must": true,
+          "text": "Không lấy sự thật nào từ văn bản mẫu."
+        }
+      ]
+    },
+    {
+      "id": "C22",
+      "title": "Mail B2B: xưng hô và từ tiếng Anh",
+      "spec_item": 13,
+      "language": "VI",
+      "mode": "polish",
+      "prompt": "Sửa mail gửi khách hàng này cho đúng xưng hô, gọn hơn.",
+      "input": "Chào bạn, chúng ta xin gửi bạn báo giá gói triển khai đến sản xuất cho 3 môi trường. Tổng chi phí là 120.000.000 đồng, chưa gồm VAT. Bạn vui lòng phản hồi trước 05/12 để chúng ta lên lịch.",
+      "checks": [
+        {
+          "id": "C22-1",
+          "kind": "numbers",
+          "must": true,
+          "text": "Giữ 3 môi trường, 120.000.000 đồng, chưa gồm VAT, 05/12."
+        },
+        {
+          "id": "C22-2",
+          "kind": "meaning",
+          "must": true,
+          "text": "Xưng hô B2B: anh/chị (hoặc Quý công ty) và chúng tôi / bên em; không \"bạn\", không \"chúng ta\"."
+        },
+        {
+          "id": "C22-3",
+          "kind": "naturalness",
+          "must": true,
+          "text": "\"triển khai đến sản xuất\" thành \"deploy lên production\" hoặc cách nói tự nhiên tương đương."
+        },
+        {
+          "id": "C22-4",
+          "kind": "completeness",
+          "must": true,
+          "text": "Giữ lời đề nghị phản hồi trước 05/12 và mục đích lên lịch."
+        }
+      ]
+    }
+  ]
+}

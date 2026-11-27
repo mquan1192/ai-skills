@@ -1,0 +1,992 @@
+{
+ "product": "KB-Skill-Bundle",
+ "bundle_version": "2.0.5",
+ "engine_version": "2.1.0-e3",
+ "note": "Per-file sha256; this file is not listed. install.py checks every entry before writing.",
+ "files": [
+  {
+   "path": "CHANGELOG.md",
+   "sha256": "65716faf4867507cc374b9aa21e6eff962b76e416ee91c53eb33eaf6bd5c23c4",
+   "bytes": 12365,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "LICENSE",
+   "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+   "bytes": 11358,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "README.md",
+   "sha256": "d0442267c133c624b96f3c4fa1598ead35e6d21d665a65403a15bfb1a7601287",
+   "bytes": 10027,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "README_VN.md",
+   "sha256": "21f65075554d4af71157d40a71ecd9bc39fb1f53f6b39c55d5aa1b3a3fa6ecea",
+   "bytes": 47330,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "SECURITY.md",
+   "sha256": "06483fb3b2c6c4381475544e20233e04c11d59b136e90c89326acb4ce1538fd0",
+   "bytes": 3169,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "install.py",
+   "sha256": "941e1238d9c6b4c0f06f6e30a547a43e7cb1a4df43662e1d94d099a6d4133527",
+   "bytes": 57203,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "docs/HUONG-DAN-TAI-MODEL_VN.md",
+   "sha256": "42391bba422ef8e5e93bcb89b356ce09b96fcb635cb889f4f9e61909b606f672",
+   "bytes": 3834,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "docs/engine/CHANGELOG.md",
+   "sha256": "4b328b6ad24a020acb08f71873707a62dbb911543c196b2dd645eb1ff6f1187a",
+   "bytes": 6436,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "docs/engine/Q-KnowledgeBase-README.md",
+   "sha256": "7ee8ea5b1401854a8cfca3005c0971f78fd34ceb68ae2a3c24ee971ebd1741d3",
+   "bytes": 14087,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "docs/engine/Q-KnowledgeBase-VALIDATION.md",
+   "sha256": "f2f9a280d25e94cb92ae306039094258e4ed851375d94a2ab8cf2bc451929358",
+   "bytes": 5519,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "engine/.claude/rules/q-knowledgebase.md",
+   "sha256": "3dda25d3d172f8ac10f4d803038b8037e9671eddec6dd6891fe1ca9886af1276",
+   "bytes": 921,
+   "component": "engine",
+   "dest": ".claude/rules/q-knowledgebase.md",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/SKILL.md",
+   "sha256": "fdce136768fc70d209506a641725599480ed68eb078e8d3f6f06e9730116d509",
+   "bytes": 7872,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/SKILL.md",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/references/architecture.md",
+   "sha256": "68eff39e76cf0b53332c62fede1dedd2bdcb443e146f625292834864060db2a3",
+   "bytes": 8764,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/references/architecture.md",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/references/benchmark-fixture.json",
+   "sha256": "431445e6e66261ff291c1d3db94cb532e014f58cbe26a67c3101656315826201",
+   "bytes": 2606,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/references/benchmark-fixture.json",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/references/commands.md",
+   "sha256": "fc50bb22284d4cdef3d09257976d6ebe3efdb9b7d73771ae702e459932f49e1a",
+   "bytes": 20371,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/references/commands.md",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/references/glossary-common.md",
+   "sha256": "ec786359d118a2daecbfda3d861f5f20eeac9f908f83b8e92da9f51bd909dbc1",
+   "bytes": 10561,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/references/glossary-common.md",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/references/optional-hook.json",
+   "sha256": "a9fc021f71701f2853d764fd41d84245ffa67b951bdd60360fc5cb19b58945d9",
+   "bytes": 267,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/references/optional-hook.json",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/references/security-policy.md",
+   "sha256": "d61f9eb81c42134fd360203b664ab96997e10b077c92d42f4a10153ac12f5acf",
+   "bytes": 6165,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/references/security-policy.md",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/references/semantic-workflow.md",
+   "sha256": "5d89be25f109ba6e91991ae5a6688374e2f3257f4a13fa7ccceabcdf74cbbea0",
+   "bytes": 4517,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/references/semantic-workflow.md",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/references/upstream-design.md",
+   "sha256": "245edb30e6bb6f04f9980300e0b0bba273ddb832ae85eefc08b2ff3e27b0c1bd",
+   "bytes": 3430,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/references/upstream-design.md",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/benchmark.py",
+   "sha256": "56b59d590f953decb0d4f409daf47dc3212139f202d9f724da86e1adaecfa586",
+   "bytes": 7358,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/benchmark.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/chunking.py",
+   "sha256": "97bd41bc5a84a7acb1900af429f434d7d09938d02c9bdcce2bb2573ac20ac2fa",
+   "bytes": 3872,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/chunking.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/codelinks.py",
+   "sha256": "78666ff858838dc74f59854e6b478eaf7b4a5118091cfd995981fa709417cc07",
+   "bytes": 4502,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/codelinks.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/context.py",
+   "sha256": "d4b0e39e32a615c7eb258f381794553f4b5adcfd6bb613c27979bfc4cd788494",
+   "bytes": 2371,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/context.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/core.py",
+   "sha256": "f7babe38422ff4011ff86908c77ede5efbc4aa0c1acc0b6034d3ca477c784d2b",
+   "bytes": 53588,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/core.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/engine.py",
+   "sha256": "92aa12bbba0d6b2cfd5c53f11ad242acf4a92fd06938235e3654760f4f0d3d1e",
+   "bytes": 45695,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/engine.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/exports.py",
+   "sha256": "f0a2f4d4159b43d7533185d33bd1608dd595771570836110cab07dd453693038",
+   "bytes": 7224,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/exports.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/hook_reminder.py",
+   "sha256": "2b114f33c27e40dba6cfe3ed594bf975af91aba08f31b104918d84eec1c3955b",
+   "bytes": 409,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/hook_reminder.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/idlinks.py",
+   "sha256": "10baf5d674acf4e1916d6574fc531d2a4e3047b5f9829df85c66b8c57dd3df3e",
+   "bytes": 3868,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/idlinks.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/migrate.py",
+   "sha256": "77b50b277a576730759f68e481963d33e17ba5631584109ed8f59797370f3f1f",
+   "bytes": 4853,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/migrate.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/ops.py",
+   "sha256": "42d37983e4fccdc7dc9d7a861de988500f49a88244f508772e5ddc6dfbc13f65",
+   "bytes": 5043,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/ops.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/packs.py",
+   "sha256": "e4a4f705bd7af5464023d6f56fb5456b83ffbeb0c6745d580426801032f3febe",
+   "bytes": 12315,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/packs.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/parser_cpp.py",
+   "sha256": "6b4e0ddb8e88e7f9d882f1a689dbf3022da986f95db890cda19f81b6b12d2961",
+   "bytes": 9709,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/parser_cpp.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/parser_python.py",
+   "sha256": "6eed7dbc983e20e7c0c28756cf26efee96e5dcfd0e91e88490b3759b82fa0a1c",
+   "bytes": 2214,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/parser_python.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/parsers.py",
+   "sha256": "538e04d14af9d2f61bf5aaa8291caec9815a6fa6e76676e7ae021cc60f932ff7",
+   "bytes": 1719,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/parsers.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/qkb.py",
+   "sha256": "b462c86b8d2c79aeae04af07ef01789818be0283ed1168dae218f50bac0480db",
+   "bytes": 18168,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/qkb.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/reports.py",
+   "sha256": "74f153e8a92abd9a72576156de5f1c7c6743a58b46854b256a522c0474636d76",
+   "bytes": 6715,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/reports.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/retrieval.py",
+   "sha256": "32236892fcb5dbf2a2364be69648d9e2b7a82eab457ae52610c05859504da08e",
+   "bytes": 23107,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/retrieval.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/router.py",
+   "sha256": "d8e661527825cc4bcbd37d7167ab890c92c8b4254dfa9f230f62231ee92cb7b2",
+   "bytes": 6383,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/router.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/semantic.py",
+   "sha256": "8d6a2106b21e77db63f70e2b1830bce8fd8ea0bf911e3c33886e57ad647e78f5",
+   "bytes": 9705,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/semantic.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/textformats.py",
+   "sha256": "037655d1df75a7f1662f9e98dbb34beaca35532647931442ffbabe298b6094ec",
+   "bytes": 4092,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/textformats.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/usage.py",
+   "sha256": "c15ea02621adc6169b2c06edd5b0badd62a4eaa94496b285369186e99bff5528",
+   "bytes": 2977,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/usage.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/vectors.py",
+   "sha256": "66dbb9aab16cece38e63580d768c2904561dd56164fca02f7a6ce2b1a93a5bf8",
+   "bytes": 21677,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/vectors.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/scripts/vntext.py",
+   "sha256": "25c03cb92993c2e462ce30da3b6ed2c1b1088a90eec72f27c73961a52954a68b",
+   "bytes": 8424,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/scripts/vntext.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/fixtures_code.py",
+   "sha256": "26c07f0a7f1655dc4afef8da2a448c22780f692a68e1c32461023f7eeece9aa3",
+   "bytes": 7458,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/fixtures_code.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/run_benchmark_fixture.py",
+   "sha256": "8f9c2db62cd5351bd1c38dbdccd842202f2d300eb94c4fa64e68fbc8ddb955e1",
+   "bytes": 1475,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/run_benchmark_fixture.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/support.py",
+   "sha256": "dd50cbb242246acb24384619cf258ec1495ec9dea1f54d9c66e345c740939dca",
+   "bytes": 8140,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/support.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_b0_cli_compat.py",
+   "sha256": "7c9efa8a32eabfc0c2434a19a80d1eb5c23e4555aa280d4f5d69bb10dc145601",
+   "bytes": 6133,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_b0_cli_compat.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_b0_migrate.py",
+   "sha256": "637efdfd61a765d1766b0af0565695db7b1047bf751858ada47b9ee079bfd5d5",
+   "bytes": 5348,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_b0_migrate.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_b0_project.py",
+   "sha256": "70e032de8dab91f402a4c9decd79e1035c2bbd51018a8b4f00931693d2283fe4",
+   "bytes": 5067,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_b0_project.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_b0_resolver.py",
+   "sha256": "c01dff40ec3891030b939d3656caa33921345103208ffb5a8ec3f9d121c51e84",
+   "bytes": 7140,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_b0_resolver.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_b1_chunks_formats.py",
+   "sha256": "f5f1705a90e367490218c53a50abd70732c51aa844179c55f506d4ce94e2e509",
+   "bytes": 8491,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_b1_chunks_formats.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_b1_lowfixes.py",
+   "sha256": "3057b9cc1fc9abbb685091562b7e98e934da8a94b2a10cdb4bc808571c3063f9",
+   "bytes": 6371,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_b1_lowfixes.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_b1_ops.py",
+   "sha256": "ac05e965bdceb035b08b1eb058c5f359187c1751e09e0ca8ce5018907152f414",
+   "bytes": 4172,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_b1_ops.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_b1_query.py",
+   "sha256": "59127e21d4c956ff03912c6ca1d31df7bb05bf51bc7af92f661e72a2b2f13ea7",
+   "bytes": 3451,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_b1_query.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_b1_retrieval.py",
+   "sha256": "c27ba5a1d6487058d188c1985dfa062e7542a77430d440eac5718495ce6d2b48",
+   "bytes": 10312,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_b1_retrieval.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_c_codelinks.py",
+   "sha256": "7251abba3dba54eb026ebaa0c48c1dea34cda86ea2494d912a86592174515978",
+   "bytes": 4162,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_c_codelinks.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_c_engine.py",
+   "sha256": "6d40725f1e94a40a4d1d9ea0bb1ab3a846a7ad0258060d3c7ce0888c71289180",
+   "bytes": 22475,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_c_engine.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_c_reports.py",
+   "sha256": "6dc228345d9dee477766ef49120faeae0284dbb72e804f324f00a57578f1874a",
+   "bytes": 9726,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_c_reports.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_d_packs.py",
+   "sha256": "2ffe7bc2880b8eaa374e129b753d8669c0d2e4d60f53d518563c5793e25256a6",
+   "bytes": 11361,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_d_packs.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_d_vn.py",
+   "sha256": "41c9e387dfccabb0a5c56ba5614dbcc1782e9841bf446d6587d7081618dcd27c",
+   "bytes": 10954,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_d_vn.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_e2_model_trust.py",
+   "sha256": "e6ec92acf74068d34e971cb850e8eda23a28183c38cb9ff71a48657edaccfab4",
+   "bytes": 3499,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_e2_model_trust.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_e2_pack_trust.py",
+   "sha256": "616619b5e9de89d23bda2c562c23d446c61822a25488788b401a8d249a63c201",
+   "bytes": 5521,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_e2_pack_trust.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_e3_model_speed.py",
+   "sha256": "640fb22687f711bca09ecc3e302f219230899154354f4bb08b8754a334cc8f9e",
+   "bytes": 3867,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_e3_model_speed.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_e3_usage_log.py",
+   "sha256": "9f54f4e49ea7f30860f4e848ba4d62521cf9d185fc4c0cc47fac576d8ba8e192",
+   "bytes": 3258,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_e3_usage_log.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_e_vectors.py",
+   "sha256": "e93ad4a54c9769de82699caa51224dc100f35e26ea15df49f4b8c05da514f81c",
+   "bytes": 13154,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_e_vectors.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_exports.py",
+   "sha256": "888518bf644257d9b90090f70acdcebe0696630798425efdda53f2efa758426e",
+   "bytes": 1918,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_exports.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_graph.py",
+   "sha256": "6a9b7da5b665583627cd7b6596726d6636601deccf0391dc104e4dc2e329fa78",
+   "bytes": 4703,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_graph.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_incremental.py",
+   "sha256": "ea836f5c31ac9840600912478203624ce18fcc8fa61827f00f5a9756f99536b9",
+   "bytes": 3464,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_incremental.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_install.py",
+   "sha256": "88772315b8d7be61b3c169c42254844454c5dfcfd6302f464e7e2fa7327fb254",
+   "bytes": 3766,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_install.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_markdown.py",
+   "sha256": "5e655dc9ddd29f366a141440d55072a3819b9e15bd1b3743c28fad561813d476",
+   "bytes": 3739,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_markdown.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_offline.py",
+   "sha256": "1df22c9360d11c1e43eaf5961887c08362b81c1fdd1305ea2f78c6d88a901515",
+   "bytes": 4211,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_offline.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_search.py",
+   "sha256": "6be8dfdaea86964c952d0490ce799a28d2eaa4ad76f837d4931e81fa74235d38",
+   "bytes": 5238,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_search.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_security.py",
+   "sha256": "cb7d3bc8efaceadde78004c9e5f87aa901e60da8294e370c5fe15fb1ed665823",
+   "bytes": 5425,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_security.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.claude/skills/q-knowledgebase/tests/test_semantic.py",
+   "sha256": "ecbc0bfe14fec2fed1f6be9eb047df4bf4ee62dc1c8e0faf689907dfbf113ec4",
+   "bytes": 4905,
+   "component": "engine",
+   "dest": ".claude/skills/q-knowledgebase/tests/test_semantic.py",
+   "mode": "replace"
+  },
+  {
+   "path": "engine/.qkb/.gitignore",
+   "sha256": "3cf5661d281bb1cb738dbedb1398750cc8274144b2ec1dcf43f5213f562efca8",
+   "bytes": 60,
+   "component": "engine",
+   "dest": ".qkb/.gitignore",
+   "mode": "create-only"
+  },
+  {
+   "path": "engine/.qkb/config.example.json",
+   "sha256": "78b531344f2d3f347ce49e68f71586643e5dc8e8f36adec9092413df76bf8308",
+   "bytes": 433,
+   "component": "engine",
+   "dest": ".qkb/config.example.json",
+   "mode": "create-only"
+  },
+  {
+   "path": "hooks/hooks.json",
+   "sha256": "0c0b19f4235c73aa711192e86e75ff003d7959417b5f285e50d9a4e1a034e43a",
+   "bytes": 1247,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "hooks/kbcommon.py",
+   "sha256": "0396fb9d79db4b136eb99e41cc9c813178e8c0f2c21a70c3ce79c220ddf5931c",
+   "bytes": 10669,
+   "component": "hooks",
+   "dest": ".claude/hooks/kbcommon.py",
+   "mode": "replace"
+  },
+  {
+   "path": "hooks/kbguard.py",
+   "sha256": "f79768780f053fcbc6ef1d77e51c79cb826355a9081170e768b80ba3635e6ab0",
+   "bytes": 8475,
+   "component": "hooks",
+   "dest": ".claude/hooks/kbguard.py",
+   "mode": "replace"
+  },
+  {
+   "path": "hooks/kbroute.py",
+   "sha256": "8730e6bba7447ce8b1c3d74e9216fddacdb9bba98b37a3ae61e7508819af903a",
+   "bytes": 3666,
+   "component": "hooks",
+   "dest": ".claude/hooks/kbroute.py",
+   "mode": "replace"
+  },
+  {
+   "path": "hooks/kbscope.py",
+   "sha256": "74294534a6ee6a34a935b09591afa75b4867edf197208fd1462000cdaa5b1ba0",
+   "bytes": 3050,
+   "component": "hooks",
+   "dest": ".claude/hooks/kbscope.py",
+   "mode": "replace"
+  },
+  {
+   "path": "hooks/kbwatch.py",
+   "sha256": "508d74cc12a442c167f204b1464af7caa4f031be5dd482b2fdbb38516d598f35",
+   "bytes": 12031,
+   "component": "hooks",
+   "dest": ".claude/hooks/kbwatch.py",
+   "mode": "replace"
+  },
+  {
+   "path": "manifests/known-engine.json",
+   "sha256": "387e5855d0b037c4f90d6f189164435a5b393b1aeb2eda9b26eb96a667d40b63",
+   "bytes": 58793,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "scripts/kb_scaffold.py",
+   "sha256": "00122a79486d6ade2ec68fa2fc629de7039e519887d36326b0c3e07407b65b8b",
+   "bytes": 6106,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "skills/q-kb-add/SKILL.md",
+   "sha256": "ec4ab2c87e79eead7120c2baf710423c5bef9cb4e8ea2f5d21e0501714f1a8ec",
+   "bytes": 3224,
+   "component": "manager-skills",
+   "dest": "{manager}/.claude/skills/q-kb-add/SKILL.md",
+   "mode": "replace"
+  },
+  {
+   "path": "skills/q-kb-publish/SKILL.md",
+   "sha256": "7f342859795f0da2872313597e968ff35859eee2335af88386bd3052c22e4e34",
+   "bytes": 5001,
+   "component": "manager-skills",
+   "dest": "{manager}/.claude/skills/q-kb-publish/SKILL.md",
+   "mode": "replace"
+  },
+  {
+   "path": "skills/q-kb-request/SKILL.md",
+   "sha256": "056b091574f365d44fa2d835afb339f4c71bbfa2d1f4eafcecfa48188bd37294",
+   "bytes": 4847,
+   "component": "skills",
+   "dest": ".claude/skills/q-kb-request/SKILL.md",
+   "mode": "replace"
+  },
+  {
+   "path": "skills/q-kb-search/SKILL.md",
+   "sha256": "63b302f9e526a2d5f165729e902358edbe690479d294aa91290110b4e470a480",
+   "bytes": 8390,
+   "component": "skills",
+   "dest": ".claude/skills/q-kb-search/SKILL.md",
+   "mode": "replace"
+  },
+  {
+   "path": "skills/q-kb-sync/SKILL.md",
+   "sha256": "ef466c6355c38b1077252d14f60f87c1b8fad214f75f4a533f7240d2466efe53",
+   "bytes": 4326,
+   "component": "manager-skills",
+   "dest": "{manager}/.claude/skills/q-kb-sync/SKILL.md",
+   "mode": "replace"
+  },
+  {
+   "path": "skills/q-kb-sync/references/ingest-templates.md",
+   "sha256": "c5e7117323d59c278bc820aa362b3499e5500bebeecd23f05db24507590bbe68",
+   "bytes": 1668,
+   "component": "manager-skills",
+   "dest": "{manager}/.claude/skills/q-kb-sync/references/ingest-templates.md",
+   "mode": "replace"
+  },
+  {
+   "path": "skills/q-kb-sync/references/kb-conventions.md",
+   "sha256": "2b389271b0726df8b1c0bbd9d929a9c496e4ddd0f2fdf599d1b5574e53526014",
+   "bytes": 3737,
+   "component": "manager-skills",
+   "dest": "{manager}/.claude/skills/q-kb-sync/references/kb-conventions.md",
+   "mode": "replace"
+  },
+  {
+   "path": "templates/kb-policy.default.md",
+   "sha256": "5341385b988ada2ee93121b3db423b465bb04c2063642867655990b1bb753ff1",
+   "bytes": 1625,
+   "component": "templates",
+   "dest": "{manager}/templates/kb-policy.default.md",
+   "mode": "create-only"
+  },
+  {
+   "path": "templates/kb.config.example.json",
+   "sha256": "b5ac94ac141253f5512cd02314e7ce175f861e1760eb4e16f7e194b027e217ca",
+   "bytes": 2513,
+   "component": "templates",
+   "dest": "{manager}/templates/kb.config.example.json",
+   "mode": "create-only"
+  },
+  {
+   "path": "templates/request.md",
+   "sha256": "197e465c3d6b324bacea70b21befbec98161f12d7422bf6eb21743734e1a5eab",
+   "bytes": 491,
+   "component": "templates",
+   "dest": "{manager}/templates/request.md",
+   "mode": "create-only"
+  },
+  {
+   "path": "templates/kb/CHANGELOG.md",
+   "sha256": "e32020ac9ea993ca26f6f985ff8d7a7fb3829577eba987840d026d3afeee01e4",
+   "bytes": 186,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "templates/kb/VERSION",
+   "sha256": "4ec0bc6335f51fbe810fe6da168060ec133b3e23d4367c035951da0a4f3fb88c",
+   "bytes": 14,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "templates/manager/README.md",
+   "sha256": "fd64ffabc8388ff31a1f7eef2fdd7d9323a64b77e29f56a6a6a44c78d5d0524c",
+   "bytes": 5379,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "templates/manager/locks/.keep",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bytes": 0,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "templates/manager/requests/.keep",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bytes": 0,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "templates/manager/staging/.keep",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bytes": 0,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "templates/pages/INDEX.md",
+   "sha256": "7c8063c9f331fa1dcacafd3387fea12d96e609be3c6c5a50083e24fcfcf959a4",
+   "bytes": 444,
+   "component": "templates",
+   "dest": "{manager}/templates/pages/INDEX.md",
+   "mode": "create-only"
+  },
+  {
+   "path": "templates/pages/_sources.md",
+   "sha256": "afc1a2b0da1df5f0d08f309787d37fb59ea00bf8cb5a0b4b8c13a9a55e8f4ad7",
+   "bytes": 144,
+   "component": "templates",
+   "dest": "{manager}/templates/pages/_sources.md",
+   "mode": "create-only"
+  },
+  {
+   "path": "templates/pages/document.md",
+   "sha256": "185fc837e51deb6998f1868f3582d6664ac2977f416e2cfa7df61ede239fe54d",
+   "bytes": 629,
+   "component": "templates",
+   "dest": "{manager}/templates/pages/document.md",
+   "mode": "create-only"
+  },
+  {
+   "path": "templates/pages/module.md",
+   "sha256": "54aa8f2b5e2835a2120647e82fcc0587c9091c9b0c7783c98e0a8f3658c68469",
+   "bytes": 590,
+   "component": "templates",
+   "dest": "{manager}/templates/pages/module.md",
+   "mode": "create-only"
+  },
+  {
+   "path": "templates/pages/notes.md",
+   "sha256": "7582db06b27f396a111e3957537fa66c42dec723fca3987163f144e1c99ce3ab",
+   "bytes": 363,
+   "component": "templates",
+   "dest": "{manager}/templates/pages/notes.md",
+   "mode": "create-only"
+  },
+  {
+   "path": "templates/pages/project-README.md",
+   "sha256": "bde5e4d60f07e504f7059d89af21735231d1b6f26c6aa3fffb6bc3ef60869af0",
+   "bytes": 334,
+   "component": "templates",
+   "dest": "{manager}/templates/pages/project-README.md",
+   "mode": "create-only"
+  },
+  {
+   "path": "templates/pages/topic.md",
+   "sha256": "9d009d220859efdb1f8d5a2bf0a56c37add51a7964327d447025c7a865670cf8",
+   "bytes": 442,
+   "component": "templates",
+   "dest": "{manager}/templates/pages/topic.md",
+   "mode": "create-only"
+  },
+  {
+   "path": "tests/bundle.Tests.ps1",
+   "sha256": "c3383dd9a411204bd4abb3e8e7ebecd8dc2aa78256df5f9ab23d5ad4cfa09545",
+   "bytes": 2801,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "tests/localcfg.py",
+   "sha256": "cb4d56564b1efadc211b862d2ee688b76a9e5dfdd3fabd91ad7c170b1e2b3ff7",
+   "bytes": 2088,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "tests/test_hooks.py",
+   "sha256": "75c701affa85571e01e42b6365c381e7617148f4a7e4343a03bc8706debce207",
+   "bytes": 32849,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "tests/test_install.py",
+   "sha256": "5d4dfb161d52b976a24b735894fd238453951938ae79325ac2496ae95f0bd458",
+   "bytes": 28652,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "tests/test_kbpack.py",
+   "sha256": "63711291c5c9b394a2487ad7c05ba74720b6ee4268aa3c195c80c6c9e17a2231",
+   "bytes": 22413,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "tests/test_models.py",
+   "sha256": "ef2efa0bb24d1fd5f073384238321855ea924c0e80bb39830a6cdf21d7e83c04",
+   "bytes": 15444,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "tests/test_names.py",
+   "sha256": "906891a37bd0f448245ff13e56e74674a0daea5e7f6f78786b1a8e6824804813",
+   "bytes": 4605,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "tests/test_skills.py",
+   "sha256": "b8b3838b0d19bb5c01b3961b39c846b1d86a0d5f67cc91dcdbde4fdc680083d6",
+   "bytes": 12715,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "tools/build_manifest.py",
+   "sha256": "34a4c816cb64c1757c1e9a60c595c073ad681a5c394894522c69dbfbb6de2e82",
+   "bytes": 5462,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "tools/download-models.ps1",
+   "sha256": "a35d2f57aa029a7e357b5d96770789e5b316bf3dda10d8b1cfb1bd5d2c20540d",
+   "bytes": 10622,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "tools/download-models.sh",
+   "sha256": "358e3b45c6e4595f70fba4eb6ac02cbb1897ba6955c1c9caf936aa9f5d83a40c",
+   "bytes": 7847,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "tools/kbmodel.py",
+   "sha256": "872467421f03a8caf28567bd69a73d5dd633cfcfc60ebc6ab05aa7ca5a6040be",
+   "bytes": 8396,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "tools/kbpack.py",
+   "sha256": "c48ee3e5a0aac89ea7fd58f8ac6b69530ced55914d6756b7583cf6487baeb7c9",
+   "bytes": 49084,
+   "component": "skills",
+   "dest": ".claude/tools/kbpack.py",
+   "mode": "replace"
+  },
+  {
+   "path": "tools/models.manifest.json",
+   "sha256": "eb68f639effc06d5962630564aba01d25e3829ebeb9fceb362396cc86d696ab3",
+   "bytes": 1709,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "tools/settings_fragment.py",
+   "sha256": "ed87e321a4c2fcfd0e4259adaf3518ad26ef06dbe0b3650e366dd03fbe7da4ce",
+   "bytes": 7178,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  }
+ ]
+}

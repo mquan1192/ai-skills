@@ -1,0 +1,19 @@
+{
+  "_ghi_chu": "Cấu hình gói văn phong (writing style bundle v1.2). install.py chép file này thành .writing-style/style.config.json trong dự án đích (chỉ khi chưa có). Sửa giá trị cho dự án; tên khóa giữ nguyên. Đường dẫn tương đối tính từ thư mục gốc dự án, dùng dấu /.",
+  "schema": 1,
+  "enabled": true,
+  "skill_name": "q-writing-style",
+  "project_rules": "",
+  "glossary": "",
+  "voice_profile": "",
+
+  "prompt_reminder": {
+    "enabled": true,
+    "keywords": ["báo cáo", "report", "tài liệu", "biên bản", "mail", "chat", "jira", "ticket", "報告書", "資料", "メール", "議事録", "dịch", "翻訳", "訳", "translate", "slide", "pptx", "powerpoint", "設計書", "報告", "bài viết", "văn bản", "viết lại", "giọng văn", "văn AI", "humanize", "blog", "release note", "proofread", "文章", "記事"]
+  },
+  "file_reminder": {
+    "enabled": true,
+    "extensions": [".md", ".docx", ".xlsx", ".html", ".pptx"],
+    "output_dirs": ["out/", "reports/", "docs/"]
+  }
+}

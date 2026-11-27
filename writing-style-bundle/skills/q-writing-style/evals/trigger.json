@@ -1,0 +1,69 @@
+{
+  "skill": "q-writing-style",
+  "about": "Bộ kiểm tra gọi kỹ năng: should_trigger = lời nhắc phải chọn kỹ năng văn phong này; near_miss = lời nhắc gần giống nhưng phải chọn kỹ năng khác (hoặc không chọn kỹ năng nào). Chạy từng lời nhắc bằng một agent mới chỉ thấy danh sách kỹ năng; đạt = chọn đúng kỹ năng kỳ vọng. Mọi lời nhắc là nội dung bịa, trung tính.",
+  "should_trigger": [
+    "Sửa văn phong đoạn mail này cho lịch sự và gọn hơn.",
+    "Rút gọn đoạn báo cáo sau xuống 3 câu, giữ nguyên số liệu.",
+    "Viết lại phần kết luận của báo cáo kiểm thử này cho trung tính, đừng khẳng định quá mức.",
+    "Chỉnh lại biên bản họp tôi vừa gõ cho rõ ràng, không đổi nội dung.",
+    "Câu trả lời trong ticket Jira này dài dòng quá, gọn lại giúp tôi.",
+    "Tin nhắn chat này nghe hơi cộc, sửa lại cho lịch sự hơn nhưng vẫn ngắn.",
+    "Hãy chuẩn lại tài liệu hướng dẫn thao tác này: mỗi bước một dòng, bỏ chữ thừa.",
+    "この報告書の文章を、丁寧さを保ったまま簡潔に推敲してください。",
+    "この資料の説明文を自然な日本語に直してください。",
+    "お客様宛てのメールを、失礼のない短い文章に書き直してください。",
+    "Polish this status report for the team lead and keep every number as it is.",
+    "Proofread and tighten this email without changing what it says.",
+    "Dịch đoạn này sang tiếng Nhật và chỉnh cho tự nhiên giúp tôi: \"Bản sửa đã gửi, nhờ chị kiểm tra trước thứ Sáu.\"",
+    "Dịch đoạn tóm tắt này sang EN rồi soát lại câu chữ cho tự nhiên.",
+    "この報告をメールで送る前に、文章を整えてください。",
+    "Polish the speaker notes of this pptx so each slide reads clearly.",
+    "設計書の説明文をもっと簡潔にしてください。",
+    "Translate this paragraph into Vietnamese and tidy the wording afterwards.",
+    "Dịch toàn bộ file README_ja.md sang tiếng Việt, giữ nguyên code và liên kết.",
+    "Đoạn giới thiệu này đọc như văn AI quá, sửa cho tự nhiên mà không đổi ý.",
+    "Viết một bài blog ngắn về việc nhóm chuyển sang CI mới, dựa trên các ghi chú sau.",
+    "Rewrite this runbook step in plain English for non-native readers.",
+    "Đây là 5 bài tôi từng viết, viết bài mới về chủ đề kiểm thử theo đúng giọng văn của tôi.",
+    "Soạn mail gửi đối tác báo giá, xưng hô cho đúng mực.",
+    "この技術記事の文章を自然にしてください。AIっぽい言い回しを消したいです。",
+    "Write the release notes for version 2.3 from this list of changes."
+  ],
+  "near_miss": [
+    {
+      "prompt": "Tóm tắt file minutes_0301.docx trong 5 dòng.",
+      "expect": "kỹ năng tóm tắt / so sánh tài liệu",
+      "why": "Tóm tắt cả tài liệu, không phải sửa văn phong"
+    },
+    {
+      "prompt": "Review bản thiết kế chi tiết này: tìm chỗ thiếu và mâu thuẫn với bản thiết kế cơ bản.",
+      "expect": "kỹ năng review tài liệu thiết kế",
+      "why": "Kiểm tra nội dung thiết kế, không phải sửa câu chữ"
+    },
+    {
+      "prompt": "Viết hàm Python đọc file CSV và tính tổng cột số lượng.",
+      "expect": "none",
+      "why": "Viết code, không phải việc văn bản"
+    },
+    {
+      "prompt": "Quy định đặt tên file trong dự án này là gì? Tra giúp tôi trong tài liệu chung.",
+      "expect": "kỹ năng tra cứu kiến thức (KB)",
+      "why": "Tra cứu thông tin, không phải viết lại văn bản"
+    },
+    {
+      "prompt": "So sánh hai phiên bản của bản kế hoạch này và cho biết phần nào đã đổi.",
+      "expect": "kỹ năng tóm tắt / so sánh tài liệu",
+      "why": "So sánh phiên bản, không phải sửa văn phong"
+    },
+    {
+      "prompt": "Tạo file slide.pptx 10 trang từ dàn ý này, có bố cục và hình.",
+      "expect": "kỹ năng tạo file PowerPoint (pptx)",
+      "why": "Dựng file và bố cục slide; chữ trên slide soát văn phong sau"
+    },
+    {
+      "prompt": "Viết unit test cho hàm tính thuế.",
+      "expect": "none",
+      "why": "Viết code, không phải việc văn bản"
+    }
+  ]
+}

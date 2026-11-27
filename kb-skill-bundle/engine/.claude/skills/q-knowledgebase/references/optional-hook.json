@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/skills/q-knowledgebase/scripts/hook_reminder.py",
+            "timeout": 3
+          }
+        ]
+      }
+    ]
+  }
+}
