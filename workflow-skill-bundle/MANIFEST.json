@@ -1,6 +1,6 @@
 {
   "product": "workflow-skill-bundle",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "note": "install.py kiểm SHA-256 mọi file trong danh sách này trước khi cài",
   "files": {
     "AGENTS.md": {
@@ -8,24 +8,24 @@
       "bytes": 7503
     },
     "CHANGELOG.md": {
-      "sha256": "4061311e1ae4002846048a14d81fa261189e1b7e539d9cf62857d4612e345e9c",
-      "bytes": 6651
+      "sha256": "081b4d1fd8e1432c3aa80c59009ba64d887e84e16550b53c8fa6c06b5dd339bd",
+      "bytes": 8286
     },
     "DOC-TRUOC.md": {
-      "sha256": "e61086f9a93b6efe4b9de63bb9ce903d80586038fa74a48099802e91c253040d",
-      "bytes": 5056
+      "sha256": "d28777d322edd2251b39f8436dc9fda3192512a64f9b460bd38e8b0bc48b63d8",
+      "bytes": 5185
     },
     "LICENSE": {
       "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
       "bytes": 11358
     },
     "README.md": {
-      "sha256": "9d045e00742af0492fc4769a8972fe17b562f36f83370522e16138f555a9f02e",
-      "bytes": 8585
+      "sha256": "2e546b4a4034335e68f17592bb3ff32accf566b42f1216167cc0a2918ecbc08c",
+      "bytes": 9095
     },
     "README_VN.md": {
-      "sha256": "b16ace903bfb42199e0ee31b935513877605a1ea0ac00c17c917f5a3a54b8c3d",
-      "bytes": 16483
+      "sha256": "e80ed7bbcc2fa077296e80500cf8e6378358fcb78532c9b6f3a3a1cc22a92bc7",
+      "bytes": 17018
     },
     "SECURITY.md": {
       "sha256": "0f7960569d1b3252d715969ec52e5289634fabc3969a3492560f78a8f090beac",
@@ -64,8 +64,8 @@
       "bytes": 4343
     },
     "install.py": {
-      "sha256": "d31fbbe112518d79f409d72a81d3f7e05de12dd527b4a7f6748847adbfce21e2",
-      "bytes": 28746
+      "sha256": "1ff5d036b90a5b07ac72ae714e4cff5ba37def49929d3432d1fa7233a0ca2a57",
+      "bytes": 31629
     },
     "scripts/CardFlow.psm1": {
       "sha256": "fb719f54d072408a908f05cbffb32aafaea1f9bc2e3e0a9564cb8686a3444d23",
@@ -260,8 +260,8 @@
       "bytes": 507
     },
     "tests/test_install.py": {
-      "sha256": "74bc5363ba5b74476d8f78089ab441f107936a55d9cb0f187e88b7d086ef372b",
-      "bytes": 16478
+      "sha256": "e1158e8f4b12d326b34386fd1f8707500b52e4a84549aaaeafee5f533fec1293",
+      "bytes": 21714
     },
     "tests/turnlog.Tests.ps1": {
       "sha256": "5e033f337b55c1997a7b419954ef8281ecc4e686fff43d893c4b8e3b39fa7efd",
@@ -270,6 +270,10 @@
     "tools/make_manifest.py": {
       "sha256": "92e2f128dc881d8dd448b1f680d3c4b96567f88be0c6d338bf8c8743eff9a06d",
       "bytes": 998
+    },
+    "tools/pylauncher.py": {
+      "sha256": "c0a44efeab8ea4775a984429a21180639af9aeaeed4684c545c141648c18f941",
+      "bytes": 6676
     },
     "tools/scan_terms.py": {
       "sha256": "bcf1ca22dcad368e6717ee9fc820614a8038b88066177d2a29ae4e37e7b27144",

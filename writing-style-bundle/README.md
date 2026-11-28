@@ -4,7 +4,7 @@ English · [Tiếng Việt](README_VN.md)
 
 Gives Claude Code one house style for everything it writes or translates (reports, emails, docs, articles, release notes, prompts) in Japanese, Vietnamese or English, and makes it check its own text before saving.
 
-Version 1.2.0 · License: Apache License 2.0; some content is adapted from MIT-licensed works, see `THIRD-PARTY-NOTICES.md` · Repository: https://github.com/mquan1192/ai-skills
+Version 1.2.1 · License: Apache License 2.0; some content is adapted from MIT-licensed works, see `THIRD-PARTY-NOTICES.md` · Repository: https://github.com/mquan1192/ai-skills
 
 This bundle is one of three independent bundles in this repository ([overview](../README.md)). You can install it on its own.
 
@@ -51,7 +51,7 @@ flowchart LR
 
 ### Get started in 3 steps
 
-1. Download `Writing-Style-Bundle_v1.2.0_20261126.zip` from the [Releases](https://github.com/mquan1192/ai-skills/releases) page and unzip it **outside** your project.
+1. Download `Writing-Style-Bundle_v1.2.1_20261128.zip` from the [Releases](https://github.com/mquan1192/ai-skills/releases) page and unzip it **outside** your project.
 2. Open Claude Code in your project and say: *"Read `DOC-TRUOC.md` in the bundle folder and install this bundle."*
 3. Claude shows you the plan first and installs only after you agree.
 
@@ -117,6 +117,8 @@ Any one layer can bring Claude to the skill; three layers make it far less likel
 
 - Claude Code (command line or desktop app).
 - Python 3.8 or later, standard library only (for the installer and hook).
+- Python command: the installer finds it on your machine. It tries the command already used in the project, then `python`, `python3` and `py -3`, and writes the first one that really runs into the hook commands. On macOS and Linux, start the installer with `python3`. To choose the command yourself, add `--python <command or path>`.
+- Recommended version: a release in the bug-fix phase on python.org (3.14 and 3.15 as of 2026-11-28). Python 3.10 reached end of life in October 2026.
 - PowerShell 7 (`pwsh`) only to run the bundle's tests.
 - The hook is optional.
 
@@ -132,7 +134,7 @@ If your project has no `CLAUDE.md` or `.claude/settings.json` yet, the installer
 ### Uninstall
 
 ```powershell
-python install.py --target <project folder> --uninstall           # dry run
+python install.py --target <project folder> --uninstall           # dry run (macOS / Linux: python3)
 python install.py --target <project folder> --uninstall --apply   # remove
 ```
 

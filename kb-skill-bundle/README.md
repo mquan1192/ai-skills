@@ -126,8 +126,10 @@ The mode is the `hooks.mode` key in `kb.config.json`. Details: `README_VN.md` se
 
 - Claude Code (command line or desktop app). Tested with 2.1.325; the minimum version is not known.
 - Python 3.10 or later, standard library only, with SQLite full-text search (FTS5).
+- Python command: the installer finds it on your machine. It tries the command already used in the project, then `python`, `python3` and `py -3`, and writes the first one that really runs into the hook commands. On macOS and Linux, start the installer with `python3`. To choose the command yourself, add `--python <command or path>`.
+- Recommended version: a release in the bug-fix phase on python.org (3.14 and 3.15 as of 2026-11-28). Python 3.10 reached end of life in October 2026.
 - Windows, macOS or Linux.
-- The optional model needs `onnxruntime` and `numpy`, installed by IT, and roughly 0.5 to 2.3 GB of disk (estimate).
+- The optional model needs `onnxruntime` and `numpy`, installed by IT, and roughly 0.5 to 2.3 GB of disk (estimate). Use a Python version that `onnxruntime` supports: on 2026-11-28, onnxruntime 1.32.0 on PyPI covers Python 3.11 to 3.14 and not yet 3.15, so use 3.14 with the model. If that Python lives in a virtual environment, install with `--python <path to the venv python>`.
 
 ### Install
 
@@ -143,7 +145,7 @@ Before writing, the installer checks the SHA-256 fingerprint of every bundle fil
 ### Uninstall
 
 ```powershell
-python -E -s -B install.py --target <project folder> --uninstall               # dry run
+python -E -s -B install.py --target <project folder> --uninstall               # dry run (macOS / Linux: python3)
 python -E -s -B install.py --target <project folder> --uninstall --apply --yes   # remove
 ```
 

@@ -143,6 +143,9 @@ Hướng dẫn đầy đủ: các mục 1–13 bên dưới.
 
 - Claude Code (CLI hoặc app Desktop, tab Code). Bản đã thử: 2.1.325. Bản tối thiểu: chưa xác định.
 - Python 3.10 trở lên (chỉ dùng thư viện chuẩn), SQLite có FTS5.
+- Lệnh gọi Python: bộ cài tự dò trên máy. Thứ tự thử: lệnh đang dùng trong dự án, rồi `python`, `python3`, `py -3`; lệnh đầu tiên chạy được sẽ được ghi vào lệnh hook. Trên macOS và Linux, chạy bộ cài bằng `python3`. Muốn tự chọn lệnh: thêm `--python <lệnh hoặc đường dẫn>`. Lệnh này cũng được ghi vào quyền chạy lệnh đọc và `qkb_command` trong `kb.config.json`. Các lệnh mẫu trong tài liệu này viết `python`; máy dùng lệnh khác thì thay tương ứng.
+- Bản nên dùng: bản đang ở giai đoạn sửa lỗi (bugfix) trên python.org (3.14 và 3.15, tính đến 28/11/2026). Python 3.10 đã hết hỗ trợ từ tháng 10/2026.
+- Khi dùng model: chọn bản Python mà `onnxruntime` hỗ trợ. Ngày 28/11/2026, onnxruntime 1.32.0 trên PyPI có bản cho Python 3.11 đến 3.14, chưa có cho 3.15, nên dùng 3.14. Python đó nằm trong venv thì cài kèm `--python <đường dẫn python của venv>`.
 - Quyền ghi trong thư mục dự án.
 - Windows, macOS hoặc Linux.
 
@@ -610,6 +613,8 @@ python -E -s -B install.py --target "D:\work\demo" --uninstall --apply --yes
 | Thông báo | Nguyên nhân / cách xử lý |
 |---|---|
 | `LỖI: cần Python 3.10 trở lên (đang có 3.x).` | Cài Python mới rồi chạy lại. Chưa ghi gì |
+| `LỖI: không tìm được lệnh gọi Python 3.10+ dùng cho hook và lệnh KB (…)` | Không lệnh nào trong `python`, `python3`, `py -3` chạy được Python 3.10+ có FTS5 (dòng báo ghi lý do từng lệnh). Cài Python bản chính thức, hoặc thêm `--python <lệnh hoặc đường dẫn>`. Chưa ghi gì |
+| Hook không chạy, Claude Code báo `python: command not found` | Dự án cài bằng bản 2.0.5 trở về trước trên máy không có lệnh `python`. Chạy lại `install.py` bản 2.0.6: lệnh hook, quyền và `qkb_command` được đổi tại chỗ sang lệnh của máy |
 | `LỖI: SQLite của Python này không có FTS5. Cài Python bản chính thức rồi chạy lại.` | Cài bản Python có FTS5 |
 | `LỖI: file <tên> trong gói không đúng mã kiểm tra. Giải nén lại từ file zip gốc.` | Gói thiếu hoặc bị sửa. Mã thoát 2 |
 | `DỪNG: <n> file đang có khác với gói và không nhận ra nguồn gốc (danh sách dưới). Chưa ghi gì. Xem lại, rồi chạy thêm --adopt nếu muốn thay (có sao lưu).` | Xung đột. Mã thoát 1 |

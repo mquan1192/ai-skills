@@ -41,7 +41,7 @@ You keep giving Claude Code tasks as before. The bundles you installed decide ho
 
 Claude first shows a list of every file it would add or change. **Nothing is written** until you agree.
 
-You need Claude Code and Python 3. The workflow bundle also needs PowerShell 7.
+You need Claude Code and Python 3. The workflow bundle also needs PowerShell 7. Each installer finds the Python command of your machine (`python`, `python3` or `py -3`); on macOS and Linux start it with `python3`.
 
 ---
 
@@ -51,9 +51,9 @@ You need Claude Code and Python 3. The workflow bundle also needs PowerShell 7.
 
 | Bundle | Version | What it does | Guide | Zip on Releases |
 |---|---|---|---|---|
-| Workflow | 1.1.1 | Roles, a write area per role, approval levels, checked releases for code changes, a one-week sprint | [workflow-skill-bundle](workflow-skill-bundle/README.md) | `Workflow-Skill-Bundle_v1.1.1_20261125.zip` |
+| Workflow | 1.1.2 | Roles, a write area per role, approval levels, checked releases for code changes, a one-week sprint | [workflow-skill-bundle](workflow-skill-bundle/README.md) | `Workflow-Skill-Bundle_v1.1.2_20261128.zip` |
 | KB | 2.1.0 | Project knowledge as Markdown pages with one writer, and search that names its source | [kb-skill-bundle](kb-skill-bundle/README.md) | `KB-Skill-Bundle_v2.1.0_20261128.zip` |
-| Writing style | 1.2.0 | Skill `q-writing-style`: one style for everything Claude writes or translates, facts kept exact, AI phrasing removed, a self-check before saving | [writing-style-bundle](writing-style-bundle/README.md) | `Writing-Style-Bundle_v1.2.0_20261126.zip` |
+| Writing style | 1.2.1 | Skill `q-writing-style`: one style for everything Claude writes or translates, facts kept exact, AI phrasing removed, a self-check before saving | [writing-style-bundle](writing-style-bundle/README.md) | `Writing-Style-Bundle_v1.2.1_20261128.zip` |
 
 The KB bundle can also search by meaning with a small offline AI model. The model is a separate zip on the Releases page (`KB-Model_multilingual-e5-small_20261118.zip`). Without it, the KB bundle searches by keyword.
 

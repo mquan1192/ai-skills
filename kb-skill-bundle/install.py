@@ -27,6 +27,7 @@ import sys
 sys.dont_write_bytecode = True
 BUNDLE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(BUNDLE, "tools"))
+import pylauncher  # noqa: E402
 import settings_fragment  # noqa: E402
 
 COMPONENTS = ("engine", "skills", "hooks", "scaffold")
@@ -37,9 +38,32 @@ MANAGER_LEGACY = "00_UpdateDocs"          # default manager folder up to bundle 
 PROFILES = ("author", "solo", "reader")   # "full" = old name of "author", still accepted
 PROFILE_WORD = {"author": "người soạn (có phiên quản lý KB)", "solo": "solo (một người, không phiên quản lý)", "reader": "người đọc"}
 QKB = ".claude/skills/q-knowledgebase/scripts/qkb.py"
-QKB_CMD = "python -E -s -B " + QKB
+MIN_PYTHON = (3, 10)
+LAUNCHER = "python"     # how this machine starts Python; set once per run by pick_launcher()
 READ_COMMANDS = ("status", "search", "query", "explore", "read", "related", "path", "impact", "map")
-PERMISSIONS = ["Bash(%s %s *)" % (QKB_CMD, c) for c in READ_COMMANDS] + ["Bash(python -I -S .claude/hooks/kbscope.py *)"]
+KB_PERMISSION = re.compile(r"^Bash\((.+?) (?:-E -s -B \.claude/skills/q-knowledgebase/scripts/qkb\.py|"
+                           r"-I -S \.claude/hooks/kbscope\.py) ")
+QKB_DEFAULT = re.compile(r"^(.+?) -E -s -B \.claude/skills/q-knowledgebase/scripts/qkb\.py$")
+
+
+def qkb_cmd():
+    return LAUNCHER + " -E -s -B " + QKB
+
+
+def permissions():
+    return ["Bash(%s %s *)" % (qkb_cmd(), c) for c in READ_COMMANDS] + ["Bash(%s -I -S .claude/hooks/kbscope.py *)" % LAUNCHER]
+
+
+def switch_permissions(allow):
+    """Permission list with the KB entries of another Python launcher rewritten to this one (order kept, no repeats)."""
+    out = []
+    for p in allow:
+        m = KB_PERMISSION.match(p) if isinstance(p, str) else None
+        if m and m.group(1) != LAUNCHER:
+            p = "Bash(" + LAUNCHER + p[m.end(1):]
+        if p not in out:
+            out.append(p)
+    return out
 RECORD = ".qkb/install/installed.json"
 INDEX = ".qkb/cache/index.sqlite3"
 NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
@@ -145,8 +169,40 @@ def inside(target, rel):
     return full
 
 
+def project_launchers(target):
+    """Python launchers already written in this project (settings hooks, then kb.config qkb_command)."""
+    found = []
+    try:
+        found += pylauncher.used_in(read_json(os.path.join(target, ".claude", "settings.json")), settings_fragment.HOOK_SCRIPTS)
+    except (OSError, ValueError):
+        pass
+    for folder in os.listdir(target) + [""]:
+        try:
+            m = QKB_DEFAULT.match(str(read_json(os.path.join(target, folder, "kb.config.json")).get("qkb_command", "")))
+        except (OSError, ValueError, AttributeError):
+            continue
+        if m and m.group(1) not in found:
+            found.append(m.group(1))
+    return found
+
+
+def pick_launcher(target, explicit, out):
+    """Set LAUNCHER to a command that really starts Python 3.10+ with FTS5 on this machine (see tools/pylauncher.py)."""
+    global LAUNCHER
+    try:
+        LAUNCHER, info, tried = pylauncher.choose(MIN_PYTHON, need_fts5=True, explicit=explicit,
+                                                  existing=project_launchers(target))
+    except pylauncher.LauncherError as exc:
+        raise Stop(2, "LỖI: không tìm được lệnh gọi Python 3.10+ dùng cho hook và lệnh KB (%s). "
+                      "Cài Python bản chính thức, hoặc chỉ rõ bằng --python <lệnh hoặc đường dẫn>." % exc)
+    say(out, "Lệnh Python ghi vào hook / quyền / config: %s (Python %s)%s"
+        % (LAUNCHER, ".".join(str(n) for n in info["version"]),
+           "; bỏ qua: " + "; ".join("`%s` %s" % t for t in tried) if tried else ""))
+    return info
+
+
 def check_env():
-    if sys.version_info < (3, 10):
+    if sys.version_info < MIN_PYTHON:
         raise Stop(2, "LỖI: cần Python 3.10 trở lên (đang có %d.%d)." % sys.version_info[:2])
     try:
         if os.environ.get("KBINSTALL_TEST_NO_FTS5") == "1":     # test seam for the install check (IC-02); never set in use
@@ -273,10 +329,11 @@ def plan_files(target, manifest, components, manager, record, known, adopt, prof
 
 
 def plan_settings(target):
-    """(state, new settings dict or None, added blocks, added permissions, old-form commands rewritten).
+    """(state, new settings dict or None, added blocks, added permissions, old-form commands rewritten,
+    commands / permissions switched to this run's Python launcher).
     state: create | merge | same | broken."""
     path = os.path.join(target, ".claude", "settings.json")
-    frag = settings_fragment.fragment()
+    frag = settings_fragment.fragment(LAUNCHER)
     current = {}
     state = "create"
     if os.path.exists(path):
@@ -286,20 +343,26 @@ def plan_settings(target):
                 raise ValueError
             state = "merge"
         except (OSError, ValueError):
-            return "broken", None, frag, PERMISSIONS, 0
-    # old-form KB hook commands (2.0.3 and older: exit 2 when the script is missing) -> safe form, other keys kept
-    current, upgraded = settings_fragment.upgrade_commands(current)
+            return "broken", None, frag, permissions(), 0, 0
+    # old-form KB hook commands (2.0.3 and older: exit 2 when the script is missing) -> safe form, other keys kept;
+    # KB hook commands and permissions that start another Python launcher -> the launcher chosen for this run
+    current, upgraded, switched = settings_fragment.upgrade_commands(current, LAUNCHER)
+    old_allow = (current.get("permissions") or {}).get("allow") if isinstance(current.get("permissions"), dict) else None
+    if isinstance(old_allow, list):
+        new_allow = switch_permissions(old_allow)
+        switched += sum(1 for p in new_allow if p not in old_allow)
+        current["permissions"]["allow"] = new_allow
     merged = settings_fragment.merge(current, frag)
     allow = merged.setdefault("permissions", {}).setdefault("allow", [])
-    added_perms = [p for p in PERMISSIONS if p not in allow]
+    added_perms = [p for p in permissions() if p not in allow]
     allow.extend(added_perms)
     added_blocks = {ev: [b for b in blocks if b not in (current.get("hooks") or {}).get(ev, [])] for ev, blocks in frag.items()}
     added_blocks = {ev: b for ev, b in added_blocks.items() if b}
     if not preserved(current, merged):
         raise Stop(4, "LỖI: bản ghép .claude/settings.json làm mất nội dung đang có. Không ghi.")
-    if state == "merge" and not added_blocks and not added_perms and not upgraded:
+    if state == "merge" and not added_blocks and not added_perms and not upgraded and not switched:
         state = "same"
-    return state, merged, added_blocks, added_perms, upgraded
+    return state, merged, added_blocks, added_perms, upgraded, switched
 
 
 def preserved(old, new):
@@ -394,6 +457,7 @@ def run_qkb(target, args_list, timeout=600):
 def install(args, out):
     target = check_target(os.path.abspath(args.target))
     check_env()
+    pick_launcher(target, args.python, out)
     manifest = load_manifest()
     known = load_known()
     record_path = os.path.join(target, *RECORD.split("/"))
@@ -419,8 +483,8 @@ def install(args, out):
     has_kb = os.path.isdir(os.path.join(target, "kb"))
     scaffold = "scaffold" in components and not has_kb
     rows = plan_files(target, manifest, components, manager, record, known, args.adopt, args.profile)
-    settings_state, settings_new, added_blocks, added_perms, upgraded = plan_settings(target) if "hooks" in components \
-        else ("skip", None, {}, [], 0)
+    settings_state, settings_new, added_blocks, added_perms, upgraded, switched = plan_settings(target) \
+        if "hooks" in components else ("skip", None, {}, [], 0, 0)
     interactive = sys.stdin.isatty() and not args.yes
     found = None if args.model_zip else find_model_zip(args, out)     # model zip placed next to the bundle
     if found:
@@ -473,6 +537,9 @@ def install(args, out):
         if upgraded:
             say(out, "   + đổi %d lệnh hook KB dạng cũ sang dạng an toàn (thiếu script thì thoát 0); matcher / timeout giữ nguyên"
                 % upgraded)
+        if switched:
+            say(out, "   + đổi %d lệnh hook / quyền KB sang lệnh Python của máy này (%s); phần còn lại của lệnh giữ nguyên"
+                % (switched, LAUNCHER))
     for rel, items in untouched_legacy(target).items():
         say(out, "   ! %s: %d lệnh hook KB dạng cũ (%s) — thoát mã 2 khi thiếu script; installer không sửa file này, "
                  "thay tay bằng lệnh trong .claude/settings.json (README_VN.md § 9)"
@@ -491,7 +558,7 @@ def install(args, out):
              "nếu dự án chưa tự đặt; muốn tắt: đặt \"path\" rỗng." % USAGE_LOG_DEFAULT["path"])
     schema = index_schema(target)
     if schema == 1:
-        say(out, "CHÚ Ý: chỉ mục đang ở schema 1. Xem trước: %s migrate --dry-run. Chạy lại kèm --migrate để nâng." % QKB_CMD)
+        say(out, "CHÚ Ý: chỉ mục đang ở schema 1. Xem trước: %s migrate --dry-run. Chạy lại kèm --migrate để nâng." % qkb_cmd())
     for name in ("Q-KnowledgeBase-README.md", "Q-KnowledgeBase-install.py", "Q-KnowledgeBase-VALIDATION.md"):
         if os.path.isfile(os.path.join(target, name)):
             say(out, "Ghi chú: %s là file của gói cũ ở gốc dự án; có thể xóa tay." % name)
@@ -506,7 +573,7 @@ def install(args, out):
         return 1, result
     if not args.apply:
         say(out, "Chi tiết từng file: thêm --format json")
-        say(out, "Để cài: python -E -s -B install.py --target \"%s\" --apply --yes --model %s%s"
+        say(out, "Để cài: " + LAUNCHER + " -E -s -B install.py --target \"%s\" --apply --yes --model %s%s"
             % (target, model or "none", (" --project %s --sub %s" % (project or "<dự án>", sub)) if scaffold else ""))
         return 0, result
     if not args.yes:
@@ -625,19 +692,28 @@ def apply(target, manifest, rows, manager, record, settings_state, settings_new,
               and os.path.isfile(os.path.join(target, *str(f.get("dest")).split("/")))]
     old_settings = (record or {}).get("settings") or {}
     blocks = {ev: list(b) for ev, b in (old_settings.get("blocks") or {}).items()}
+    if settings_new is not None:      # recorded blocks follow the launcher switch made in settings.json at this run
+        for b in (x for group in blocks.values() for x in group if isinstance(x, dict)):
+            for h in (h for h in b.get("hooks") or [] if isinstance(h, dict)):
+                cmd = str(h.get("command", ""))
+                if settings_fragment.hook_key(cmd) and settings_fragment.is_safe(cmd):
+                    h["command"] = pylauncher.swap(cmd, LAUNCHER)
     if settings_new is not None:      # old-form blocks rewritten at this run are no longer in settings.json
         now = settings_new.get("hooks") or {}
         blocks = {ev: [x for x in b if x in now.get(ev, [])] for ev, b in blocks.items()}
         blocks = {ev: b for ev, b in blocks.items() if b}
     for ev, b in added_blocks.items():
         blocks.setdefault(ev, []).extend(x for x in b if x not in blocks[ev])
-    perms = list(old_settings.get("permissions") or []) + [p for p in added_perms if p not in (old_settings.get("permissions") or [])]
+    perms = switch_permissions(old_settings.get("permissions") or []) if settings_new is not None \
+        else list(old_settings.get("permissions") or [])
+    perms += [p for p in added_perms if p not in perms]
     created = sorted(set(created) | set((record or {}).get("created") or []))
     record_new = {"bundle_version": manifest.get("bundle_version"), "engine_version": manifest.get("engine_version"),
                   "at": datetime.datetime.now().isoformat(timespec="seconds"), "files": files,
                   "created": created, "settings": {"blocks": blocks, "permissions": perms},
                   "options": {"manager_folder": manager, "session_name": args.session_name, "model": model,
-                              "hooks": args.hooks, "project": project, "sub": sub, "profile": args.profile},
+                              "hooks": args.hooks, "project": project, "sub": sub, "profile": args.profile,
+                              "python": LAUNCHER},
                   "backup": backup_rel,
                   "previous": record}
     # A re-run that wrote no package file and no settings keeps the earlier restore point, so --restore-previous still
@@ -654,7 +730,7 @@ def apply(target, manifest, rows, manager, record, settings_state, settings_new,
     say(out, "ĐÃ CÀI XONG. Việc cần làm:")
     say(out, "1. Khởi động lại phiên Claude Code (hook và skill mới có hiệu lực sau khi khởi động lại).")
     if args.profile == "reader":
-        say(out, "2. Nhập gói dữ liệu KB nhận được: python -E -s -B .claude/tools/kbpack.py import <file.zip> --apply")
+        say(out, "2. Nhập gói dữ liệu KB nhận được: " + LAUNCHER + " -E -s -B .claude/tools/kbpack.py import <file.zip> --apply")
         say(out, "3. Tra cứu: /q-kb-search <câu hỏi>. Bản nhập là bản chỉ đọc; cập nhật bằng gói mới hơn.")
     elif args.profile == "solo":
         say(out, "2. Không cần tạo phiên quản lý KB. Mở phiên Claude Code ở gốc dự án là ghi được KB.")
@@ -680,8 +756,13 @@ def apply(target, manifest, rows, manager, record, settings_state, settings_new,
            "gốc dự án" if args.profile == "reader" else manager + "/"))
     if model == "local":
         say(out, "6. Model: cần onnxruntime + numpy trên máy (IT cài); dựng vector 1 lần: "
-                 "python -E -s -B .claude/skills/q-knowledgebase/scripts/qkb.py embed --apply")
-    say(out, "Lùi lại: python -E -s -B install.py --target \"%s\" --restore-previous --apply --yes" % target)
+                 + qkb_cmd() + " embed --apply")
+        if not pylauncher.has_modules(LAUNCHER, ("onnxruntime", "numpy")):
+            say(out, "   CHÚ Ý: lệnh `%s` chưa thấy onnxruntime / numpy → engine đang tìm theo cách thường. Cài 2 gói này cho "
+                     "đúng Python đó. Bản Python quá mới có thể chưa có onnxruntime: khi pip báo không có bản phù hợp, "
+                     "tạo venv bằng bản Python thấp hơn một bậc rồi chạy lại install.py kèm --python <python của venv>."
+                % LAUNCHER)
+    say(out, "Lùi lại: " + LAUNCHER + " -E -s -B install.py --target \"%s\" --restore-previous --apply --yes" % target)
     return 0, result
 
 
@@ -719,6 +800,8 @@ def write_configs(target, manager, model, args):
                 cfg["manager"]["solo"] = True
             else:
                 cfg["manager"].pop("solo", None)
+        if QKB_DEFAULT.match(str(cfg.get("qkb_command", ""))):     # a command the owner rewrote by hand is kept
+            cfg["qkb_command"] = qkb_cmd()
         cfg.setdefault("hooks", {})["mode"] = args.hooks
         cfg.setdefault("search", {})["model"] = model or "none"
         os.makedirs(os.path.dirname(cfg_path), exist_ok=True)
@@ -843,7 +926,7 @@ def post_checks(target, schema, args, out):
                 if code != 0:
                     raise Stop(4, "migrate")
             else:
-                say(out, "CHÚ Ý: chỉ mục đang ở schema 1. Xem trước: %s migrate --dry-run. Chạy lại kèm --migrate để nâng." % QKB_CMD)
+                say(out, "CHÚ Ý: chỉ mục đang ở schema 1. Xem trước: %s migrate --dry-run. Chạy lại kèm --migrate để nâng." % qkb_cmd())
                 return checks
         elif schema is None:
             code, data = run_qkb(target, ["build"], timeout=3600)
@@ -1050,7 +1133,7 @@ def uninstall(args, out, restore):
         if s_plan:
             remove_settings(target, s_plan)
         say(out, "Chỉ mục: nếu cần bản chỉ mục cũ, chép file sao lưu trong .qkb/backups/ về .qkb/cache/index.sqlite3, "
-                 "hoặc chạy: %s build --full" % QKB_CMD)
+                 "hoặc chạy: %s build --full" % qkb_cmd())
         previous = record.get("previous")
         with open(record_path, "w", encoding="utf-8", newline="\n") as f:
             json.dump(previous or {"restored_from": record.get("backup")}, f, ensure_ascii=False, indent=1)
@@ -1088,6 +1171,8 @@ def main(argv=None):
     ap.add_argument("--model", choices=("none", "local"), help="none = không model (khuyên dùng); local = dùng model trên máy (thử nghiệm)")
     ap.add_argument("--model-zip", help="Với --model local: file zip model do tools/download-models -Zip tạo; kiểm rồi đặt vào .qkb/models/. Không cần khi đúng 1 file KB-Model_*.zip đặt cạnh bộ skill (tự nhận)")
     ap.add_argument("--hooks", choices=("observe", "off"), default="observe", help="Chế độ hook lúc cài")
+    ap.add_argument("--python", help="Lệnh gọi Python ghi vào hook / quyền / config (mặc định tự dò: lệnh đang dùng trong "
+                                     "dự án, python, python3, py -3). Ví dụ: python3, \"py -3\", đường dẫn python của venv")
     ap.add_argument("--profile", choices=PROFILES + ("full",),
                     help="author = người soạn, có phiên quản lý KB riêng (mặc định; tên cũ: full); "
                          "solo = một người dùng, ghi KB bằng /q-kb-update ở gốc dự án, không cần phiên quản lý; "

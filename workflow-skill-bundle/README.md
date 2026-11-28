@@ -4,7 +4,7 @@ English · [Tiếng Việt](README_VN.md)
 
 Lets several Claude Code sessions work on one project like a real team: a lead splits the work, members do it, a reviewer checks it, and you approve the risky steps.
 
-Version 1.1.1 · License: Apache License 2.0 · Repository: https://github.com/mquan1192/ai-skills
+Version 1.1.2 · License: Apache License 2.0 · Repository: https://github.com/mquan1192/ai-skills
 
 This bundle is one of three independent bundles in this repository ([overview](../README.md)). You can install it on its own.
 
@@ -59,7 +59,7 @@ flowchart LR
 
 ### Get started in 3 steps
 
-1. Download `Workflow-Skill-Bundle_v1.1.1_20261125.zip` from the [Releases](https://github.com/mquan1192/ai-skills/releases) page and unzip it **outside** your project.
+1. Download `Workflow-Skill-Bundle_v1.1.2_20261128.zip` from the [Releases](https://github.com/mquan1192/ai-skills/releases) page and unzip it **outside** your project.
 2. Open Claude Code in your project and say: *"Read `DOC-TRUOC.md` in the bundle folder and install this bundle."*
 3. Claude shows you the plan first and installs only after you agree.
 
@@ -136,6 +136,8 @@ The lead plans on Monday and you answer once. The secretary reports every hour, 
 
 - Claude Code (command line or desktop app).
 - Python 3.8 or later, standard library only (for the installer and hooks).
+- Python command: the installer finds it on your machine. It tries the command already used in the project, then `python`, `python3` and `py -3`, and writes the first one that really runs into the hook commands. On macOS and Linux, start the installer with `python3`. To choose the command yourself, add `--python <command or path>`.
+- Recommended version: a release in the bug-fix phase on python.org (3.14 and 3.15 as of 2026-11-28). Python 3.10 reached end of life in October 2026.
 - PowerShell 7 (`pwsh`) for the scripts. Windows PowerShell 5.1 is refused.
 - Hooks are optional.
 
@@ -151,7 +153,7 @@ The installer never overwrites an existing `CLAUDE.md`, `AGENTS.md` or `.claude/
 ### Uninstall
 
 ```powershell
-python install.py --target <project folder> --uninstall           # dry run
+python install.py --target <project folder> --uninstall           # dry run (macOS / Linux: python3)
 python install.py --target <project folder> --uninstall --apply   # remove
 ```
 

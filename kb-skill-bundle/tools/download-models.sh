@@ -1,5 +1,6 @@
 #!/bin/sh
-# Tải model cho bộ skill KB (dành cho bộ phận IT). macOS / Linux. Cần: python3, curl.
+# Tải model cho bộ skill KB (dành cho bộ phận IT). macOS / Linux. Cần: Python 3.10+ (python3 hoặc python), curl.
+# Lệnh Python: tự dò python3 rồi python; chỉ định lệnh khác bằng biến KB_PYTHON (ví dụ KB_PYTHON=/opt/venv/bin/python).
 # Mặc định chỉ in kế hoạch (không tải gì). Làm thật: thêm --apply.
 #
 #   1) Đặt thẳng vào dự án:  sh tools/download-models.sh --target /work/demo --apply [--proxy http://proxy:8080]
@@ -35,13 +36,22 @@ while [ $# -gt 0 ]; do
   esac
 done
 
+# Python launcher: KB_PYTHON when set, else the first of python3 / python that really runs Python 3.10+
+# (a missing name, Python 2 and an old Python 3 are skipped).
+PY=
+if [ -n "${KB_PYTHON:-}" ]; then set -- "$KB_PYTHON"; else set -- python3 python; fi
+for c in "$@"; do
+  if "$c" -E -s -B -c 'import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)' >/dev/null 2>&1; then PY=$c; break; fi
+done
+[ -n "$PY" ] || { echo "LỖI: cần Python 3.10 trở lên (đã thử: $*). Đặt KB_PYTHON=<lệnh hoặc đường dẫn>." >&2; exit 2; }
+
 # 3) --from-zip: one implementation for every caller (tools/kbmodel.py, also used by install.py --model-zip)
 if [ -n "$FROMZIP" ]; then
   [ -d "$TARGET" ] || { echo "LỖI: không thấy thư mục dự án: $TARGET" >&2; exit 2; }
   if [ "$APPLY" = 1 ]; then
-    exec python3 -E -s -B "$HERE/kbmodel.py" from-zip "$FROMZIP" --target "$TARGET" --apply
+    exec "$PY" -E -s -B "$HERE/kbmodel.py" from-zip "$FROMZIP" --target "$TARGET" --apply
   fi
-  exec python3 -E -s -B "$HERE/kbmodel.py" from-zip "$FROMZIP" --target "$TARGET"
+  exec "$PY" -E -s -B "$HERE/kbmodel.py" from-zip "$FROMZIP" --target "$TARGET"
 fi
 
 if [ -n "$ZIP" ]; then
@@ -50,8 +60,8 @@ if [ -n "$ZIP" ]; then
 else
   [ -d "$TARGET" ] || { echo "LỖI: không thấy thư mục dự án: $TARGET" >&2; exit 2; }
 fi
-# The manifest is read and checked by python3 (stdlib only); it prints one tab-separated line per file.
-PLAN=$(python3 -E -s -B - "$MANIFEST" "$MODEL" <<'PY'
+# The manifest is read and checked by Python (stdlib only); it prints one tab-separated line per file.
+PLAN=$("$PY" -E -s -B - "$MANIFEST" "$MODEL" <<'PY'
 import json, re, sys, os
 m = json.load(open(sys.argv[1], encoding="utf-8"))
 name = sys.argv[2] or m["default"]
@@ -134,7 +144,7 @@ fi
   echo "downloaded: $(date '+%Y-%m-%d %H:%M')"; cat "$DONE"; } > "$DEST/MODEL.txt"
 rm -f "$DONE"
 if [ -z "$ZIP" ]; then echo "XONG: mọi file đạt. Ghi lại ở $DEST/MODEL.txt"; exit 0; fi
-python3 -E -s -B - "$WORK" "$ZIP" <<'PY'
+"$PY" -E -s -B - "$WORK" "$ZIP" <<'PY'
 import os, sys, zipfile
 work, out = sys.argv[1], sys.argv[2]
 with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:

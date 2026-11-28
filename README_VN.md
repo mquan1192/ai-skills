@@ -41,7 +41,7 @@ Bạn vẫn giao việc cho Claude Code như trước. Gói nào đã cài thì 
 
 Claude cho bạn xem trước danh sách mọi file sẽ thêm hoặc sửa. **Chưa có gì được ghi** cho tới khi bạn đồng ý.
 
-Máy cần có Claude Code và Python 3. Riêng gói quy trình nhóm cần thêm PowerShell 7.
+Máy cần có Claude Code và Python 3. Riêng gói quy trình nhóm cần thêm PowerShell 7. Bộ cài của từng gói tự dò lệnh Python của máy (`python`, `python3` hoặc `py -3`); trên macOS và Linux chạy bộ cài bằng `python3`.
 
 ---
 
@@ -51,9 +51,9 @@ Máy cần có Claude Code và Python 3. Riêng gói quy trình nhóm cần thê
 
 | Gói | Bản | Làm gì | Hướng dẫn | Zip ở Releases |
 |---|---|---|---|---|
-| Quy trình nhóm | 1.1.1 | Vai trò, vùng ghi riêng cho từng vai, mức duyệt, phát hành có kiểm cho thay đổi code, sprint 1 tuần | [workflow-skill-bundle](workflow-skill-bundle/README_VN.md) | `Workflow-Skill-Bundle_v1.1.1_20261125.zip` |
+| Quy trình nhóm | 1.1.2 | Vai trò, vùng ghi riêng cho từng vai, mức duyệt, phát hành có kiểm cho thay đổi code, sprint 1 tuần | [workflow-skill-bundle](workflow-skill-bundle/README_VN.md) | `Workflow-Skill-Bundle_v1.1.2_20261128.zip` |
 | KB | 2.1.0 | Kiến thức dự án dạng trang Markdown, một người ghi, tìm kiếm có ghi nguồn | [kb-skill-bundle](kb-skill-bundle/README_VN.md) | `KB-Skill-Bundle_v2.1.0_20261128.zip` |
-| Văn phong | 1.2.0 | Skill `q-writing-style`: một văn phong cho mọi thứ Claude viết hoặc dịch, giữ đúng sự thật, bỏ giọng văn AI, tự soát trước khi ghi file | [writing-style-bundle](writing-style-bundle/README_VN.md) | `Writing-Style-Bundle_v1.2.0_20261126.zip` |
+| Văn phong | 1.2.1 | Skill `q-writing-style`: một văn phong cho mọi thứ Claude viết hoặc dịch, giữ đúng sự thật, bỏ giọng văn AI, tự soát trước khi ghi file | [writing-style-bundle](writing-style-bundle/README_VN.md) | `Writing-Style-Bundle_v1.2.1_20261128.zip` |
 
 Gói KB có thể tìm theo nghĩa nhờ một model AI nhỏ chạy offline. Model là file zip riêng ở trang Releases (`KB-Model_multilingual-e5-small_20261118.zip`). Không có model, gói KB vẫn tìm theo từ khóa.
 

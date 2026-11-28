@@ -1,10 +1,10 @@
 [English](README.md) · Tiếng Việt
 
-# Gói văn phong (writing style bundle) v1.2.0: hướng dẫn
+# Gói văn phong (writing style bundle) v1.2.1: hướng dẫn
 
 Cho Claude Code một văn phong chung cho mọi thứ nó viết hoặc dịch (báo cáo, mail, tài liệu, bài viết, release note, prompt) bằng tiếng Nhật, Việt hoặc Anh, và bắt Claude tự soát bài trước khi lưu file.
 
-Bản 1.2.0 · Giấy phép: Apache License 2.0 (file `LICENSE`; Copyright 2026 Nguyễn Minh Quân (https://github.com/mquan1192)); một phần nội dung phỏng theo tác phẩm MIT, thông báo bản quyền ở `THIRD-PARTY-NOTICES.md` · Kho mã: https://github.com/mquan1192/ai-skills
+Bản 1.2.1 · Giấy phép: Apache License 2.0 (file `LICENSE`; Copyright 2026 Nguyễn Minh Quân (https://github.com/mquan1192)); một phần nội dung phỏng theo tác phẩm MIT, thông báo bản quyền ở `THIRD-PARTY-NOTICES.md` · Kho mã: https://github.com/mquan1192/ai-skills
 
 Gói này là một trong ba gói độc lập của repo ([tổng quan](../README_VN.md)); cài riêng được.
 
@@ -51,7 +51,7 @@ flowchart LR
 
 ### Bắt đầu trong 3 bước
 
-1. Tải `Writing-Style-Bundle_v1.2.0_20261126.zip` ở trang [Releases](https://github.com/mquan1192/ai-skills/releases), giải nén ra **ngoài** dự án.
+1. Tải `Writing-Style-Bundle_v1.2.1_20261128.zip` ở trang [Releases](https://github.com/mquan1192/ai-skills/releases), giải nén ra **ngoài** dự án.
 2. Mở Claude Code trong dự án và nói: *"Đọc `DOC-TRUOC.md` trong thư mục gói và cài gói này."*
 3. Claude cho xem kế hoạch trước, chỉ cài khi bạn đồng ý.
 
@@ -102,7 +102,7 @@ Chỉ cần một lớp là Claude tìm tới skill; có ba lớp thì rất kh�
 
 ### Chỉ cài gói cần dùng
 
-Gói này không cần hai gói kia của repo: gói có `install.py` riêng. Để lấy riêng gói này: tải `Writing-Style-Bundle_v1.2.0_20261126.zip` ở trang Releases kèm file `.sha256` để kiểm file tải về, hoặc chép thư mục `writing-style-bundle/` từ repo. Nút "Download ZIP" trên trang repo tải cả ba gói.
+Gói này không cần hai gói kia của repo: gói có `install.py` riêng. Để lấy riêng gói này: tải `Writing-Style-Bundle_v1.2.1_20261128.zip` ở trang Releases kèm file `.sha256` để kiểm file tải về, hoặc chép thư mục `writing-style-bundle/` từ repo. Nút "Download ZIP" trên trang repo tải cả ba gói.
 
 ### Tóm tắt yêu cầu, an toàn, gỡ
 
@@ -129,6 +129,9 @@ Gói không chứa dữ liệu của dự án nào; quy tắc và glossary riên
 | `install.py` | Python 3.8+ (chỉ thư viện chuẩn) |
 | Hook `stylewatch.py` | Python 3; công cụ AI có hỗ trợ hook kiểu Claude Code (không bắt buộc) |
 | Test | PowerShell 7 (`pwsh`) cho các tệp `*.Tests.ps1`; Python 3 cho test Python |
+
+- Lệnh gọi Python: bộ cài tự dò trên máy. Thứ tự thử: lệnh đang dùng trong dự án, rồi `python`, `python3`, `py -3`; lệnh đầu tiên chạy được sẽ được ghi vào lệnh hook. Trên macOS và Linux, chạy bộ cài bằng `python3`. Muốn tự chọn lệnh: thêm `--python <lệnh hoặc đường dẫn>`.
+- Bản nên dùng: bản đang ở giai đoạn sửa lỗi (bugfix) trên python.org (3.14 và 3.15, tính đến 28/11/2026). Python 3.10 đã hết hỗ trợ từ tháng 10/2026.
 
 ## 3. Cài đặt
 

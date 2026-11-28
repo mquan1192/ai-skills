@@ -48,12 +48,22 @@ function Sha256Of([string] $Path) {
 # ---- 3) -FromZip: one implementation for every caller (tools\kbmodel.py, also used by install.py --model-zip)
 if ($FromZip) {
     if (-not (Test-Path -LiteralPath $Target -PathType Container)) { Fail 2 ('LỖI: không thấy thư mục dự án: ' + $Target) }
-    $py = Get-Command python -ErrorAction SilentlyContinue
-    if (-not $py) { $py = Get-Command py -ErrorAction SilentlyContinue }
-    if (-not $py) { Fail 2 'LỖI: cần Python 3.10 trở lên (bộ skill KB đã cần sẵn).' }
+    # Python launcher: $env:KB_PYTHON when set, else the first of python / py -3 / python3 that really runs Python 3.10+
+    # (a missing name, a Microsoft Store shortcut and an old Python are skipped).
+    $py = $null; $pyPre = @()
+    $tries = @(@('python'), @('py', '-3'), @('python3'))
+    if ($env:KB_PYTHON) { $tries = @(, @($env:KB_PYTHON)) }
+    foreach ($t in $tries) {
+        $cmd = Get-Command $t[0] -ErrorAction SilentlyContinue
+        if (-not $cmd) { continue }
+        $pre = @($t | Select-Object -Skip 1)
+        try { & $cmd.Source @pre -E -s -B -c 'import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)' *> $null } catch { continue }
+        if ($LASTEXITCODE -eq 0) { $py = $cmd; $pyPre = $pre; break }
+    }
+    if (-not $py) { Fail 2 'LỖI: cần Python 3.10 trở lên (đã thử: python, py -3, python3). Đặt biến KB_PYTHON = lệnh hoặc đường dẫn Python.' }
     $pyArgs = @('-E', '-s', '-B', (Join-Path $here 'kbmodel.py'), 'from-zip', $FromZip, '--target', $Target)
     if ($Apply) { $pyArgs += '--apply' }
-    & $py.Source @pyArgs
+    & $py.Source @pyPre @pyArgs
     exit $LASTEXITCODE
 }
 

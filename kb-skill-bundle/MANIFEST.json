@@ -6,8 +6,8 @@
  "files": [
   {
    "path": "CHANGELOG.md",
-   "sha256": "c6efdd59a2655efc329e59bc8e13dd4796b1f6f6b53367efbfea78acec337f29",
-   "bytes": 15863,
+   "sha256": "90fa3c0f4f44b4e367d7c792fcdffc64e14703c09e43e9d506998662939c0db0",
+   "bytes": 18857,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
@@ -22,16 +22,16 @@
   },
   {
    "path": "README.md",
-   "sha256": "b573ce320274668f4f0ca66bc3dc3cf2e9575e1d51a7b00ee7212979e79fb22b",
-   "bytes": 10543,
+   "sha256": "11b0a8ae1fab593f663f18c42399a85fcc2b32194baa99be4d67fecbeecf80d7",
+   "bytes": 11316,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
   },
   {
    "path": "README_VN.md",
-   "sha256": "f1c81db129e6b7e54533949ce11e1bcf0de0f89d90c2762f9c328ba3ddc49bab",
-   "bytes": 51240,
+   "sha256": "dd78c4402a40b6c0da7eaf26acb0fdf8af956c56fca25e6d8847f9232dcdb8c1",
+   "bytes": 52897,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
@@ -46,8 +46,8 @@
   },
   {
    "path": "install.py",
-   "sha256": "0f087e9106404c8dc938c953f541c5a523f43a52a3d8a7674b2da0b41aed569a",
-   "bytes": 62267,
+   "sha256": "3b3c579f58f85c9cb0913b26c5267827073425fdbec105d944b3d028781b332e",
+   "bytes": 67153,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
@@ -926,8 +926,8 @@
   },
   {
    "path": "tests/test_models.py",
-   "sha256": "ef2efa0bb24d1fd5f073384238321855ea924c0e80bb39830a6cdf21d7e83c04",
-   "bytes": 15444,
+   "sha256": "ac4e9760eab0a310d6736ddc2d384bfe378479ae90e1e0374c1469906a6fded4",
+   "bytes": 15466,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
@@ -936,6 +936,14 @@
    "path": "tests/test_names.py",
    "sha256": "193163817ba2ccca3d92c4313bbfd03af2c256af35a789d174167f2e6f451f57",
    "bytes": 4609,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "tests/test_pylauncher.py",
+   "sha256": "8739d0a257eda7ee208643ccbf0f6bbe0ef7139a2c6cdab6b6deed4cc5812bde",
+   "bytes": 11568,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
@@ -958,16 +966,16 @@
   },
   {
    "path": "tools/download-models.ps1",
-   "sha256": "a35d2f57aa029a7e357b5d96770789e5b316bf3dda10d8b1cfb1bd5d2c20540d",
-   "bytes": 10622,
+   "sha256": "979d2f2800d6f0f5d13c56a792b7b1b7f765d55b011f10e17e988fccf69a1978",
+   "bytes": 11303,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
   },
   {
    "path": "tools/download-models.sh",
-   "sha256": "358e3b45c6e4595f70fba4eb6ac02cbb1897ba6955c1c9caf936aa9f5d83a40c",
-   "bytes": 7847,
+   "sha256": "93c5b085790e382a45acc3f0c4e0c62239ac0251f4abc892b780f0745b08a8d6",
+   "bytes": 8557,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
@@ -997,9 +1005,17 @@
    "mode": "not-installed"
   },
   {
+   "path": "tools/pylauncher.py",
+   "sha256": "c0a44efeab8ea4775a984429a21180639af9aeaeed4684c545c141648c18f941",
+   "bytes": 6676,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
    "path": "tools/settings_fragment.py",
-   "sha256": "ed87e321a4c2fcfd0e4259adaf3518ad26ef06dbe0b3650e366dd03fbe7da4ce",
-   "bytes": 7178,
+   "sha256": "ad81172dc22b14a86d1961d641fe9f6eeffcddfcce8e0b64bcd8ecdf8d40ad71",
+   "bytes": 8165,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
