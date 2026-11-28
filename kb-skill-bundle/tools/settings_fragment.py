@@ -3,6 +3,7 @@
 Cách dùng:
     python -E -s -B tools/settings_fragment.py                       # in đoạn cần thêm
     python -E -s -B tools/settings_fragment.py --settings <file>     # in bản ghép + diff so với file đang có
+    python -E -s -B tools/settings_fragment.py --python python3      # máy gọi Python bằng tên khác (macOS / Linux)
 
 Đoạn cần thêm = hooks/hooks.json (dạng plugin), mỗi lệnh đổi sang dạng an toàn cho dự án:
 python kiểm có <dự án>/.claude/hooks/<script> rồi mới chạy (runpy); thiếu script → thoát 0, không chặn gì.
@@ -17,6 +18,9 @@ import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import pylauncher  # noqa: E402
+
 PLUGIN = os.path.normpath(os.path.join(HERE, "..", "hooks", "hooks.json"))
 PLUGIN_ROOT = "${CLAUDE_PLUGIN_ROOT}/hooks/"
 HOOK_SCRIPTS = ("kbwatch.py", "kbroute.py", "kbguard.py")
@@ -25,10 +29,11 @@ _LEGACY_ARG = re.compile(r"(?:kbwatch|kbroute|kbguard)\.py\"?\s+(\w+)")
 _SAFE_ARG = re.compile(r"sys\.argv=\[p(?:,'(\w+)')?\]")
 
 
-def safe_command(script, arg=None):
-    """Hook command that runs <project>/.claude/hooks/<script> only when the file exists; missing file -> exit 0."""
+def safe_command(script, arg=None, launcher="python"):
+    """Hook command that runs <project>/.claude/hooks/<script> only when the file exists; missing file -> exit 0.
+    launcher: how this machine starts Python (python | python3 | py -3 | a path), chosen by the installer."""
     argv = "[p,'%s']" % arg if arg else "[p]"
-    return ("python -I -S -c \"import os,runpy,sys;p=os.path.join(os.environ.get('CLAUDE_PROJECT_DIR') or '.',"
+    return (launcher + " -I -S -c \"import os,runpy,sys;p=os.path.join(os.environ.get('CLAUDE_PROJECT_DIR') or '.',"
             "'.claude','hooks','%s');sys.argv=%s;os.path.isfile(p) and runpy.run_path(p,run_name='__main__')\""
             % (script, argv))
 
@@ -56,7 +61,7 @@ def _entries(settings):
                     yield event, g, h
 
 
-def fragment():
+def fragment(launcher="python"):
     with open(PLUGIN, encoding="utf-8") as f:
         hooks = json.load(f)["hooks"]
     for blocks in hooks.values():
@@ -64,22 +69,26 @@ def fragment():
             for h in block.get("hooks", []):
                 key = hook_key(h.get("command", ""))
                 if key:
-                    h["command"] = safe_command(*key)
+                    h["command"] = safe_command(key[0], key[1], launcher)
     return hooks
 
 
-def upgrade_commands(settings):
+def upgrade_commands(settings, launcher="python"):
     """Copy of settings with every old-form KB hook command (python -I -S ".../kbguard.py" pre) rewritten to the safe
-    form in place (matcher, timeout and other keys kept); (new settings, number rewritten)."""
+    form in place (matcher, timeout and other keys kept), and every safe-form KB hook command that starts another
+    Python launcher switched to this one; (new settings, old-form rewritten, launcher switched)."""
     out = json.loads(json.dumps(settings))
-    n = 0
+    n = switched = 0
     for _, _, h in _entries(out):
         cmd = str(h.get("command", ""))
         key = hook_key(cmd)
         if key and not is_safe(cmd):
-            h["command"] = safe_command(*key)
+            h["command"] = safe_command(key[0], key[1], launcher)
             n += 1
-    return out, n
+        elif key and pylauncher.launcher_of(cmd) not in (None, launcher):
+            h["command"] = pylauncher.swap(cmd, launcher)
+            switched += 1
+    return out, n, switched
 
 
 def strip_kb_hooks(settings):
@@ -138,8 +147,13 @@ def merge(settings, frag):
 def main(argv=None):
     ap = argparse.ArgumentParser(description="In đoạn cấu hình hook KB (không ghi file nào).")
     ap.add_argument("--settings", help="File settings.json đang dùng (chỉ đọc) để in bản ghép và diff")
+    ap.add_argument("--python", default="python", help="Lệnh gọi Python trên máy dùng hook: python (mặc định), python3, \"py -3\"")
     args = ap.parse_args(argv)
-    frag = fragment()
+    try:
+        frag = fragment(pylauncher.normalize(args.python))
+    except pylauncher.LauncherError as exc:
+        print("LỖI: %s" % exc, file=sys.stderr)
+        return 2
     if not args.settings:
         print(json.dumps({"hooks": frag}, ensure_ascii=False, indent=2))
         return 0

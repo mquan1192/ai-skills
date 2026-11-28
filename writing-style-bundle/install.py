@@ -27,6 +27,11 @@ import time
 from pathlib import Path
 
 BUNDLE = Path(__file__).resolve().parent
+sys.path.insert(0, str(BUNDLE / "tools"))
+import pylauncher  # noqa: E402
+
+MIN_PYTHON = (3, 8)
+LAUNCHER = "python"     # lệnh gọi Python của máy này; pick_launcher() đặt một lần mỗi lần chạy
 NAME = "writing-style-bundle"
 HOME = ".writing-style"
 RECORD = HOME + "/install-record.json"
@@ -40,6 +45,45 @@ LEGACY_SKILLS = ("q-doc-edit",)     # tên skill của gói trước 1.2.0
 
 class InstallError(Exception):
     pass
+
+
+def source_bytes(src_rel):
+    """Nội dung file của gói như sẽ ghi vào dự án. hooks/hooks.json: lệnh hook bắt đầu bằng lệnh Python của máy này
+    (python → giữ nguyên từng byte)."""
+    data = (BUNDLE / src_rel).read_bytes()
+    if src_rel == "hooks/hooks.json" and LAUNCHER != "python":
+        data = data.replace(b'"command": "python -I -S ',
+                            ('"command": "%s -I -S ' % json.dumps(LAUNCHER, ensure_ascii=False)[1:-1]).encode("utf-8"))
+    return data
+
+
+def settings_launchers(target):
+    """Các lệnh Python đang đứng đầu lệnh hook của gói trong .claude/settings.json của dự án."""
+    try:
+        data = json.loads((target / ".claude/settings.json").read_text(encoding="utf-8-sig"))
+    except (OSError, ValueError):
+        return []
+    return pylauncher.used_in(data, (HOOK_SCRIPT,))
+
+
+def pick_launcher(target, explicit):
+    """Đặt LAUNCHER = lệnh thật sự chạy được Python 3.8+ trên máy này (xem tools/pylauncher.py)."""
+    global LAUNCHER
+    try:
+        LAUNCHER, info, tried = pylauncher.choose(MIN_PYTHON, explicit=explicit, existing=settings_launchers(target))
+    except pylauncher.LauncherError as exc:
+        raise InstallError("Không tìm được lệnh gọi Python 3.8+ cho hook (%s). Cài Python bản chính thức, "
+                           "hoặc chỉ rõ bằng --python <lệnh hoặc đường dẫn>." % exc)
+    say("Lệnh Python ghi vào lệnh hook: %s (Python %s)%s"
+        % (LAUNCHER, ".".join(str(n) for n in info["version"]),
+           "; bỏ qua: " + "; ".join("`%s` %s" % t for t in tried) if tried else ""))
+
+
+def launcher_lines(target, merge_file):
+    """Dòng báo khi settings.json của chủ dự án (gói không sửa) gọi hook của gói bằng lệnh Python khác lần cài này."""
+    return ["! .claude/settings.json: lệnh hook của gói đang bắt đầu bằng `%s`, lần cài này dùng `%s` → hook có thể "
+            "không chạy trên máy này; đổi phần đầu các lệnh đó thành `%s` (bản mẫu: %s)" % (old, LAUNCHER, LAUNCHER, merge_file)
+            for old in settings_launchers(target) if old != LAUNCHER]
 
 
 def sha256(path):
@@ -133,6 +177,7 @@ def read_record(target):
 def install(args):
     target = check_target(args.target)
     manifest = load_manifest()
+    pick_launcher(target, args.python)
     components = tuple(c.strip() for c in (args.components or ",".join(COMPONENTS)).split(",") if c.strip())
     unknown = [c for c in components if c not in COMPONENTS]
     if unknown:
@@ -159,6 +204,8 @@ def install(args):
             conflicts.append(dest_rel)
 
     merges = merge_plan(target, record, components)
+    if "hooks" in components and merge_state(target, record, ".claude/settings.json", "hooks/hooks.json") == "merge":
+        merges += launcher_lines(target, HOME + "/merge/hooks.json")
     old = record.get("version")
     say("Gói %s %s → %s%s" % (NAME, manifest.get("version", "?"), target,
                              (" (nâng cấp từ bản %s đã cài)" % old) if old and old != manifest.get("version") else ""))
@@ -303,7 +350,7 @@ def merge_state(target, record, live_rel, src_rel):
     live = target / live_rel
     if not live.exists():
         return "create"
-    if live.is_file() and sha256(live) == sha256(BUNDLE / src_rel):
+    if live.is_file() and sha256(live) == hashlib.sha256(source_bytes(src_rel)).hexdigest():
         return "same"
     if live.is_file() and record.get("seeded", {}).get(live_rel) == sha256(live):
         return "refresh"
@@ -355,7 +402,7 @@ def write_merges(target, record, stamp, components=COMPONENTS):
             record["pending"] = live_rel
             save_record(target, record)
             live.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(BUNDLE / src_rel, live)
+            live.write_bytes(source_bytes(src_rel))
             created[live_rel] = sha256(live)
         else:
             m = inside(target, HOME + "/merge/" + merge_name)
@@ -363,7 +410,7 @@ def write_merges(target, record, stamp, components=COMPONENTS):
             record["pending"] = HOME + "/merge/" + merge_name
             save_record(target, record)
             m.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(BUNDLE / src_rel, m)
+            m.write_bytes(source_bytes(src_rel))
             record["files"][HOME + "/merge/" + merge_name] = sha256(m)
         record.pop("pending", None)
         save_record(target, record)
@@ -533,9 +580,11 @@ def main(argv=None):
     ap.add_argument("--yes", action="store_true", help="Không hỏi lại (cần khi chạy không có bàn phím)")
     ap.add_argument("--uninstall", action="store_true", help="Gỡ những gì gói đã cài (file đã sửa được giữ lại)")
     ap.add_argument("--components", help="skills,hooks,docs (mặc định: tất cả)")
+    ap.add_argument("--python", help="Lệnh gọi Python ghi vào lệnh hook (mặc định tự dò: lệnh đang dùng trong dự án, "
+                                     "python, python3, py -3). Ví dụ: python3, \"py -3\", đường dẫn python của venv")
     ap.add_argument("--adopt", action="store_true", help="Cho thay file đã có mà gói không nhận ra (sau khi sao lưu)")
     args = ap.parse_args(argv)
-    if sys.version_info < (3, 8):
+    if sys.version_info < MIN_PYTHON:
         say("Cần Python 3.8 trở lên.")
         return 2
     try:

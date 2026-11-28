@@ -1,5 +1,16 @@
 # CHANGELOG — gói văn phong
 
+## 1.2.1
+
+Skill, hook, khuôn giữ nguyên từng byte; đổi `install.py`, thêm `tools/pylauncher.py`, tài liệu.
+
+- **Lệnh gọi Python theo máy**: trước đây lệnh hook ghi cứng `python`; máy chỉ có `python3` (macOS / Linux) hoặc chỉ có `py` (một số máy Windows) báo `python: command not found` và hook không chạy. Nay `install.py` thử từng lệnh và ghi lệnh chạy được: lệnh đang dùng trong dự án → `python` → `python3` → `py -3`. Một lệnh được nhận khi chạy thật và đủ phiên bản tối thiểu; lối tắt Microsoft Store và Python 2 bị bỏ qua, dòng đầu của kết quả cài ghi lệnh đã chọn và lý do bỏ từng lệnh. Không lệnh nào chạy được: dừng, chưa ghi gì.
+- **`--python <lệnh hoặc đường dẫn>`**: tự chọn lệnh (ví dụ `python3`, `"py -3"`, python của một venv). Dấu `\` trong đường dẫn được đổi thành `/`.
+- Máy có lệnh `python` chạy được: kết quả cài giống bản trước từng byte.
+- `.claude/settings.json` do gói tạo mà chưa ai sửa: lệnh hook được thay theo lệnh của máy khi lệnh cũ không còn chạy được (có sao lưu). `settings.json` của chủ dự án: không sửa; bộ cài in dòng báo lệnh nào cần đổi và để bản mẫu trong thư mục `merge/`.
+- Tài liệu: thêm bản Python nên dùng (ngày 28/11/2026: 3.14 và 3.15 đang ở giai đoạn sửa lỗi trên python.org). Bản tối thiểu của gói vẫn là 3.8.
+- `MANIFEST.json` tạo lại bằng `tools/make_manifest.py 1.2.1`.
+
 ## 1.2.0
 
 Đổi tên skill `q-doc-edit` → `q-writing-style` và mở rộng cho mọi loại viết: văn bản công việc, bài viết, hướng dẫn, release note, prompt, dịch Nhật – Việt – Anh. Gộp điểm mạnh của bốn nguồn tham khảo (ghi công và giấy phép ở `THIRD-PARTY-NOTICES.md`); mọi quy tắc giữ nghĩa, số liệu, trạng thái thông tin và khung báo cáo tiếng Việt của bản 1.1.0 giữ nguyên.

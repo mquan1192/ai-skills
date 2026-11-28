@@ -308,5 +308,101 @@ class InstallTests(unittest.TestCase):
         self.assertFalse((self.target / ".claude/hooks/turnlog.py").exists())
 
 
+class LauncherTests(unittest.TestCase):
+    """Lệnh Python đứng đầu lệnh hook: tự dò theo máy (python → python3 → py -3) hoặc do --python chỉ định."""
+    SCRIPT = "turnlog.py"
+    MERGE = ".workflow/merge/hooks.json"
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory(prefix="launcher-")
+        self.target = Path(self.tmp.name) / "demo"
+        self.target.mkdir()
+        self._probe = install.pylauncher.probe
+
+    def tearDown(self):
+        install.pylauncher.probe = self._probe
+        install.LAUNCHER = "python"
+        self.tmp.cleanup()
+
+    def only(self, *names):
+        """Giả lập máy chỉ có các lệnh Python này (ví dụ macOS / Linux chỉ có python3)."""
+        good = {"version": [3, 14, 0], "fts5": True, "executable": "x"}
+        install.pylauncher.probe = lambda command, timeout=20: good if command in names else None
+
+    def commands(self, rel=".claude/settings.json"):
+        data = json.loads((self.target / rel).read_text(encoding="utf-8"))
+        return [h["command"] for groups in data["hooks"].values() for g in groups for h in g["hooks"]]
+
+    def test_machine_with_only_python3(self):
+        self.only("python3")
+        code, out = run("--target", str(self.target), "--apply", "--yes")
+        self.assertEqual(code, 0, out)
+        self.assertIn("`python` không chạy được", out)
+        cmds = self.commands()
+        self.assertTrue(cmds and all(c.startswith("python3 -I -S -c ") for c in cmds), cmds)
+        code, out = run("--target", str(self.target), "--apply", "--yes")          # chạy lại: không đổi gì
+        self.assertEqual(code, 0, out)
+        self.assertIn(".claude/settings.json đã có nội dung của bản này", out)
+        self.assertEqual(self.commands(), cmds)
+        code, out = run("--target", str(self.target), "--uninstall", "--apply", "--yes")
+        self.assertEqual(code, 0, out)
+        self.assertFalse((self.target / ".claude/settings.json").exists())
+
+    def test_python_available_keeps_bundle_bytes(self):
+        self.only("python", "python3")
+        code, out = run("--target", str(self.target), "--apply", "--yes")
+        self.assertEqual(code, 0, out)
+        self.assertEqual((self.target / ".claude/settings.json").read_bytes(), (BUNDLE / "hooks/hooks.json").read_bytes())
+
+    def test_launcher_in_project_is_kept_then_refreshed_when_it_stops_working(self):
+        self.only("python3")
+        run("--target", str(self.target), "--apply", "--yes")
+        self.only("python", "python3")                 # máy khác trong nhóm có cả hai: giữ python3, không đổi qua lại
+        code, out = run("--target", str(self.target), "--apply", "--yes")
+        self.assertEqual(code, 0, out)
+        self.assertTrue(all(c.startswith("python3 ") for c in self.commands()))
+        self.only("py -3")                             # máy chỉ có py -3: tệp do gói tạo, chưa ai sửa → thay
+        code, out = run("--target", str(self.target), "--apply", "--yes")
+        self.assertEqual(code, 0, out)
+        self.assertTrue(all(c.startswith("py -3 -I -S -c ") for c in self.commands()), self.commands())
+
+    def test_explicit_launcher_is_really_runnable(self):
+        import os
+        import shlex
+        import subprocess
+        me = install.pylauncher.normalize(sys.executable)
+        code, out = run("--target", str(self.target), "--apply", "--yes", "--python", sys.executable)
+        self.assertEqual(code, 0, out)
+        cmds = self.commands()
+        self.assertTrue(all(c.startswith(me + " -I -S -c ") for c in cmds), cmds)
+        r = subprocess.run(shlex.split(cmds[0]), input=b"{}", capture_output=True, timeout=30, cwd=str(self.target),
+                           env=dict(os.environ, CLAUDE_PROJECT_DIR=str(self.target)))
+        self.assertEqual(r.returncode, 0, r.stderr)
+
+    def test_no_usable_python_writes_nothing(self):
+        self.only()
+        code, out = run("--target", str(self.target), "--apply", "--yes")
+        self.assertEqual(code, 2, out)
+        self.assertIn("--python", out)
+        self.assertEqual(list(self.target.iterdir()), [])
+        code, out = run("--target", str(self.target), "--apply", "--yes", "--python", "python; x")
+        self.assertEqual(code, 2, out)
+        self.assertEqual(list(self.target.iterdir()), [])
+
+    def test_owner_settings_with_other_launcher_is_reported_not_edited(self):
+        self.only("python3")
+        s = self.target / ".claude/settings.json"
+        s.parent.mkdir(parents=True)
+        mine = json.dumps({"hooks": {"Stop": [{"hooks": [{"type": "command", "command":
+            "python -I -S -c \"import os,runpy;p=os.path.join('.claude','hooks','" + self.SCRIPT
+            + "');os.path.isfile(p) and runpy.run_path(p,run_name='__main__')\""}]}]}})
+        s.write_text(mine, encoding="utf-8")
+        code, out = run("--target", str(self.target), "--apply", "--yes")
+        self.assertEqual(code, 0, out)
+        self.assertIn("đang bắt đầu bằng `python`, lần cài này dùng `python3`", out)
+        self.assertEqual(s.read_text(encoding="utf-8"), mine)
+        self.assertTrue(all(c.startswith("python3 -I -S -c ") for c in self.commands(self.MERGE)))
+
+
 if __name__ == "__main__":
     unittest.main()

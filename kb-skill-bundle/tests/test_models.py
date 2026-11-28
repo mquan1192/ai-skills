@@ -14,8 +14,8 @@ os.environ["KBINSTALL_TEST_NO_MODEL_SEARCH"] = "1"
 BUNDLE = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 TOOLS = os.path.join(BUNDLE, "tools")
 POWERSHELL = shutil.which("pwsh")     # 2.0.4: download-models.ps1 is PowerShell 7 only (5.1 is refused)
-# The .sh script targets macOS / Linux; on Windows "python3" is usually a Store alias, so the .sh case runs only there.
-SH = shutil.which("sh") if (os.name != "nt" and shutil.which("python3")
+# The .sh script targets macOS / Linux (it tries python3, then python), so the .sh case runs only there.
+SH = shutil.which("sh") if (os.name != "nt" and (shutil.which("python3") or shutil.which("python"))
                             and (shutil.which("sha256sum") or shutil.which("shasum"))) else None
 
 
@@ -100,7 +100,7 @@ class PowerShellTests(Base):
         self.assertIn("đuôi file không được phép", out)
 
 
-@unittest.skipUnless(SH, "sh + python3 + sha256sum not available")
+@unittest.skipUnless(SH, "sh + python3 / python + sha256sum not available")
 class ShTests(Base):
     def run_sh(self, *args):
         r = subprocess.run([SH, os.path.join(TOOLS, "download-models.sh"), "--target", self.target] + list(args),
