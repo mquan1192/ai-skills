@@ -41,7 +41,7 @@ You keep giving Claude Code tasks as before. The bundles you installed decide ho
 
 Claude first shows a list of every file it would add or change. **Nothing is written** until you agree.
 
-You need Claude Code and Python 3. The workflow bundle also needs PowerShell 7. Each installer finds the Python command of your machine (`python`, `python3` or `py -3`); on macOS and Linux start it with `python3`.
+You need Claude Code and Python 3. The workflow bundle also needs PowerShell 7. Each installer finds the Python command of your machine (`python`, `python3` or `py -3`); on macOS and Linux start it with `python3`. Any Python version still supported on python.org works; if you use the optional KB model, use Python 3.14, the newest version `onnxruntime` supports as of 2026-11-28 (details in the KB bundle README).
 
 ---
 
@@ -56,6 +56,16 @@ You need Claude Code and Python 3. The workflow bundle also needs PowerShell 7. 
 | Writing style | 1.2.1 | Skill `q-writing-style`: one style for everything Claude writes or translates, facts kept exact, AI phrasing removed, a self-check before saving | [writing-style-bundle](writing-style-bundle/README.md) | `Writing-Style-Bundle_v1.2.1_20261128.zip` |
 
 The KB bundle can also search by meaning with a small offline AI model. The model is a separate zip on the Releases page (`KB-Model_multilingual-e5-small_20261118.zip`). Without it, the KB bundle searches by keyword.
+
+**KB bundle 2.1.0: three ways to install.**
+
+| Profile | For whom | How the KB is written |
+|---|---|---|
+| `author` (default) | A team, or several Claude sessions | One KB manager session (`KB_Manager`, folder `00_KB_Manager/`) writes; other sessions send `/q-kb-request` |
+| `solo` | One person | No manager session; one command, `/q-kb-update`, at the project root |
+| `reader` | A machine that only reads | The KB arrives as a data pack |
+
+Choose with `--profile` when installing. Names changed in 2.1.0 and the old ones still work: folder `00_UpdateDocs` is kept where it already exists, `/q-kb-sync` is now `/q-kb-ingest`, and `--profile full` is now `author`.
 
 ### How the three work together
 
