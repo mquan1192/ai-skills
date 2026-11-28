@@ -13,14 +13,14 @@ import unittest
 
 BUNDLE = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 GENERIC = ("skills", "hooks", "templates", "scripts", "tools", "README_VN.md", "install.py", "CHANGELOG.md", "SECURITY.md")
-SKILLS = ("q-kb-search", "q-kb-request", "q-kb-sync", "q-kb-add", "q-kb-publish")
+SKILLS = ("q-kb-search", "q-kb-request", "q-kb-ingest", "q-kb-sync", "q-kb-add", "q-kb-publish", "q-kb-update")
 DEFAULT_ENGINE = os.path.join(BUNDLE, "engine", ".claude", "skills", "q-knowledgebase", "scripts", "qkb.py")
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import localcfg  # noqa: E402
 
 # One project's own config / alias skills stay outside the generic package; checked only when the local test file names them.
 WORKSPACE = localcfg.LOCAL.get("workspace_files")
-MANAGER_SKILLS = ("q-kb-sync", "q-kb-add", "q-kb-publish")
+MANAGER_SKILLS = ("q-kb-ingest", "q-kb-sync", "q-kb-add", "q-kb-publish")
 
 
 def alias_skills():
@@ -89,11 +89,11 @@ class SkillTests(unittest.TestCase):
             self.assertLess(vi / max(1, len(words)), 0.12, path)
 
     def test_references_exist(self):
-        refs = os.path.join(skill_dir("q-kb-sync"), "references")
+        refs = os.path.join(skill_dir("q-kb-ingest"), "references")
         for name in ("kb-conventions.md", "ingest-templates.md"):
             self.assertTrue(os.path.isfile(os.path.join(refs, name)), name)
         for skill in ("q-kb-add", "q-kb-publish"):
-            self.assertIn("../q-kb-sync/references/kb-conventions.md", read(os.path.join(skill_dir(skill), "SKILL.md")))
+            self.assertIn("../q-kb-ingest/references/kb-conventions.md", read(os.path.join(skill_dir(skill), "SKILL.md")))
 
     def test_search_skill_rules(self):
         text = read(os.path.join(skill_dir("q-kb-search"), "SKILL.md"))
@@ -195,11 +195,11 @@ class ScaffoldTests(unittest.TestCase):
             r = self.run_py([script, "--project", "demo", "--sub", "core"], tmp)
             self.assertEqual(r.returncode, 0, r.stderr)
             for rel in (".qkb/config.json", "kb/VERSION", "kb/demo/core/INDEX.md", "kb/demo/core/notes.md",
-                        "00_UpdateDocs/kb.config.json", "00_UpdateDocs/README.md", "projects/demo/core/docs"):
+                        "00_KB_Manager/kb.config.json", "00_KB_Manager/README.md", "projects/demo/core/docs"):
                 self.assertTrue(os.path.exists(os.path.join(tmp, rel)), rel)
             index = read(os.path.join(tmp, "kb", "demo", "core", "INDEX.md"))
             self.assertNotIn("{{", index)
-            cfg = json.loads(read(os.path.join(tmp, "00_UpdateDocs", "kb.config.json")))
+            cfg = json.loads(read(os.path.join(tmp, "00_KB_Manager", "kb.config.json")))
             self.assertEqual(cfg["project_scopes"], {"demo/core": ["kb/demo/core/", "kb/demo/shared/"]})
             with open(os.path.join(tmp, "kb", "VERSION"), "w", encoding="utf-8") as f:
                 f.write("keep\n")

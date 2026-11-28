@@ -395,7 +395,7 @@ class ReaderInstallTests(Base):
         self.assertEqual(code.returncode, 0, code.stdout.decode("utf-8", "replace") + code.stderr.decode("utf-8", "replace"))
         self.assertTrue(os.path.isfile(os.path.join(self.m, ".claude", "tools", "kbpack.py")))
         self.assertTrue(os.path.isfile(os.path.join(self.m, ".claude", "skills", "q-kb-search", "SKILL.md")))
-        self.assertFalse(os.path.exists(os.path.join(self.m, "00_UpdateDocs")))
+        self.assertFalse(os.path.exists(os.path.join(self.m, "00_KB_Manager")))
         self.assertFalse(os.path.exists(os.path.join(self.m, ".claude", "skills", "q-kb-publish")))
         self.assertTrue(os.path.isfile(os.path.join(self.m, "kb.config.json")))
         z = self.export("--project", "demo")

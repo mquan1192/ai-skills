@@ -5,6 +5,8 @@ Tóm tắt (cho người dùng):
 - Phiên khác gửi yêu cầu bằng `/q-kb-request`; yêu cầu nằm trong `requests/`.
 - Phiên quản lý xử lý yêu cầu, viết bản nháp trong `staging/`, phát hành bằng `/q-kb-publish`.
 - Lần đầu mở phiên quản lý: gõ `/q-kb-publish --whoami` để các phiên khác báo được tới phiên này.
+- Dạng cài solo (`"manager": {"solo": true}` trong `kb.config.json`): không có phiên quản lý riêng. Phiên mở ở gốc dự án
+  làm việc của phiên quản lý bằng một lệnh `/q-kb-update`; các bước nháp, khoá, phát hành bên dưới giữ nguyên.
 
 Config: `kb.config.json` (this folder). Session ID of the manager: `session.json` (written by `/q-kb-publish --whoami`).
 
@@ -22,7 +24,7 @@ Other sessions write **only** `requests/` (with `/q-kb-request`). Raw sources (`
 | `requests/` | One file per request: `<prefix>YYYYMMDD-HHMM-<topic>.md`, prefix = first entry of `request_prefixes` (default `REQ-`); files with any listed prefix are read | any session (`/q-kb-request`) |
 | `locks/` | One file per document being updated: `<doc path with / replaced by __>.lock` | manager agents |
 | `staging/` | Draft copies, same relative path as the target | manager agents |
-| `.claude/skills/` | `q-kb-sync`, `q-kb-add`, `q-kb-publish` (only this session has them) | install script |
+| `.claude/skills/` | `q-kb-ingest` (old name `q-kb-sync` kept as an alias), `q-kb-add`, `q-kb-publish` (only this session has them; solo profile: they sit in the project root's `.claude/skills/` with `q-kb-update`) | install script |
 
 ## Request file
 
@@ -48,7 +50,7 @@ Other sessions write **only** `requests/` (with `/q-kb-request`). Raw sources (`
    another agent; a lock whose last line starts with `released` is free (overwrite it with the new lock line). Different documents
    may run in parallel (subagents).
 3. **Work in staging**: copy the current file into `staging/` and edit only that copy (or write a new file there).
-4. **Review** every staged file: refs, policy, paths (`q-kb-sync/references/kb-conventions.md`), conflicts with existing knowledge
+4. **Review** every staged file: refs, policy, paths (`q-kb-ingest/references/kb-conventions.md`), conflicts with existing knowledge
    (conflict → ask the user, do not overwrite). A Content line without a source label goes back to the requester; every `[CODE]` ref is
    re-read; `[INFER]` only under "Open points" as `Suy luận (cao|vừa):`.
    Ask the user first **only** for the `ask_first` cases of `kb.config.json` (policy finding, conflict or reversed user decision,

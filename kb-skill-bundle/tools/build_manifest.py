@@ -1,6 +1,6 @@
 """Build MANIFEST.json (and optionally manifests/known-engine.json) of the KB skill bundle. Stdlib only.
 
-    python -E -s -B tools/build_manifest.py [--bundle-version 2.0] \
+    python -E -s -B tools/build_manifest.py [--bundle-version 2.1.0] \
         [--known 2.0.0=<folder> --known 2.1.0-b1=<folder> ...]
 
 --known <version>=<folder>: a folder that holds `.claude/skills/q-knowledgebase/` (+ `.claude/rules/q-knowledgebase.md`)
@@ -14,7 +14,8 @@ import re
 import sys
 
 BUNDLE = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-MANAGER_SKILLS = ("q-kb-sync", "q-kb-add", "q-kb-publish")
+MANAGER_SKILLS = ("q-kb-ingest", "q-kb-sync", "q-kb-add", "q-kb-publish")   # q-kb-sync = old name, kept as an alias
+SOLO_SKILLS = ("q-kb-update",)                                           # installed by --profile solo only
 SKIP_DIRS = {"__pycache__", ".git"}
 
 
@@ -35,6 +36,8 @@ def classify(rel):
     if p[0] == "skills" and len(p) > 2:
         if p[1] in MANAGER_SKILLS:
             return "manager-skills", "{manager}/.claude/skills/" + "/".join(p[1:]), "replace"
+        if p[1] in SOLO_SKILLS:
+            return "solo-skills", ".claude/skills/" + "/".join(p[1:]), "replace"
         return "skills", ".claude/skills/" + "/".join(p[1:]), "replace"
     if rel == "tools/kbpack.py":
         return "skills", ".claude/tools/kbpack.py", "replace"
@@ -102,7 +105,7 @@ def known(pairs):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description="Sinh MANIFEST.json của gói.")
-    ap.add_argument("--bundle-version", default="2.0.4")
+    ap.add_argument("--bundle-version", default="2.1.0")
     ap.add_argument("--known", action="append", default=[], metavar="VERSION=FOLDER")
     args = ap.parse_args(argv)
     if args.known:

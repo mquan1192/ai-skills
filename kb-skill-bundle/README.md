@@ -4,7 +4,7 @@ English · [Tiếng Việt](README_VN.md)
 
 Gives Claude Code a "project library": project knowledge kept as readable pages, one owner who updates it, and answers that always name their source.
 
-Version 2.0.5 · Search engine: Q-KnowledgeBase 2.1.0-e3 · License: Apache License 2.0 · Repository: https://github.com/mquan1192/ai-skills
+Version 2.1.0 · Search engine: Q-KnowledgeBase 2.1.0-e3 · License: Apache License 2.0 · Repository: https://github.com/mquan1192/ai-skills
 
 This bundle is one of three independent bundles in this repository ([overview](../README.md)). You can install it on its own.
 
@@ -48,9 +48,9 @@ Questions go through the index and come back with a source. New facts go to the 
 
 ### Get started in 3 steps
 
-1. Download `KB-Skill-Bundle_v2.0.5_20261125.zip` from the [Releases](https://github.com/mquan1192/ai-skills/releases) page and unzip it **outside** your project.
+1. Download `KB-Skill-Bundle_v2.1.0_20261128.zip` from the [Releases](https://github.com/mquan1192/ai-skills/releases) page and unzip it **outside** your project.
 2. Open Claude Code in your project and say: *"Read `README_VN.md` section 3 in the bundle folder and install this bundle."* Claude shows you the plan first and installs only after you agree.
-3. Restart Claude Code, then set up the KB manager session once (`README_VN.md` section 5).
+3. Restart Claude Code, then set up the KB manager session once (`README_VN.md` section 5). Working alone? Install with `--profile solo`: no manager session, and one command, `/q-kb-update`, writes the KB.
 
 **Optional: search by meaning.** A small AI model that runs offline on your computer lets the KB find pages even when your question uses different words or another language. It is off by default. The model is a separate zip on the Releases page (`KB-Model_multilingual-e5-small_20261118.zip`); put it next to the bundle zip and the installer finds it.
 
@@ -64,7 +64,8 @@ Questions go through the index and come back with a source. New facts go to the 
 |---|---|
 | **Claude Code** | Anthropic's AI assistant that works inside a project folder; it reads and writes files and runs commands within the permissions you set |
 | **KB** | Markdown pages in the `kb/` folder. Markdown is plain text with light formatting, readable in any editor |
-| **Skills** (5) | Instruction folders Claude loads when needed. `q-kb-search` and `q-kb-request` are for every session. `q-kb-sync`, `q-kb-add` and `q-kb-publish` exist only in the KB manager's folder, so other sessions cannot run them |
+| **Skills** (6) | Instruction folders Claude loads when needed. `q-kb-search` and `q-kb-request` are for every session. `q-kb-ingest` (named `q-kb-sync` up to 2.0.5; the old command still works), `q-kb-add` and `q-kb-publish` exist only in the KB manager's folder, so other sessions cannot run them. `q-kb-update` comes only with the solo install: one command that does all three |
+| **Install profiles** | `author` (default): one KB manager session writes, the others send requests. `solo`: one person, no manager session, `/q-kb-update` at the project root. `reader`: read-only, the KB arrives as a data pack |
 | **Search engine** | Q-KnowledgeBase, a Python program that builds an index of the KB with SQLite full-text search (built into Python). Like the index of a book, it lists which words are in which section of which page, so a search does not read every file |
 | **Model** (optional, experimental) | multilingual-e5-small, runs on the CPU, offline. Adds search by meaning (VI / EN / JA). Needs `onnxruntime` and `numpy`, installed by IT. Without it the engine falls back to keyword search |
 | **Hooks** | Small programs Claude Code runs at fixed moments: a status line when a session opens (KB version, new sources not yet added) and reminders to use the index before searching files by hand. They never change the KB, never block Claude and never record what you type |
@@ -74,7 +75,7 @@ Questions go through the index and come back with a source. New facts go to the 
 
 ```mermaid
 flowchart TD
-    SRC["Documents<br/>and code"] -->|"q-kb-sync"| MG["KB manager"]
+    SRC["Documents<br/>and code"] -->|"q-kb-ingest"| MG["KB manager"]
     WS["Work sessions"] -->|"q-kb-request"| MG
     MG -->|"q-kb-add"| STG["Staging<br/>(draft pages)"]
     STG -->|"q-kb-publish"| CHK{"Broken links<br/>increased?"}
@@ -113,7 +114,7 @@ The mode is the `hooks.mode` key in `kb.config.json`. Details: `README_VN.md` se
 | Part | Content |
 |---|---|
 | `README_VN.md` | Full guide: install, model choice, manager session, daily use, hooks, upgrade, uninstall, data packs |
-| `skills/` | The five KB skills |
+| `skills/` | The six KB skills and the `q-kb-sync` alias |
 | `engine/` | The Q-KnowledgeBase search engine |
 | `hooks/` | `kbwatch.py`, `kbroute.py`, `kbguard.py` and their hook settings |
 | `templates/` | KB page templates, an empty KB, the request template, the default data policy, the example configuration |

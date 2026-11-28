@@ -1,5 +1,37 @@
 # Bộ skill KB — lịch sử thay đổi
 
+## 2.1.0 (28/11/2026)
+
+Engine không đổi: Q-KnowledgeBase 2.1.0-e3. File zip model không đổi. Máy đã cài bản cũ không phải đổi gì: thư mục, tên phiên và lệnh cũ vẫn chạy.
+
+**Dạng cài mới: `--profile solo` (một người dùng, không cần phiên quản lý KB)**
+
+- Thêm skill `q-kb-update` (chỉ cài ở dạng `solo`): một lệnh ở gốc dự án làm cả ba việc ghi KB (nạp nguồn, thêm thông tin, phát hành) và xử lý yêu cầu đang mở. Vẫn giữ nháp trong `staging/`, khoá, tăng phiên bản, changelog, kiểm liên kết hỏng.
+- Dạng `solo` đặt 3 skill ghi KB ở `.claude/skills/` gốc dự án và ghi `"manager": {"solo": true}` vào `kb.config.json`. Thư mục quản lý vẫn được dựng để chứa nháp, khoá, yêu cầu, cấu hình.
+- Giới hạn: `solo` không có rào "chỉ 1 phiên được ghi"; nhiều người hoặc nhiều phiên cùng ghi thì dùng `--profile author`.
+- Đổi dạng cài bằng cách chạy lại `install.py` kèm `--profile`. File skill của dạng cũ không bị xóa nhưng vẫn nằm trong biên bản cài, nên `--uninstall` xóa đủ.
+
+**Thông báo rõ hơn khi chưa có phiên quản lý**
+
+- Dòng "Việc cần làm" sau khi cài viết riêng cho từng dạng cài; ghi rõ bước nào bắt buộc để ghi KB, điều gì xảy ra nếu chưa tạo phiên quản lý (tra cứu và `/q-kb-request` vẫn chạy, KB không đổi), và gợi ý dạng `solo`.
+- `/q-kb-request` nhận biết 3 trường hợp (có phiên quản lý, `solo`, máy không cài skill ghi KB) và báo đúng trường hợp thay vì chỉ báo "đã gửi".
+- Hook `kbguard` (nhắc cuối lượt): ở dạng `solo` nhắc gõ `/q-kb-update`; lượt đã chạy `/q-kb-update` thì không nhắc.
+
+**Đổi tên mặc định (tên cũ vẫn dùng được)**
+
+| Mục | Tên cũ | Tên mới | Tương thích |
+|---|---|---|---|
+| Thư mục quản lý | `00_UpdateDocs` | `00_KB_Manager` | Dự án đang có `00_UpdateDocs/kb.config.json` hoặc biên bản cài: giữ nguyên tên đang dùng. Hook, `kbpack.py`, skill tìm cấu hình ở cả hai tên |
+| Phiên quản lý | `KB_UpdateDocs` | `KB_Manager` | Giữ tên trong biên bản cài hoặc `kb.config.json` đang có |
+| Skill nạp nguồn | `q-kb-sync` | `q-kb-ingest` | `q-kb-sync` còn lại dưới dạng skill bí danh trỏ sang `q-kb-ingest`; `/q-kb-request sync …` giữ nguyên, thêm `ingest` cùng nghĩa |
+| Dạng cài | `--profile full` | `--profile author` | `full` vẫn được nhận và ghi thành `author` |
+
+- `install.py` chạy lại mà không ghi `--profile`, `--manager-folder`, `--session-name`: lấy theo lần cài trước (trước đây luôn về `full` và tên mặc định).
+- Sửa: cài với `--manager-folder` khác mặc định, `search.never_read` trong `kb.config.json` do installer tạo vẫn ghi tên thư mục mặc định; nay ghi đúng thư mục đã chọn.
+- Nâng từ 2.0.5: thư mục `q-kb-sync/references/` cũ trong thư mục quản lý không bị xóa (không còn được dùng; tài liệu tham chiếu nay ở `q-kb-ingest/references/`).
+- `tools/build_manifest.py`: nhóm `solo-skills` cho `q-kb-update`; giá trị mặc định `--bundle-version` là 2.1.0.
+- Test: thêm 6 ca cài đặt (solo, author, bí danh `full`, giữ thư mục cũ, giữ dạng đã ghi, đổi dạng rồi gỡ) và 1 ca hook.
+
 ## 2.0.5 (25/11/2026)
 
 Engine không đổi: Q-KnowledgeBase 2.1.0-e3. File zip model không đổi. Chỉ đổi tài liệu, không đổi chức năng: skill, hook, engine, script, công cụ, `install.py` giữ nguyên từng byte.

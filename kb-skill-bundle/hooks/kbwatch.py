@@ -209,7 +209,7 @@ def main(argv):
         n = len(status.get('changed') or []) + len(status.get('deleted') or [])
         index = 'chỉ mục cũ (%d file đổi)' % n
         codes = ['INDEX_STALE']
-    requests = os.path.join(root, *(cfg.get('requests_folder') or '00_UpdateDocs/requests').split('/'))
+    requests = os.path.join(root, *(cfg.get('requests_folder') or '00_KB_Manager/requests').split('/'))
     prefixes = request_prefixes(cfg)
     count, hashes, mentioned = open_requests(requests, prefixes, cfg.get('projects_root') or 'projects')
     news = new_sources(root, cfg, hcfg, t0 + 1.6)

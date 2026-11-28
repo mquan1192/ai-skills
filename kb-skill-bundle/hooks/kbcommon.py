@@ -27,7 +27,7 @@ DEFAULT_HOOKS = {
     'route_min_chars': 8,                    # shorter prompts are ignored
     'task_output_pattern': r'(^|/)out/',     # kbguard Stop: a write whose path matches this = task output
 }
-CONFIG_NAMES = ('kb.config.json', '00_UpdateDocs/kb.config.json')
+CONFIG_NAMES = ('kb.config.json', '00_KB_Manager/kb.config.json', '00_UpdateDocs/kb.config.json')
 
 
 def project_root(argv=None):
@@ -51,7 +51,7 @@ def read_stdin():
 
 def config_names(root):
     """kb.config.json at the root, in the manager folder named by the install record (.qkb/install/installed.json),
-    then the default manager folder 00_UpdateDocs/."""
+    then the default manager folder 00_KB_Manager/ (00_UpdateDocs/ = default name up to 2.0.5)."""
     names = [CONFIG_NAMES[0]]
     try:
         with open(os.path.join(root, '.qkb', 'install', 'installed.json'), encoding='utf-8') as f:

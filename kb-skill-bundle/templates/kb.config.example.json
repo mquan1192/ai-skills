@@ -1,18 +1,18 @@
 {
-  "_comment": "KB manager config. Copy to <manager.folder>/kb.config.json (default 00_UpdateDocs/kb.config.json) and fill the values. Every path is relative to the repository root. Keys starting with _ are notes.",
+  "_comment": "KB manager config. Copy to <manager.folder>/kb.config.json (default 00_KB_Manager/kb.config.json) and fill the values. Every path is relative to the repository root. Keys starting with _ are notes.",
   "kb_root": "kb",
   "projects_root": "projects",
   "qkb_command": "python -E -s -B .claude/skills/q-knowledgebase/scripts/qkb.py",
   "manager": {
-    "folder": "00_UpdateDocs",
-    "session_name": "KB_UpdateDocs",
-    "session_file": "00_UpdateDocs/session.json"
+    "folder": "00_KB_Manager",
+    "session_name": "KB_Manager",
+    "session_file": "00_KB_Manager/session.json"
   },
-  "requests_folder": "00_UpdateDocs/requests",
+  "requests_folder": "00_KB_Manager/requests",
   "request_prefixes": ["REQ-", "KB-REQ-"],
   "_request_prefixes": "File-name prefixes of request files. Every prefix is read (open requests, duplicates); the first one is used for new files. Default [\"REQ-\", \"KB-REQ-\"] (2.0.4; new files use REQ-). To rename later, put the new prefix first and keep the old one.",
-  "locks_folder": "00_UpdateDocs/locks",
-  "staging_folder": "00_UpdateDocs/staging",
+  "locks_folder": "00_KB_Manager/locks",
+  "staging_folder": "00_KB_Manager/staging",
   "ideas_folder": "",
   "policy_file": "",
   "_policy_file": "Empty = the default rules only (<manager.folder>/templates/kb-policy.default.md). A project policy file adds to the default rules, never loosens them.",
@@ -36,7 +36,7 @@
     ],
     "never_read": [
       "projects/",
-      "00_UpdateDocs/staging/"
+      "00_KB_Manager/staging/"
     ],
     "model": "none"
   },

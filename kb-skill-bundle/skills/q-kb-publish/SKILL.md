@@ -7,6 +7,8 @@ argument-hint: "[--whoami] [tùy chọn: mã yêu cầu cần phát hành; mặc
 # KB publish
 
 > **Run only in the KB manager session.** Protocol: `<manager.folder>/README.md`.
+> **Solo profile** (`manager.solo` = true in `kb.config.json`): there is no separate manager session. The session opened
+> at the project root is the manager, and the usual entry is `/q-kb-update`. Staging, locks and publish stay the same.
 > **Imported projects are read-only.** A project with `.qkb/packs/<project>/PACK.json` (or `<project>__<sub>`) came from a
 > data pack: do not write into it (no staging, no publish); tell the user it is updated only by a newer pack.
 
@@ -17,6 +19,8 @@ argument-hint: "[--whoami] [tùy chọn: mã yêu cầu cần phát hành; mặc
 
 ## `--whoami` (one time, after the manager session is created)
 
+Solo profile: not needed (no other session rings this one). Say so and stop.
+
 Write `manager.session_file` = `{"session_name": "<this session's title>", "session_id": "<this session's ID>",
 "written_at": "<YYYY-MM-DD>"}`. Tell the user: `Đã ghi ID phiên quản lý KB vào <session_file>. Các phiên khác sẽ báo yêu cầu tới
 phiên này.` Then stop.
@@ -24,7 +28,7 @@ phiên này.` Then stop.
 ## Publish steps
 
 1. **List** staged files (`<staging_folder>/**`) with their lock and request IDs. Publish only files whose review is done.
-2. **Check** each staged file: refs present, paths per `../q-kb-sync/references/kb-conventions.md` § 1, no credentials / personal
+2. **Check** each staged file: refs present, paths per `../q-kb-ingest/references/kb-conventions.md` § 1, no credentials / personal
    data / policy-file findings, no undecided `⚠️ Conflict:`. A failed check → stop and ask. Otherwise publish **without asking**,
    except the `ask_first` cases (policy finding, conflict or reversed user decision, deletion or loosened rule, permissions or
    settings, unclear source, very large change).
@@ -51,7 +55,7 @@ phiên này.` Then stop.
    more so the index holds these lines.
 10. **Release**: append `released <YYYY-MM-DD HH:MM> <version>` to each published document's lock file (never delete a lock; a
    lock whose last line starts with `released` is free). Set each request `Status: done`, `Result: <version> + files`.
-11. **Notify** each requesting session: `REQ-… done — KB <version>: <files>`.
+11. **Notify** each requesting session (solo profile: skip, the report of step 12 is enough): `REQ-… done — KB <version>: <files>`.
 12. **Report** to the user (in `languages.reply`, short list): `Phiên bản`, `File đã phát hành`, `Yêu cầu đã đóng`,
     `Liên kết hỏng: <trước> → <sau>`, `Còn trong staging / còn khoá`.
     After a roll back: `Không phát hành: liên kết hỏng tăng <trước> → <sau>; đã khôi phục bản cũ.` + the new broken links.

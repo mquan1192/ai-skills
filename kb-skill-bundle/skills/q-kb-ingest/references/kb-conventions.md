@@ -1,4 +1,4 @@
-# KB conventions (shared by q-kb-sync, q-kb-add, q-kb-publish)
+# KB conventions (shared by q-kb-ingest, q-kb-add, q-kb-publish)
 
 ## 1. Paths (one convention, matches the index resolver)
 

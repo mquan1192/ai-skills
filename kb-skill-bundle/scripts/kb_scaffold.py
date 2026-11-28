@@ -2,7 +2,7 @@
 
 Cách dùng (từ thư mục gốc của dự án):
     python -E -s -B <bundle>/scripts/kb_scaffold.py --project <dự án> [--sub <phần>] [--root .]
-        [--manager-folder 00_UpdateDocs] [--session-name KB_UpdateDocs] [--dry-run]
+        [--manager-folder 00_KB_Manager] [--session-name KB_Manager] [--dry-run]
 
 Cần: Q-KnowledgeBase 2.1.0-c1 trở lên (bản cũ từ chối .qkb/config.json do script này ghi).
 
@@ -78,8 +78,8 @@ def main(argv=None):
     ap.add_argument("--project", required=True, help="Tên dự án (chữ, số, . _ -)")
     ap.add_argument("--sub", default="main", help="Tên phần của dự án (mặc định: main)")
     ap.add_argument("--root", default=".", help="Thư mục gốc của dự án (mặc định: thư mục hiện tại)")
-    ap.add_argument("--manager-folder", default="00_UpdateDocs", help="Thư mục phiên quản lý KB")
-    ap.add_argument("--session-name", default="KB_UpdateDocs", help="Tên phiên quản lý KB")
+    ap.add_argument("--manager-folder", default="00_KB_Manager", help="Thư mục phiên quản lý KB")
+    ap.add_argument("--session-name", default="KB_Manager", help="Tên phiên quản lý KB")
     ap.add_argument("--dry-run", action="store_true", help="Chỉ liệt kê, không tạo gì")
     args = ap.parse_args(argv)
     for label, value in (("--project", args.project), ("--sub", args.sub), ("--manager-folder", args.manager_folder)):

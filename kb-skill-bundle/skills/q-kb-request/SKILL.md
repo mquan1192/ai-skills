@@ -10,10 +10,19 @@ Shared KB files are written only by the **KB manager session**. Do not edit them
 
 ## 0. Config
 
-`kb.config.json` at the repository root, else `00_UpdateDocs/kb.config.json`. Keys used: `manager.folder`,
-`manager.session_name`, `manager.session_file`, `requests_folder`, `policy_file`, `issue_id_patterns`, `confirmer_roles`,
-`source_labels`, `languages.reply`. No config → defaults: folder `00_UpdateDocs`, requests `00_UpdateDocs/requests`,
-manager name `KB_UpdateDocs`, policy = default rules only.
+`kb.config.json` at the repository root, else in the manager folder of the install record (`.qkb/install/installed.json` →
+`options.manager_folder`), else `00_KB_Manager/kb.config.json`, else `00_UpdateDocs/kb.config.json` (default name up to 2.0.5).
+Keys used: `manager.folder`, `manager.session_name`, `manager.session_file`, `manager.solo`, `requests_folder`, `policy_file`,
+`issue_id_patterns`, `confirmer_roles`, `source_labels`, `languages.reply`. No config → defaults: folder `00_KB_Manager`,
+requests `00_KB_Manager/requests`, manager name `KB_Manager`, policy = default rules only.
+
+**Who will handle the request** (find out now, it decides §§ 3–4):
+
+| What you find | Case |
+|---|---|
+| `manager.solo` is `true` | **solo**: this project has no separate manager session; `/q-kb-update` handles requests |
+| `<manager.folder>/.claude/skills/q-kb-publish/SKILL.md` exists | **manager**: the KB manager session handles them |
+| neither | **none**: the KB-writing skills are not installed on this machine (reader install, or only part of the bundle) |
 
 ## 1. Policy check first
 
@@ -54,7 +63,7 @@ below):
 - **Issue IDs** ("Mã vấn đề"): when the content defines, closes or changes an issue, give its ID in the form of
   `issue_id_patterns` (new issue without an ID → write `new`; the manager assigns one). One line per issue in Content:
   `**<ID>** · Trạng thái: <mở | đóng | …> · Ảnh hưởng: <files / sections> · Nguồn: <ref>`.
-- `sync <project>/<sub>` = new or changed raw sources → Type `sync-sources`, list the paths.
+- `sync <project>/<sub>` (or `ingest <project>/<sub>`, same meaning) = new or changed raw sources → Type `sync-sources`, list the paths.
 - Type `improvement` = an idea to change the workflow: problem seen, proposed change, expected gain, cost / risk. Never applied
   directly; the manager rates it and the user chooses.
 - Send what your own session found (you hold the source context).
@@ -64,11 +73,19 @@ below):
 Read `manager.session_file` (`{"session_name", "session_id"}`); send a short message to that session ID (fallback: the session
 titled `manager.session_name`; a `session_id` starting with `<` is not set yet → use the title): first line `KB request REQ-… : <topic>`, then the request path.
 No session file or the session is not available → the request file alone is enough; say so.
+Case **solo** or **none**: skip this step (there is no session to ring).
 
 ## 4. Tell the user (in `languages.reply`, default Vietnamese)
 
 Short list:
 - `Đã gửi yêu cầu <REQ-ID>: <nội dung chính>.`
 - `KB chỉ thay đổi sau khi phiên quản lý KB phát hành phiên bản mới.`
-- `Chưa báo được phiên quản lý KB: yêu cầu nằm trong <requests_folder>.` (only when the ring failed)
+- Case **manager**, ring failed or `session_file` not written yet:
+  `Chưa báo được phiên quản lý KB: yêu cầu đã lưu trong <requests_folder> và chưa có ai xử lý. Mở phiên <manager.session_name> (thư mục <manager.folder>/) rồi gõ /q-kb-publish --whoami một lần; yêu cầu sẽ được xử lý ở phiên đó.`
+- Case **solo** (replaces the second line above):
+  `Dự án ở dạng solo: gõ /q-kb-update để xử lý yêu cầu này và phát hành KB.` When the user asked to update the KB right now,
+  offer to run `/q-kb-update` in this turn instead of only saving the request.
+- Case **none** (replaces the second line above):
+  `Máy này chưa cài skill ghi KB nên yêu cầu chỉ được lưu, KB sẽ không đổi. Cách xử lý: chuyển file yêu cầu cho người soạn KB, hoặc cài lại gói với --profile solo (dùng một mình) hay --profile author (có phiên quản lý KB).`
+Never report a request as "sent" without saying which of the three cases applies when it is not the plain manager case.
 Then continue the current task with the current KB version.

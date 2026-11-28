@@ -87,11 +87,11 @@ class FreshTests(Base):
         record = json.loads(read(os.path.join(self.t, ".qkb", "install", "installed.json")))
         self.assertEqual(record["options"]["model"], "none")
         for rel in (".claude/skills/q-knowledgebase/scripts/qkb.py", ".claude/skills/q-kb-search/SKILL.md",
-                    "00_UpdateDocs/.claude/skills/q-kb-publish/SKILL.md", ".claude/hooks/kbwatch.py",
-                    "00_UpdateDocs/templates/pages/module.md", "00_UpdateDocs/kb.config.json", "kb/demo/core/INDEX.md",
+                    "00_KB_Manager/.claude/skills/q-kb-publish/SKILL.md", ".claude/hooks/kbwatch.py",
+                    "00_KB_Manager/templates/pages/module.md", "00_KB_Manager/kb.config.json", "kb/demo/core/INDEX.md",
                     ".qkb/cache/index.sqlite3"):
             self.assertTrue(os.path.exists(os.path.join(self.t, *rel.split("/"))), rel)
-        cfg = json.loads(read(os.path.join(self.t, "00_UpdateDocs", "kb.config.json")))
+        cfg = json.loads(read(os.path.join(self.t, "00_KB_Manager", "kb.config.json")))
         self.assertEqual((cfg["hooks"]["mode"], cfg["search"]["model"]), ("observe", "none"))
         self.assertFalse(os.path.exists(os.path.join(self.t, "Q-KnowledgeBase-README.md")))
         settings = read(os.path.join(self.t, ".claude", "settings.json"))
@@ -122,7 +122,7 @@ class FreshTests(Base):
         self.assertTrue(os.path.exists(os.path.join(self.t, ".claude", "hooks", "kbroute.py")))
         self.assertFalse(os.path.exists(os.path.join(self.t, ".claude", "hooks", "kbwatch.py")))
         self.assertFalse(os.path.exists(os.path.join(self.t, ".claude", "skills", "q-knowledgebase", "scripts", "qkb.py")))
-        for rel in ("kb/demo/core/notes.md", ".qkb/config.json", "00_UpdateDocs/kb.config.json"):
+        for rel in ("kb/demo/core/notes.md", ".qkb/config.json", "00_KB_Manager/kb.config.json"):
             self.assertTrue(os.path.exists(os.path.join(self.t, *rel.split("/"))), rel)
         self.assertNotIn("kbwatch", read(os.path.join(self.t, ".claude", "settings.json")))
         # a second uninstall is not an error
@@ -157,7 +157,7 @@ class FreshTests(Base):
         code, out = run(self.t, "--apply", "--yes", "--model", "local", "--project", "demo", "--sub", "core")
         self.assertEqual(code, 0, out)
         self.assertTrue(os.path.isfile(os.path.join(self.t, ".qkb", "models", "DOC_TRUOC_VN.md")))
-        cfg = json.loads(read(os.path.join(self.t, "00_UpdateDocs", "kb.config.json")))
+        cfg = json.loads(read(os.path.join(self.t, "00_KB_Manager", "kb.config.json")))
         self.assertEqual(cfg["search"]["model"], "local")
         self.assertIn("models/", read(os.path.join(self.t, ".qkb", ".gitignore")))
 
@@ -171,12 +171,12 @@ class FreshTests(Base):
         code, data = run_json(self.t, "--apply", "--yes", "--model", "local")
         self.assertEqual(code, 0, data)
         self.assertEqual({r["action"] for r in data["files"]}, {"same"})          # no package file written again
-        cfg = json.loads(read(os.path.join(self.t, "00_UpdateDocs", "kb.config.json")))
+        cfg = json.loads(read(os.path.join(self.t, "00_KB_Manager", "kb.config.json")))
         self.assertEqual(cfg["search"]["model"], "local")
         self.assertTrue(os.path.isfile(os.path.join(self.t, ".qkb", "models", "DOC_TRUOC_VN.md")))
         code, data = run_json(self.t, "--apply", "--yes", "--model", "none")
         self.assertEqual(code, 0, data)
-        self.assertEqual(json.loads(read(os.path.join(self.t, "00_UpdateDocs", "kb.config.json")))["search"]["model"], "none")
+        self.assertEqual(json.loads(read(os.path.join(self.t, "00_KB_Manager", "kb.config.json")))["search"]["model"], "none")
         con = sqlite3.connect(index)
         self.assertEqual(con.execute("SELECT count(*) FROM sections").fetchone()[0], sections)
         con.close()
@@ -241,8 +241,8 @@ class FreshTests(Base):
     def test_t17_other_manager_folder(self):
         code, out = run(self.t, *(FULL + ["--manager-folder", "kbadmin", "--session-name", "KB_Admin"]))
         self.assertEqual(code, 0, out)
-        self.assertTrue(os.path.isfile(os.path.join(self.t, "kbadmin", ".claude", "skills", "q-kb-sync", "SKILL.md")))
-        self.assertFalse(os.path.exists(os.path.join(self.t, "00_UpdateDocs")))
+        self.assertTrue(os.path.isfile(os.path.join(self.t, "kbadmin", ".claude", "skills", "q-kb-ingest", "SKILL.md")))
+        self.assertFalse(os.path.exists(os.path.join(self.t, "00_KB_Manager")))
         r = subprocess.run([sys.executable, "-I", "-S", "-c",
                             "import sys; sys.path.insert(0, sys.argv[1]); import kbcommon as k; "
                             "c = k.load_config(sys.argv[2]); print(c['manager']['folder'])",
@@ -509,6 +509,78 @@ class ContentTests(unittest.TestCase):
         actual = set(tree(BUNDLE)) - {"MANIFEST.json"}
         self.assertEqual(actual, listed)
         self.assertFalse([p for p in actual if "__pycache__" in p or p.endswith(".pyc")])
+
+
+class ProfileAndNameTests(Base):
+    """2.1.0: --profile solo, new default names, old names kept working."""
+
+    def test_solo_profile_puts_writing_skills_at_root(self):
+        code, out = run(self.t, *(FULL + ["--profile", "solo"]))
+        self.assertEqual(code, 0, out)
+        for name in ("q-kb-update", "q-kb-ingest", "q-kb-sync", "q-kb-add", "q-kb-publish", "q-kb-search", "q-kb-request"):
+            self.assertTrue(os.path.isfile(os.path.join(self.t, ".claude", "skills", name, "SKILL.md")), name)
+        self.assertFalse(os.path.exists(os.path.join(self.t, "00_KB_Manager", ".claude")))
+        for folder in ("requests", "locks", "staging", "templates"):
+            self.assertTrue(os.path.isdir(os.path.join(self.t, "00_KB_Manager", folder)), folder)
+        cfg = json.loads(read(os.path.join(self.t, "00_KB_Manager", "kb.config.json")))
+        self.assertIs(cfg["manager"]["solo"], True)
+        self.assertIn("/q-kb-update demo/core", out)
+        self.assertNotIn("--whoami", out)
+        self.assertEqual(json.loads(read(os.path.join(self.t, ".qkb", "install", "installed.json")))["options"]["profile"], "solo")
+
+    def test_author_profile_has_no_solo_skill_and_says_what_is_required(self):
+        code, out = run(self.t, *FULL)
+        self.assertEqual(code, 0, out)
+        self.assertFalse(os.path.exists(os.path.join(self.t, ".claude", "skills", "q-kb-update")))
+        cfg = json.loads(read(os.path.join(self.t, "00_KB_Manager", "kb.config.json")))
+        self.assertEqual(cfg["manager"]["session_name"], "KB_Manager")
+        self.assertNotIn("solo", cfg["manager"])
+        self.assertEqual(cfg["search"]["never_read"], ["projects/", "00_KB_Manager/staging/"])
+        for needle in ("[BẮT BUỘC để ghi KB]", "KB_Manager", "00_KB_Manager/requests/", "/q-kb-ingest demo/core", "--profile solo"):
+            self.assertIn(needle, out)
+        # the old command name is still installed, as an alias that points to the new skill
+        alias = read(os.path.join(self.t, "00_KB_Manager", ".claude", "skills", "q-kb-sync", "SKILL.md"))
+        self.assertIn("../q-kb-ingest/SKILL.md", alias)
+
+    def test_full_is_still_accepted_as_author(self):
+        code, out = run(self.t, *(FULL + ["--profile", "full"]))
+        self.assertEqual(code, 0, out)
+        self.assertEqual(json.loads(read(os.path.join(self.t, ".qkb", "install", "installed.json")))["options"]["profile"], "author")
+
+    def test_existing_old_manager_folder_is_kept(self):
+        # a project set up by bundle <= 2.0.5: the manager folder is 00_UpdateDocs/ and the session KB_UpdateDocs
+        code, out = run(self.t, *(FULL + ["--manager-folder", "00_UpdateDocs", "--session-name", "KB_UpdateDocs"]))
+        self.assertEqual(code, 0, out)
+        os.remove(os.path.join(self.t, ".qkb", "install", "installed.json"))      # even without the install record
+        code, out = run(self.t, *FULL)
+        self.assertEqual(code, 0, out)
+        self.assertFalse(os.path.exists(os.path.join(self.t, "00_KB_Manager")))
+        self.assertIn("KB_UpdateDocs", out)
+        record = json.loads(read(os.path.join(self.t, ".qkb", "install", "installed.json")))
+        self.assertEqual((record["options"]["manager_folder"], record["options"]["session_name"]), ("00_UpdateDocs", "KB_UpdateDocs"))
+
+    def test_rerun_keeps_the_recorded_profile_and_names(self):
+        self.assertEqual(run(self.t, *(FULL + ["--profile", "solo", "--manager-folder", "kbadmin"]))[0], 0)
+        code, out = run(self.t, *FULL)
+        self.assertEqual(code, 0, out)
+        record = json.loads(read(os.path.join(self.t, ".qkb", "install", "installed.json")))
+        self.assertEqual((record["options"]["profile"], record["options"]["manager_folder"]), ("solo", "kbadmin"))
+        self.assertFalse(os.path.exists(os.path.join(self.t, "00_KB_Manager")))
+
+    def test_profile_change_keeps_old_files_in_record_and_uninstall_removes_them(self):
+        self.assertEqual(run(self.t, *FULL)[0], 0)
+        code, out = run(self.t, *(FULL + ["--profile", "solo"]))
+        self.assertEqual(code, 0, out)
+        old = "00_KB_Manager/.claude/skills/q-kb-publish/SKILL.md"
+        record = json.loads(read(os.path.join(self.t, ".qkb", "install", "installed.json")))
+        dests = [f["dest"] for f in record["files"]]
+        self.assertIn(old, dests)
+        self.assertIn(".claude/skills/q-kb-publish/SKILL.md", dests)
+        self.assertIs(json.loads(read(os.path.join(self.t, "00_KB_Manager", "kb.config.json")))["manager"]["solo"], True)
+        code, out = run(self.t, "--uninstall", "--apply", "--yes")
+        self.assertEqual(code, 0, out)
+        self.assertFalse(os.path.exists(os.path.join(self.t, *old.split("/"))))
+        self.assertFalse(os.path.exists(os.path.join(self.t, ".claude", "skills", "q-kb-update", "SKILL.md")))
 
 
 if __name__ == "__main__":

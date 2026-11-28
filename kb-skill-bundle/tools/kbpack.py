@@ -29,7 +29,7 @@ sys.dont_write_bytecode = True
 FORMAT = "kb-data-pack"
 FORMAT_VERSION = 1
 QKB = ".claude/skills/q-knowledgebase/scripts/qkb.py"
-CONFIG_NAMES = ("kb.config.json", "00_UpdateDocs/kb.config.json")
+CONFIG_NAMES = ("kb.config.json", "00_KB_Manager/kb.config.json", "00_UpdateDocs/kb.config.json")
 NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
 DATA_EXT = {".md", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"}
 PACK_ROOT_FILES = {"PACK.json", "README_VN.md", "CHANGELOG.md"}
@@ -310,12 +310,12 @@ def export(args, out):
         raise Stop(2, "LỖI: không thấy %s/%s." % (proj.kb_root, name))
     units = units_of(proj, args.project, args.sub)
     # step 1: published? (no staged file, no open lock under the pack)
-    staging = proj.path((proj.cfg.get("staging_folder") or "00_UpdateDocs/staging"))
+    staging = proj.path((proj.cfg.get("staging_folder") or "00_KB_Manager/staging"))
     open_items = []
     for unit in units:
         if os.path.exists(os.path.join(staging, *(proj.kb_root + "/" + unit).split("/"))):
             open_items.append("staging: " + unit)
-    locks = proj.path((proj.cfg.get("locks_folder") or "00_UpdateDocs/locks"))
+    locks = proj.path((proj.cfg.get("locks_folder") or "00_KB_Manager/locks"))
     if os.path.isdir(locks):
         for n in os.listdir(locks):
             target = n[:-5].replace("__", "/") if n.endswith(".lock") else ""
@@ -424,7 +424,7 @@ def export(args, out):
               "- Chỉ mục không đi theo gói; công cụ nhập tự dựng lại.\n"
               % (name, kb_version, args.project, (" --sub " + args.sub) if args.sub else ""))
     out_root = proj.path(args.out) if args.out else os.path.join(
-        proj.path((proj.cfg.get("manager") or {}).get("folder") or "00_UpdateDocs"), "exports")
+        proj.path((proj.cfg.get("manager") or {}).get("folder") or "00_KB_Manager"), "exports")
     zip_name = "KB-Data_%s_v%s_%s.zip" % (name.replace("/", "-"), kb_version, datetime.date.today().strftime("%Y%m%d"))
     zip_path = os.path.join(out_root, zip_name)
     say(out, "5. File gói: %s" % zip_path)

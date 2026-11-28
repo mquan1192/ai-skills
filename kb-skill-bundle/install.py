@@ -30,7 +30,12 @@ sys.path.insert(0, os.path.join(BUNDLE, "tools"))
 import settings_fragment  # noqa: E402
 
 COMPONENTS = ("engine", "skills", "hooks", "scaffold")
-COMPONENT_OF = {"engine": "engine", "skills": "skills", "manager-skills": "skills", "templates": "skills", "hooks": "hooks"}
+COMPONENT_OF = {"engine": "engine", "skills": "skills", "manager-skills": "skills", "solo-skills": "skills",
+                "templates": "skills", "hooks": "hooks"}
+MANAGER_DEFAULT, SESSION_DEFAULT = "00_KB_Manager", "KB_Manager"
+MANAGER_LEGACY = "00_UpdateDocs"          # default manager folder up to bundle 2.0.5; kept when a project already uses it
+PROFILES = ("author", "solo", "reader")   # "full" = old name of "author", still accepted
+PROFILE_WORD = {"author": "người soạn (có phiên quản lý KB)", "solo": "solo (một người, không phiên quản lý)", "reader": "người đọc"}
 QKB = ".claude/skills/q-knowledgebase/scripts/qkb.py"
 QKB_CMD = "python -E -s -B " + QKB
 READ_COMMANDS = ("status", "search", "query", "explore", "read", "related", "path", "impact", "map")
@@ -208,7 +213,28 @@ def index_schema(target):
 
 # ----------------------------------------------------------------------------- plan
 
-def plan_files(target, manifest, components, manager, record, known, adopt):
+def resolve_names(args, target, record):
+    """Fill --profile, --manager-folder, --session-name when not given: the install record first, then what the project
+    already has (a 00_UpdateDocs/ manager folder from bundle <= 2.0.5 is kept, never renamed), then the defaults."""
+    options = (record or {}).get("options") or {}
+    profile = args.profile or options.get("profile") or "author"
+    args.profile = "author" if profile == "full" else profile
+    if args.profile not in PROFILES:
+        args.profile = "author"
+    if not args.manager_folder:
+        legacy = os.path.isfile(os.path.join(target, MANAGER_LEGACY, "kb.config.json"))
+        args.manager_folder = options.get("manager_folder") or (MANAGER_LEGACY if legacy else MANAGER_DEFAULT)
+    if not args.session_name:
+        name = options.get("session_name")
+        if not name and NAME.match(args.manager_folder):
+            try:
+                name = (read_json(os.path.join(target, args.manager_folder, "kb.config.json")).get("manager") or {}).get("session_name")
+            except (OSError, ValueError, AttributeError):
+                name = None
+        args.session_name = name if isinstance(name, str) and name else SESSION_DEFAULT
+
+
+def plan_files(target, manifest, components, manager, record, known, adopt, profile="author"):
     known_sha = {}
     for files in known.values():
         for dest, digest in files.items():
@@ -218,7 +244,14 @@ def plan_files(target, manifest, components, manager, record, known, adopt):
     for entry in manifest["files"]:
         if entry["mode"] == "not-installed" or COMPONENT_OF.get(entry["component"]) not in components:
             continue
-        dest = entry["dest"].replace("{manager}", manager)
+        if entry["component"] == "solo-skills" and profile != "solo":
+            continue
+        if profile == "reader" and entry["component"] in ("manager-skills", "templates"):
+            continue      # reader = engine + read skills + hooks + kbpack; no KB-writing skills, no manager templates
+        if profile == "solo" and entry["component"] == "manager-skills":
+            dest = entry["dest"].replace("{manager}/", "")      # solo: the writing skills sit at the project root
+        else:
+            dest = entry["dest"].replace("{manager}", manager)
         full = inside(target, dest)
         if not os.path.exists(full):
             action = "add"
@@ -363,10 +396,13 @@ def install(args, out):
     check_env()
     manifest = load_manifest()
     known = load_known()
+    record_path = os.path.join(target, *RECORD.split("/"))
+    record = read_json(record_path) if os.path.isfile(record_path) else None
+    resolve_names(args, target, record)
     for label, value in (("--manager-folder", args.manager_folder), ("--project", args.project), ("--sub", args.sub)):
         if value is not None and not NAME.match(value):
             raise Stop(2, "LỖI: %s chỉ được chứa chữ, số và . _ - (tối đa 64 ký tự): %r" % (label, value))
-    reader = args.profile == "reader"
+    reader, solo = args.profile == "reader", args.profile == "solo"
     default_components = ["engine", "skills", "hooks"] if reader else list(COMPONENTS)
     components = [c.strip() for c in args.components.split(",")] if args.components else default_components
     if any(c not in COMPONENTS for c in components):
@@ -374,8 +410,6 @@ def install(args, out):
     if reader and "scaffold" in components:
         raise Stop(2, "LỖI: dạng người đọc không dựng KB rỗng (bỏ scaffold khỏi --components).")
     manager = args.manager_folder
-    record_path = os.path.join(target, *RECORD.split("/"))
-    record = read_json(record_path) if os.path.isfile(record_path) else None
     engine_now = installed_engine(target)
     bundle_engine = manifest["engine_version"]
     if engine_now and engine_now != "không rõ" and version_key(engine_now) and version_key(bundle_engine) \
@@ -384,9 +418,7 @@ def install(args, out):
     state = ("gói %s" % record.get("bundle_version")) if record else ("engine %s" % engine_now if engine_now else "chưa cài")
     has_kb = os.path.isdir(os.path.join(target, "kb"))
     scaffold = "scaffold" in components and not has_kb
-    rows = plan_files(target, manifest, components, manager, record, known, args.adopt)
-    if reader:   # reader = engine + read skills + hooks + kbpack; no KB-writing skills, no manager templates
-        rows = [r for r in rows if r["component"] not in ("manager-skills", "templates")]
+    rows = plan_files(target, manifest, components, manager, record, known, args.adopt, args.profile)
     settings_state, settings_new, added_blocks, added_perms, upgraded = plan_settings(target) if "hooks" in components \
         else ("skip", None, {}, [], 0)
     interactive = sys.stdin.isatty() and not args.yes
@@ -448,10 +480,11 @@ def install(args, out):
     say(out, "4. KB rỗng: %s" % (("kb/%s/%s/, projects/%s/%s/, %s/" % (project or "<dự án>", sub, project or "<dự án>", sub, manager))
                                 if scaffold else "không (đã có kb/ hoặc không chọn)"))
     say(out, "5. Lựa chọn: dạng cài = %s · model = %s · hook = %s · %s"
-        % ("người đọc" if reader else "đầy đủ",
+        % (PROFILE_WORD[args.profile],
            ("trên máy, đặt từ zip: " + model_name) if model_name else {"none": "không", "local": "trên máy (thử nghiệm)", None: "chưa chọn"}[model],
            "quan sát (chỉ ghi log)" if args.hooks == "observe" else "tắt",
            "không có phiên quản lý (cấu hình: kb.config.json ở gốc dự án)" if reader
+           else "không cần phiên quản lý; ghi KB bằng /q-kb-update ở gốc dự án (nháp, khoá, yêu cầu: %s/)" % manager if solo
            else "phiên quản lý = %s (%s/)" % (args.session_name, manager)))
     say(out, "6. Sao lưu sẽ tạo: %s/" % backup_rel)
     say(out, "7. Log sử dụng của engine (.qkb/config.json \"usage_log\"): bật, ghi vào %s/ (kèm câu tìm, trên máy) "
@@ -585,6 +618,11 @@ def apply(target, manifest, rows, manager, record, settings_state, settings_new,
         if action == "same" and before.get(r["dest"]) in ("add", "replace"):
             action = before[r["dest"]]
         files.append({"dest": r["dest"], "sha256": r["sha256"], "action": action})
+    # Files an earlier run installed that this run no longer plans (a renamed skill, another profile) stay in the record,
+    # so uninstall still removes them. They are not deleted here.
+    planned = {r["dest"] for r in rows}
+    files += [f for f in (record or {}).get("files", []) if f.get("dest") not in planned
+              and os.path.isfile(os.path.join(target, *str(f.get("dest")).split("/")))]
     old_settings = (record or {}).get("settings") or {}
     blocks = {ev: list(b) for ev, b in (old_settings.get("blocks") or {}).items()}
     if settings_new is not None:      # old-form blocks rewritten at this run are no longer in settings.json
@@ -618,12 +656,25 @@ def apply(target, manifest, rows, manager, record, settings_state, settings_new,
     if args.profile == "reader":
         say(out, "2. Nhập gói dữ liệu KB nhận được: python -E -s -B .claude/tools/kbpack.py import <file.zip> --apply")
         say(out, "3. Tra cứu: /q-kb-search <câu hỏi>. Bản nhập là bản chỉ đọc; cập nhật bằng gói mới hơn.")
+    elif args.profile == "solo":
+        say(out, "2. Không cần tạo phiên quản lý KB. Mở phiên Claude Code ở gốc dự án là ghi được KB.")
+        say(out, "3. Nạp tài liệu: chép tài liệu gốc vào projects/%s/%s/docs/, code vào src/, rồi gõ: /q-kb-update %s/%s"
+            % (project or "<dự án>", sub, project or "<dự án>", sub))
+        say(out, "4. Tra cứu: /q-kb-search <câu hỏi>. Thêm thông tin lẻ: /q-kb-update %s/%s <nội dung>."
+            % (project or "<dự án>", sub))
+        say(out, "   Lưu ý: dạng solo dành cho một người. Khi có nhiều người / nhiều phiên cùng ghi, cài lại kèm --profile author.")
     else:
-        say(out, "2. Tạo phiên quản lý KB: tên %s, thư mục làm việc %s/." % (args.session_name, manager))
-        say(out, "3. Trong phiên đó gõ: /q-kb-publish --whoami")
-    if scaffold:
-        say(out, "4. Chép tài liệu gốc vào projects/%s/%s/docs/, code vào src/, rồi gõ: /q-kb-request sync %s/%s"
-            % (project, sub, project, sub))
+        say(out, "2. [BẮT BUỘC để ghi KB] Tạo phiên quản lý KB: phiên Claude Code mới, tên %s, thư mục làm việc %s/."
+            % (args.session_name, manager))
+        say(out, "   Ba skill ghi KB (/q-kb-ingest, /q-kb-add, /q-kb-publish) chỉ có trong thư mục đó.")
+        say(out, "   Chưa tạo phiên này: tra cứu và /q-kb-request vẫn chạy, yêu cầu được lưu trong %s/requests/, "
+                 "nhưng KB không đổi." % manager)
+        say(out, "3. [Một lần] Trong phiên đó gõ: /q-kb-publish --whoami (để phiên khác báo được khi có yêu cầu mới).")
+        if scaffold:
+            say(out, "4. Nạp tài liệu: chép tài liệu gốc vào projects/%s/%s/docs/, code vào src/. "
+                     "Ở phiên làm việc gõ /q-kb-request sync %s/%s, rồi ở phiên quản lý gõ /q-kb-ingest %s/%s."
+                % (project, sub, project, sub, project, sub))
+        say(out, "   Dùng một mình, không muốn phiên riêng? Cài lại kèm --profile solo: một lệnh /q-kb-update ở gốc dự án.")
     say(out, "5. Hook đang ở chế độ %s. Muốn bật: sửa \"hooks.mode\" thành \"on\" trong kb.config.json (%s)."
         % ("quan sát (không hiện gì; log ở .qkb/local/observe/)" if args.hooks == "observe" else "tắt",
            "gốc dự án" if args.profile == "reader" else manager + "/"))
@@ -653,12 +704,21 @@ def write_configs(target, manager, model, args):
     else:
         cfg = read_json(os.path.join(BUNDLE, "templates", "kb.config.example.json"))
         cfg["manager"] = {"folder": manager, "session_name": args.session_name, "session_file": manager + "/session.json"}
+        never = (cfg.get("search") or {}).get("never_read")
+        if isinstance(never, list):        # the example file names the default manager folder
+            cfg["search"]["never_read"] = [x.replace(MANAGER_DEFAULT + "/", manager + "/") if isinstance(x, str) else x for x in never]
         for key, folder in (("requests_folder", "requests"), ("locks_folder", "locks"), ("staging_folder", "staging")):
             cfg[key] = manager + "/" + folder
         if reader:
             cfg["_profile"] = "reader: KB projects come from data packs (.claude/tools/kbpack.py); requests are handed to the author"
         created.append(os.path.relpath(cfg_path, target).replace("\\", "/"))
     if isinstance(cfg, dict):
+        if not reader and isinstance(cfg.get("manager"), dict):
+            # solo: no separate manager session; /q-kb-update at the project root writes the KB (skills read this key)
+            if args.profile == "solo":
+                cfg["manager"]["solo"] = True
+            else:
+                cfg["manager"].pop("solo", None)
         cfg.setdefault("hooks", {})["mode"] = args.hooks
         cfg.setdefault("search", {})["model"] = model or "none"
         os.makedirs(os.path.dirname(cfg_path), exist_ok=True)
@@ -1022,13 +1082,17 @@ def main(argv=None):
     ap.add_argument("--components", help="engine,skills,hooks,scaffold (mặc định: tất cả)")
     ap.add_argument("--project", help="Tên dự án cho KB rỗng")
     ap.add_argument("--sub", help="Tên phần cho KB rỗng (mặc định main)")
-    ap.add_argument("--manager-folder", default="00_UpdateDocs", help="Thư mục phiên quản lý KB")
-    ap.add_argument("--session-name", default="KB_UpdateDocs", help="Tên phiên quản lý KB")
+    ap.add_argument("--manager-folder", help="Thư mục phiên quản lý KB (mặc định: %s; dự án đã có %s/ thì giữ)"
+                    % (MANAGER_DEFAULT, MANAGER_LEGACY))
+    ap.add_argument("--session-name", help="Tên phiên quản lý KB (mặc định: %s)" % SESSION_DEFAULT)
     ap.add_argument("--model", choices=("none", "local"), help="none = không model (khuyên dùng); local = dùng model trên máy (thử nghiệm)")
     ap.add_argument("--model-zip", help="Với --model local: file zip model do tools/download-models -Zip tạo; kiểm rồi đặt vào .qkb/models/. Không cần khi đúng 1 file KB-Model_*.zip đặt cạnh bộ skill (tự nhận)")
     ap.add_argument("--hooks", choices=("observe", "off"), default="observe", help="Chế độ hook lúc cài")
-    ap.add_argument("--profile", choices=("full", "reader"), default="full",
-                    help="full = đầy đủ (máy soạn KB); reader = người đọc (engine, skill tra cứu, hook, kbpack; nhập KB từ gói)")
+    ap.add_argument("--profile", choices=PROFILES + ("full",),
+                    help="author = người soạn, có phiên quản lý KB riêng (mặc định; tên cũ: full); "
+                         "solo = một người dùng, ghi KB bằng /q-kb-update ở gốc dự án, không cần phiên quản lý; "
+                         "reader = người đọc (engine, skill tra cứu, hook, kbpack; nhập KB từ gói). "
+                         "Không ghi: giữ dạng của lần cài trước")
     ap.add_argument("--adopt", action="store_true", help="Cho thay file đang có mà gói không nhận ra (sau sao lưu)")
     ap.add_argument("--migrate", action="store_true", help="Cho nâng chỉ mục schema cũ")
     ap.add_argument("--uninstall", action="store_true", help="Gỡ theo biên bản cài")

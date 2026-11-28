@@ -13,7 +13,7 @@ Project rules (policy file, confidentiality) stay in force on top of this skill.
 ## 0. Config
 
 Read once per session (re-read when the user changes it):
-1. `kb.config.json` at the repository root, else `00_UpdateDocs/kb.config.json`, else defaults below.
+1. `kb.config.json` at the repository root, else `00_KB_Manager/kb.config.json`, else `00_UpdateDocs/kb.config.json` (default name up to 2.0.5), else defaults below.
 2. Keys used: `kb_root` (default `kb`), `version_file` (`kb/VERSION`), `qkb_command`
    (`python -E -s -B .claude/skills/q-knowledgebase/scripts/qkb.py`), `project_scopes`, `default_scope` (`all`),
    `search.read_paths` (`["kb/"]`), `search.never_read` (`["projects/"]`), `requests_folder`, `locks_folder`,

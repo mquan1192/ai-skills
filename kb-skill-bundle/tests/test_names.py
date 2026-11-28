@@ -22,12 +22,12 @@ class ReadableNamesTests(unittest.TestCase):
             for label in ("[USER]", "[CODE]", "[DOC]", "[INFER]"):
                 self.assertIn(label, text, rel)
             self.assertRegex(text, r"(?i)old (short )?labels .*\[U\].*\[C\].*\[D\].*\[I\].* accepted", rel)
-        conv = read("skills/q-kb-sync/references/kb-conventions.md")
+        conv = read("skills/q-kb-ingest/references/kb-conventions.md")
         self.assertIn("`[USER]`, `[CODE]`, `[DOC]`, `[INFER]`", conv)
         self.assertIn("old `[U]`, `[C]`, `[D]`, `[I]` mean the same", conv)
 
     def test_open_points_use_open_and_old_op_stays_valid(self):
-        conv = read("skills/q-kb-sync/references/kb-conventions.md")
+        conv = read("skills/q-kb-ingest/references/kb-conventions.md")
         self.assertIn("**OPEN-012**", conv)
         self.assertIn("existing `OP-…` IDs are kept", conv)
         for rel in ("templates/pages/document.md", "templates/pages/topic.md"):

@@ -420,6 +420,18 @@ class GuardTests(Base):
         self.assertIsNone(run_hook("kbguard.py", self.tmp, {"transcript_path": t, "session_id": "s1"}, "stop")[1])
         self.assertIsNotNone(run_hook("kbguard.py", self.tmp, {"transcript_path": t, "session_id": "s2"}, "stop")[1])
 
+    def test_stop_solo_profile_names_update_command(self):
+        make_tree(self.tmp, mode="on", extra_cfg={"stop_notice": "once"})
+        path = os.path.join(self.tmp, "00_UpdateDocs", "kb.config.json")
+        cfg = json.loads(readtext(path))
+        cfg["manager"] = {"folder": "00_UpdateDocs", "solo": True}
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(cfg, f)
+        t = self.transcript([("Write", {"file_path": "2026-01/05_01-x/out/r.md"})])
+        out = run_hook("kbguard.py", self.tmp, {"transcript_path": t, "session_id": "s1"}, "stop")[1]
+        self.assertIn("/q-kb-update", json.dumps(out, ensure_ascii=False))
+        self.assertNotIn("/q-kb-request", json.dumps(out, ensure_ascii=False))
+
     def test_stop_silent(self):
         make_tree(self.tmp, mode="on", extra_cfg={"stop_notice": "once"})
         cases = [

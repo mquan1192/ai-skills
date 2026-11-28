@@ -1,13 +1,13 @@
 {
  "product": "KB-Skill-Bundle",
- "bundle_version": "2.0.5",
+ "bundle_version": "2.1.0",
  "engine_version": "2.1.0-e3",
  "note": "Per-file sha256; this file is not listed. install.py checks every entry before writing.",
  "files": [
   {
    "path": "CHANGELOG.md",
-   "sha256": "65716faf4867507cc374b9aa21e6eff962b76e416ee91c53eb33eaf6bd5c23c4",
-   "bytes": 12365,
+   "sha256": "c6efdd59a2655efc329e59bc8e13dd4796b1f6f6b53367efbfea78acec337f29",
+   "bytes": 15863,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
@@ -22,16 +22,16 @@
   },
   {
    "path": "README.md",
-   "sha256": "d0442267c133c624b96f3c4fa1598ead35e6d21d665a65403a15bfb1a7601287",
-   "bytes": 10027,
+   "sha256": "b573ce320274668f4f0ca66bc3dc3cf2e9575e1d51a7b00ee7212979e79fb22b",
+   "bytes": 10543,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
   },
   {
    "path": "README_VN.md",
-   "sha256": "21f65075554d4af71157d40a71ecd9bc39fb1f53f6b39c55d5aa1b3a3fa6ecea",
-   "bytes": 47330,
+   "sha256": "f1c81db129e6b7e54533949ce11e1bcf0de0f89d90c2762f9c328ba3ddc49bab",
+   "bytes": 51240,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
@@ -46,8 +46,8 @@
   },
   {
    "path": "install.py",
-   "sha256": "941e1238d9c6b4c0f06f6e30a547a43e7cb1a4df43662e1d94d099a6d4133527",
-   "bytes": 57203,
+   "sha256": "0f087e9106404c8dc938c953f541c5a523f43a52a3d8a7674b2da0b41aed569a",
+   "bytes": 62267,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
@@ -630,16 +630,16 @@
   },
   {
    "path": "hooks/kbcommon.py",
-   "sha256": "0396fb9d79db4b136eb99e41cc9c813178e8c0f2c21a70c3ce79c220ddf5931c",
-   "bytes": 10669,
+   "sha256": "e8aff5f4cab4b05b80c0e0ebdb857647c9c0fb6c29a10e3f95807928722cff24",
+   "bytes": 10745,
    "component": "hooks",
    "dest": ".claude/hooks/kbcommon.py",
    "mode": "replace"
   },
   {
    "path": "hooks/kbguard.py",
-   "sha256": "f79768780f053fcbc6ef1d77e51c79cb826355a9081170e768b80ba3635e6ab0",
-   "bytes": 8475,
+   "sha256": "e4a9805a8ec90124a962f396d3937dfab9e5bb9d7965321a86c8ec57ad000f42",
+   "bytes": 8831,
    "component": "hooks",
    "dest": ".claude/hooks/kbguard.py",
    "mode": "replace"
@@ -662,7 +662,7 @@
   },
   {
    "path": "hooks/kbwatch.py",
-   "sha256": "508d74cc12a442c167f204b1464af7caa4f031be5dd482b2fdbb38516d598f35",
+   "sha256": "5f22dab9368c14e504401baed20004ebeeac0ae49c52ba7231bb7c4aaa0b5db0",
    "bytes": 12031,
    "component": "hooks",
    "dest": ".claude/hooks/kbwatch.py",
@@ -678,66 +678,82 @@
   },
   {
    "path": "scripts/kb_scaffold.py",
-   "sha256": "00122a79486d6ade2ec68fa2fc629de7039e519887d36326b0c3e07407b65b8b",
-   "bytes": 6106,
+   "sha256": "cdab909bd4a80be57c30fd25390936144eb846d180b7a576abed11f85d3a45e3",
+   "bytes": 6100,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
   },
   {
    "path": "skills/q-kb-add/SKILL.md",
-   "sha256": "ec4ab2c87e79eead7120c2baf710423c5bef9cb4e8ea2f5d21e0501714f1a8ec",
-   "bytes": 3224,
+   "sha256": "9aa1def303c3dac9dcdb8f3bc8ba0a3ce89fe8489e045aabc82e47ae8b8833f0",
+   "bytes": 3468,
    "component": "manager-skills",
    "dest": "{manager}/.claude/skills/q-kb-add/SKILL.md",
    "mode": "replace"
   },
   {
+   "path": "skills/q-kb-ingest/SKILL.md",
+   "sha256": "af14bf7f6cd79f94a7f6a33e9d544eb10fd3c769e6c82328b6604dc1ead1c575",
+   "bytes": 4693,
+   "component": "manager-skills",
+   "dest": "{manager}/.claude/skills/q-kb-ingest/SKILL.md",
+   "mode": "replace"
+  },
+  {
+   "path": "skills/q-kb-ingest/references/ingest-templates.md",
+   "sha256": "c5e7117323d59c278bc820aa362b3499e5500bebeecd23f05db24507590bbe68",
+   "bytes": 1668,
+   "component": "manager-skills",
+   "dest": "{manager}/.claude/skills/q-kb-ingest/references/ingest-templates.md",
+   "mode": "replace"
+  },
+  {
+   "path": "skills/q-kb-ingest/references/kb-conventions.md",
+   "sha256": "288da47ed14ec7258e631c27a3dfd8dae77c82bcea022b4fc4a42c2c337921bf",
+   "bytes": 3739,
+   "component": "manager-skills",
+   "dest": "{manager}/.claude/skills/q-kb-ingest/references/kb-conventions.md",
+   "mode": "replace"
+  },
+  {
    "path": "skills/q-kb-publish/SKILL.md",
-   "sha256": "7f342859795f0da2872313597e968ff35859eee2335af88386bd3052c22e4e34",
-   "bytes": 5001,
+   "sha256": "8ed0e5e683f1b2f4a4d089f7026a91b4b905c8345745ebcb41c61ae79fb26c11",
+   "bytes": 5375,
    "component": "manager-skills",
    "dest": "{manager}/.claude/skills/q-kb-publish/SKILL.md",
    "mode": "replace"
   },
   {
    "path": "skills/q-kb-request/SKILL.md",
-   "sha256": "056b091574f365d44fa2d835afb339f4c71bbfa2d1f4eafcecfa48188bd37294",
-   "bytes": 4847,
+   "sha256": "75ed8e963d8092945b1d38973136a0008b4e104687bf1999c3a06f2215338f04",
+   "bytes": 6575,
    "component": "skills",
    "dest": ".claude/skills/q-kb-request/SKILL.md",
    "mode": "replace"
   },
   {
    "path": "skills/q-kb-search/SKILL.md",
-   "sha256": "63b302f9e526a2d5f165729e902358edbe690479d294aa91290110b4e470a480",
-   "bytes": 8390,
+   "sha256": "e222b4c3e9b2331c6ef5ea2cdce75ae12e6278194934c6b7802a91f3bf943af8",
+   "bytes": 8454,
    "component": "skills",
    "dest": ".claude/skills/q-kb-search/SKILL.md",
    "mode": "replace"
   },
   {
    "path": "skills/q-kb-sync/SKILL.md",
-   "sha256": "ef466c6355c38b1077252d14f60f87c1b8fad214f75f4a533f7240d2466efe53",
-   "bytes": 4326,
+   "sha256": "d043bd44e6f2b0cc2c4b1d265e8fdcfaf673a2577153f6bbc17cb08412a4a56f",
+   "bytes": 885,
    "component": "manager-skills",
    "dest": "{manager}/.claude/skills/q-kb-sync/SKILL.md",
    "mode": "replace"
   },
   {
-   "path": "skills/q-kb-sync/references/ingest-templates.md",
-   "sha256": "c5e7117323d59c278bc820aa362b3499e5500bebeecd23f05db24507590bbe68",
-   "bytes": 1668,
-   "component": "manager-skills",
-   "dest": "{manager}/.claude/skills/q-kb-sync/references/ingest-templates.md",
-   "mode": "replace"
-  },
-  {
-   "path": "skills/q-kb-sync/references/kb-conventions.md",
-   "sha256": "2b389271b0726df8b1c0bbd9d929a9c496e4ddd0f2fdf599d1b5574e53526014",
-   "bytes": 3737,
-   "component": "manager-skills",
-   "dest": "{manager}/.claude/skills/q-kb-sync/references/kb-conventions.md",
+   "path": "skills/q-kb-update/SKILL.md",
+   "sha256": "58b8bdc9e4a40b75c9a3f190bb9abf706fe7fb196b87a08609d52c137caf80b9",
+   "bytes": 3300,
+   "component": "solo-skills",
+   "dest": ".claude/skills/q-kb-update/SKILL.md",
    "mode": "replace"
   },
   {
@@ -750,8 +766,8 @@
   },
   {
    "path": "templates/kb.config.example.json",
-   "sha256": "b5ac94ac141253f5512cd02314e7ce175f861e1760eb4e16f7e194b027e217ca",
-   "bytes": 2513,
+   "sha256": "d51e4539b19ee0f176d27db4be8f66a758356faffe71266e54d7c0766d7e6ae9",
+   "bytes": 2510,
    "component": "templates",
    "dest": "{manager}/templates/kb.config.example.json",
    "mode": "create-only"
@@ -782,8 +798,8 @@
   },
   {
    "path": "templates/manager/README.md",
-   "sha256": "fd64ffabc8388ff31a1f7eef2fdd7d9323a64b77e29f56a6a6a44c78d5d0524c",
-   "bytes": 5379,
+   "sha256": "4d01390d8fa894c4a83c7a0221bcd9ff930781c439e8d82b888b3d59b3e09090",
+   "bytes": 5788,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
@@ -886,23 +902,23 @@
   },
   {
    "path": "tests/test_hooks.py",
-   "sha256": "75c701affa85571e01e42b6365c381e7617148f4a7e4343a03bc8706debce207",
-   "bytes": 32849,
+   "sha256": "dd5188b7888e5454d5e7dd630330555b8cd78d55aae5868369dddd1aca10e855",
+   "bytes": 33587,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
   },
   {
    "path": "tests/test_install.py",
-   "sha256": "5d4dfb161d52b976a24b735894fd238453951938ae79325ac2496ae95f0bd458",
-   "bytes": 28652,
+   "sha256": "32ce4568ff3180cf8a82908f6434bb53d8285568c4f23c27ce16fad3de22c7f9",
+   "bytes": 33465,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
   },
   {
    "path": "tests/test_kbpack.py",
-   "sha256": "63711291c5c9b394a2487ad7c05ba74720b6ee4268aa3c195c80c6c9e17a2231",
+   "sha256": "072c437f5ccea939099b02154f658d64cd2acd02204ec9b66ca4708e232164c6",
    "bytes": 22413,
    "component": "bundle",
    "dest": null,
@@ -918,24 +934,24 @@
   },
   {
    "path": "tests/test_names.py",
-   "sha256": "906891a37bd0f448245ff13e56e74674a0daea5e7f6f78786b1a8e6824804813",
-   "bytes": 4605,
+   "sha256": "193163817ba2ccca3d92c4313bbfd03af2c256af35a789d174167f2e6f451f57",
+   "bytes": 4609,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
   },
   {
    "path": "tests/test_skills.py",
-   "sha256": "b8b3838b0d19bb5c01b3961b39c846b1d86a0d5f67cc91dcdbde4fdc680083d6",
-   "bytes": 12715,
+   "sha256": "17b44d2d9acc29d5f36dfbdd88011a50d55e7b7b2bb7b6d6c101d1ab47b0cbc9",
+   "bytes": 12764,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
   },
   {
    "path": "tools/build_manifest.py",
-   "sha256": "34a4c816cb64c1757c1e9a60c595c073ad681a5c394894522c69dbfbb6de2e82",
-   "bytes": 5462,
+   "sha256": "58a81cc55daaaeff08e8c9f3e451cf5ad0c77598b22c08ba617164931e72d852",
+   "bytes": 5743,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
@@ -966,8 +982,8 @@
   },
   {
    "path": "tools/kbpack.py",
-   "sha256": "c48ee3e5a0aac89ea7fd58f8ac6b69530ced55914d6756b7583cf6487baeb7c9",
-   "bytes": 49084,
+   "sha256": "2fef445000a192dfaa4ab449a174e6250929b6cca43b8f7fd655ff3e9489bd1e",
+   "bytes": 49116,
    "component": "skills",
    "dest": ".claude/tools/kbpack.py",
    "mode": "replace"

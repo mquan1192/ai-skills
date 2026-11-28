@@ -8,6 +8,8 @@ argument-hint: "<dự án>/<phần> <nội dung | đường dẫn file>"
 
 > **Run only in the KB manager session.** Protocol: `<manager.folder>/README.md`: lock each target document in `locks_folder`,
 > write to `staging_folder` (never the live file), publish with `q-kb-publish`. One document = one agent.
+> **Solo profile** (`manager.solo` = true in `kb.config.json`): there is no separate manager session. The session opened
+> at the project root is the manager, and the usual entry is `/q-kb-update`. Staging, locks and publish stay the same.
 > **Imported projects are read-only.** A project with `.qkb/packs/<project>/PACK.json` (or `<project>__<sub>`) came from a
 > data pack: do not write into it (no staging, no publish); tell the user it is updated only by a newer pack.
 
@@ -16,7 +18,7 @@ argument-hint: "<dự án>/<phần> <nội dung | đường dẫn file>"
 - `kb.config.json` keys: `kb_root`, `locks_folder`, `staging_folder`, `policy_file`, `issue_id_patterns`, `confirmer_roles`.
 - Target: `<kb_root>/<project>/<sub>/` or `<kb_root>/<project>/shared/` for facts of the whole project (IDs, naming, teams,
   policy decisions, templates → `shared/notes.md`).
-- Read the target `INDEX.md`, `notes.md`, the default policy + `policy_file`, and `../q-kb-sync/references/kb-conventions.md`.
+- Read the target `INDEX.md`, `notes.md`, the default policy + `policy_file`, and `../q-kb-ingest/references/kb-conventions.md`.
 
 ## 1. Input types
 
@@ -25,7 +27,7 @@ argument-hint: "<dự án>/<phần> <nội dung | đường dẫn file>"
 | Fact / decision stated by the user | `notes.md` (+ the related `code/`, `docs/`, `topics/` page) | `User (chat, YYYY-MM-DD)` |
 | Verified task result | related `code/` / `topics/` pages; keep the original `path:line` / `(Doc - §)` refs | `Task <folder>, <file>` |
 | Issue (request field "Issue IDs") | the owning page, one issue line (`kb-conventions.md` § 3); mentions elsewhere = ID only | the request's source |
-| A new document or source folder | copying it is the user's job; then run `/q-kb-sync` for that one path | — |
+| A new document or source folder | copying it is the user's job; then run `/q-kb-ingest` for that one path | — |
 
 ## 2. Rules
 

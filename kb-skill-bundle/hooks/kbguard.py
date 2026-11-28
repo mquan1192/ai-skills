@@ -6,7 +6,7 @@
 #   post  (PostToolUse Bash|PowerShell): a qkb command whose output shows stale / broken sources or broken links
 #         -> one user line + model line (a problem).
 #   stop  (Stop): the turn wrote a task output (hooks.task_output_pattern) and sent no KB request
-#         -> one user line "nhớ gửi /q-kb-request". Reads only the tail of the transcript (tool names and paths).
+#         -> one user line "nhớ gửi /q-kb-request" (solo profile: "gõ /q-kb-update"). Reads only the tail of the transcript (tool names and paths).
 # Tool input / output and the transcript are read in memory only; nothing of them is logged (codes only).
 # Usage: python -I -S kbguard.py pre|post|stop [--root <dir>]
 import os
@@ -136,10 +136,10 @@ def stop(root, cfg, hcfg, data):
     if not events:
         return
     pattern = re.compile(str(hcfg['task_output_pattern']))
-    requests = (cfg.get('requests_folder') or '00_UpdateDocs/requests')
+    requests = (cfg.get('requests_folder') or '00_KB_Manager/requests')
     wrote_output = False
     for name, path, skill in events:
-        if skill == 'q-kb-request':
+        if skill in ('q-kb-request', 'q-kb-update'):
             return
         target = kc.rel(root, path) if path else None
         if name in ('Write', 'Edit', 'MultiEdit', 'NotebookEdit') and target:
@@ -150,6 +150,9 @@ def stop(root, cfg, hcfg, data):
     if not wrote_output:
         return
     user = '💡 KB: lượt này có kết quả mới trong out/ — nếu có thông tin đã kiểm chứng, gửi /q-kb-request.'
+    manager = cfg.get('manager')
+    if isinstance(manager, dict) and manager.get('solo') is True:      # solo profile: no manager session to send to
+        user = '💡 KB: lượt này có kết quả mới trong out/ — nếu có thông tin đã kiểm chứng, gõ /q-kb-update để ghi vào KB.'
     #  (owner choice: user notes only at session start and on problems): stop_notice "off" = log only
     if hcfg['mode'] == 'on' and hcfg['stop_notice'] != 'once':
         kc.log(root, hcfg, {'hook': 'kbguard', 'event': 'Stop', 'codes': ['TASK_OUTPUT_NO_REQUEST'],

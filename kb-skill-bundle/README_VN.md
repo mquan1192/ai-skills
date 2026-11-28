@@ -4,7 +4,7 @@
 
 Cho Claude Code một "thư viện dự án": kiến thức dự án nằm thành các trang dễ đọc, một người phụ trách cập nhật, và câu trả lời nào cũng ghi rõ nguồn.
 
-Bản 2.0.5 · File gói: `KB-Skill-Bundle_v2.0.5_<yyyyMMdd>.zip` · Công cụ tìm kiếm: Q-KnowledgeBase 2.1.0-e3 (dòng 2.1.x) · Giấy phép: Apache License 2.0 (file `LICENSE`; Copyright 2026 Nguyễn Minh Quân (https://github.com/mquan1192)) · Kho mã: https://github.com/mquan1192/ai-skills
+Bản 2.1.0 · File gói: `KB-Skill-Bundle_v2.1.0_<yyyyMMdd>.zip` · Công cụ tìm kiếm: Q-KnowledgeBase 2.1.0-e3 (dòng 2.1.x) · Giấy phép: Apache License 2.0 (file `LICENSE`; Copyright 2026 Nguyễn Minh Quân (https://github.com/mquan1192)) · Kho mã: https://github.com/mquan1192/ai-skills
 
 Gói này là một trong ba gói độc lập của repo ([tổng quan](../README_VN.md)); cài riêng được.
 
@@ -48,9 +48,9 @@ Câu hỏi đi qua chỉ mục và quay về kèm nguồn. Thông tin mới đi 
 
 ### Bắt đầu trong 3 bước
 
-1. Tải `KB-Skill-Bundle_v2.0.5_20261125.zip` ở trang [Releases](https://github.com/mquan1192/ai-skills/releases), giải nén ra **ngoài** dự án.
+1. Tải `KB-Skill-Bundle_v2.1.0_20261128.zip` ở trang [Releases](https://github.com/mquan1192/ai-skills/releases), giải nén ra **ngoài** dự án.
 2. Mở Claude Code trong dự án và nói: *"Đọc mục 3 của `README_VN.md` trong thư mục gói và cài gói này."* Claude cho xem kế hoạch trước, chỉ cài khi bạn đồng ý.
-3. Khởi động lại Claude Code, rồi tạo phiên quản lý KB một lần (mục 5).
+3. Khởi động lại Claude Code, rồi tạo phiên quản lý KB một lần (mục 5). Dùng một mình thì cài dạng `solo`: không cần phiên này, ghi KB bằng một lệnh `/q-kb-update` (mục 5).
 
 **Tùy chọn: tìm theo nghĩa.** Một model AI nhỏ chạy offline trên máy giúp KB tìm được trang ngay cả khi câu hỏi dùng chữ khác hoặc ngôn ngữ khác. Mặc định tắt. Model là file zip riêng ở trang Releases (`KB-Model_multilingual-e5-small_20261118.zip`); đặt cạnh file zip của gói thì installer tự tìm thấy (mục 4).
 
@@ -64,7 +64,7 @@ Câu hỏi đi qua chỉ mục và quay về kèm nguồn. Thông tin mới đi 
 |---|---|
 | **Claude Code** | Trợ lý AI của Anthropic, làm việc trong thư mục dự án; đọc, ghi file và chạy lệnh trong phạm vi quyền được cấp |
 | **KB** | Các trang Markdown trong thư mục `kb/`. Markdown là văn bản thường có định dạng nhẹ, mở bằng trình soạn thảo nào cũng đọc được |
-| **Skill** (5) | Thư mục hướng dẫn Claude nạp khi cần. `q-kb-search`, `q-kb-request` cho mọi phiên. `q-kb-sync`, `q-kb-add`, `q-kb-publish` chỉ có trong thư mục của phiên quản lý, nên phiên khác không chạy được |
+| **Skill** (6) | Thư mục hướng dẫn Claude nạp khi cần. `q-kb-search`, `q-kb-request` cho mọi phiên. `q-kb-ingest` (tên cũ `q-kb-sync`, vẫn gõ được), `q-kb-add`, `q-kb-publish` chỉ có trong thư mục của phiên quản lý, nên phiên khác không chạy được. `q-kb-update` chỉ có ở dạng cài `solo`: một lệnh làm cả ba việc ghi |
 | **Công cụ tìm kiếm** | Q-KnowledgeBase, chương trình Python dựng chỉ mục cho KB bằng tìm kiếm toàn văn của SQLite (có sẵn trong Python). Giống mục lục tra cứu cuối sách: ghi từ nào nằm ở mục nào của trang nào, nên khi tìm không phải đọc mọi file |
 | **Model** (tùy chọn, thử nghiệm) | multilingual-e5-small, chạy trên CPU, offline. Thêm cách tìm theo nghĩa (VI / EN / JA). Cần `onnxruntime` và `numpy` do IT cài. Không có model thì engine tự quay về tìm theo từ khóa |
 | **Hook** | Chương trình nhỏ Claude Code tự chạy vào thời điểm cố định: in dòng trạng thái khi mở phiên (phiên bản KB, nguồn mới chưa nạp) và nhắc dùng chỉ mục trước khi tự tìm file. Không sửa KB, không chặn Claude, không ghi câu bạn gõ |
@@ -74,7 +74,7 @@ Câu hỏi đi qua chỉ mục và quay về kèm nguồn. Thông tin mới đi 
 
 ```mermaid
 flowchart TD
-    SRC["Tài liệu<br/>và code"] -->|"q-kb-sync"| MG["Phiên quản lý KB"]
+    SRC["Tài liệu<br/>và code"] -->|"q-kb-ingest"| MG["Phiên quản lý KB"]
     WS["Phiên làm việc"] -->|"q-kb-request"| MG
     MG -->|"q-kb-add"| STG["Staging<br/>(trang nháp)"]
     STG -->|"q-kb-publish"| CHK{"Liên kết hỏng<br/>tăng không?"}
@@ -100,7 +100,7 @@ Lệnh tra chỉ đọc KB đã phát hành, không đọc tài liệu gốc. M�
 
 ### Chỉ cài gói cần dùng
 
-Gói này không cần hai gói kia của repo: gói có `install.py` riêng. Để lấy riêng gói này: tải `KB-Skill-Bundle_v2.0.5_20261125.zip` ở trang Releases kèm file `.sha256` để kiểm file tải về, hoặc chép thư mục `kb-skill-bundle/` từ repo. Nút "Download ZIP" trên trang repo tải cả ba gói.
+Gói này không cần hai gói kia của repo: gói có `install.py` riêng. Để lấy riêng gói này: tải `KB-Skill-Bundle_v2.1.0_20261128.zip` ở trang Releases kèm file `.sha256` để kiểm file tải về, hoặc chép thư mục `kb-skill-bundle/` từ repo. Nút "Download ZIP" trên trang repo tải cả ba gói.
 
 ### Tóm tắt yêu cầu, an toàn, gỡ
 
@@ -133,7 +133,8 @@ Hướng dẫn đầy đủ: các mục 1–13 bên dưới.
 - Tra nhanh KB bằng 1 lệnh `/q-kb-search`: chỉ đọc, tra chỉ mục trước, ghi nguồn, ghi rõ kết quả thuộc dự án nào.
 - Ghi KB theo quy trình 1 người ghi:
   - Phiên làm việc gửi yêu cầu bằng `/q-kb-request`.
-  - Phiên quản lý KB nạp nguồn, thêm thông tin, phát hành (`/q-kb-sync`, `/q-kb-add`, `/q-kb-publish`).
+  - Phiên quản lý KB nạp nguồn, thêm thông tin, phát hành (`/q-kb-ingest`, `/q-kb-add`, `/q-kb-publish`).
+  - Dùng một mình (dạng cài `solo`): không có phiên quản lý; gõ `/q-kb-update` ở gốc dự án.
 - Hook tự nhắc: báo trạng thái KB khi mở phiên, báo khi có nguồn mới chưa nạp.
 - Khuôn trang KB và script dựng KB rỗng cho dự án mới.
 - Chạy hoàn toàn trên máy. Script cài không gọi mạng, không tải thêm gì.
@@ -184,13 +185,13 @@ python -E -s -B install.py --target "D:\work\demo"
 Mẫu kết quả:
 
 ```text
-BỘ SKILL KB 2.0.5 (engine 2.1.0-e3) — KẾ HOẠCH CÀI (chưa ghi gì)
+BỘ SKILL KB 2.1.0 (engine 2.1.0-e3) — KẾ HOẠCH CÀI (chưa ghi gì)
 Đích: D:\work\demo   ·   Hiện trạng: chưa cài
 1. File sẽ thêm: 96      (engine 58 · skill 9 · skill quản lý 6 · hook 5 · khuôn 18)
 2. File giữ nguyên: 0   ·   File sẽ thay: 0   ·   Xung đột: 0
 3. .claude/settings.json: thêm 5 khối hook (sau các khối đang có), thêm 8 quyền chạy lệnh đọc; dòng bị xóa: 0
-4. KB rỗng: kb/demo/core/, projects/demo/core/, 00_UpdateDocs/ (14 mục)
-5. Lựa chọn: model = không · hook = quan sát (chỉ ghi log) · phiên quản lý = KB_UpdateDocs
+4. KB rỗng: kb/demo/core/, projects/demo/core/, 00_KB_Manager/ (14 mục)
+5. Lựa chọn: dạng cài = người soạn (có phiên quản lý KB) · model = không · hook = quan sát (chỉ ghi log) · phiên quản lý = KB_Manager (00_KB_Manager/)
 6. Sao lưu sẽ tạo: .qkb/backups/install-20260105-093000/
 Chi tiết từng file: thêm --format json
 ```
@@ -223,11 +224,11 @@ python -E -s -B install.py --target "D:\work\demo" --apply --yes --model none --
 | `--yes` | Không hỏi lại (bắt buộc khi không có bàn phím) | Tắt |
 | `--components <danh sách>` | `engine`, `skills`, `hooks`, `scaffold` | Tất cả (`scaffold` chỉ khi chưa có `kb/`) |
 | `--project`, `--sub` | Tên dự án / phần cho KB rỗng | Hỏi; `--sub` = `main` |
-| `--manager-folder`, `--session-name` | Thư mục và tên phiên quản lý KB | `00_UpdateDocs`, `KB_UpdateDocs` |
+| `--manager-folder`, `--session-name` | Thư mục và tên phiên quản lý KB | `00_KB_Manager`, `KB_Manager`. Dự án đã cài bản ≤ 2.0.5 (đang có `00_UpdateDocs/`): giữ nguyên tên đang dùng |
 | `--model none\|local` | Lựa chọn model (mục 4) | Hỏi; không trả lời thì dừng |
 | `--model-zip <zip>` | Với `--model local`: đặt model từ file zip của IT (mục 4). Không cần khi file zip đặt cạnh bộ skill (tự nhận) | — |
 | `--hooks observe\|off` | Chế độ hook lúc cài (không có `on`) | `observe` |
-| `--profile full\|reader` | `full`: máy soạn KB. `reader`: máy chỉ đọc KB nhận qua gói dữ liệu (mục 13) | `full` |
+| `--profile author\|solo\|reader` | `author`: máy soạn KB, có phiên quản lý riêng (tên cũ `full`, vẫn nhận). `solo`: một người dùng, ghi KB bằng `/q-kb-update` ở gốc dự án, không cần phiên quản lý (mục 5). `reader`: máy chỉ đọc KB nhận qua gói dữ liệu (mục 13) | `author`; cài lại mà không ghi thì giữ dạng của lần trước |
 | `--adopt` | Cho phép thay file đang có mà gói không nhận ra (sau sao lưu) | Tắt |
 | `--migrate` | Cho phép nâng cấu trúc chỉ mục cũ | Tắt (chỉ in lệnh) |
 | `--uninstall` | Gỡ theo biên bản cài | — |
@@ -261,7 +262,17 @@ Script dựng sẵn `kb/` rỗng, chỉ mục rỗng, thư mục quản lý. Sau
 
 - Chép tài liệu gốc vào `projects/demo/core/docs/`, code vào `projects/demo/core/src/`.
 - Tạo phiên quản lý KB (mục 5).
-- Gõ `/q-kb-request sync demo/core` ở phiên làm việc, rồi `/q-kb-sync demo/core` ở phiên quản lý.
+- Gõ `/q-kb-request sync demo/core` ở phiên làm việc, rồi `/q-kb-ingest demo/core` ở phiên quản lý.
+
+**Dùng một mình (dạng solo)**
+
+```powershell
+python -E -s -B install.py --target "D:\work\demo" --profile solo --apply --yes --model none --project demo --sub core
+```
+
+- Cài như dạng người soạn, khác 2 điểm: 3 skill ghi KB nằm ở `.claude/skills/` gốc dự án, và thêm skill `q-kb-update`.
+- Không cần tạo phiên quản lý. Chép tài liệu vào `projects/demo/core/docs/` rồi gõ `/q-kb-update demo/core`.
+- Thư mục quản lý vẫn được dựng: nơi để bản nháp (`staging/`), khoá (`locks/`), yêu cầu (`requests/`) và cấu hình.
 
 **Máy chỉ đọc KB (dạng người đọc)**
 
@@ -342,21 +353,46 @@ Nên chọn:
 
 Chỉ 1 phiên được ghi KB. Gói không tự tạo phiên. Tạo 1 lần:
 
-1. Tạo phiên mới, đặt tên `KB_UpdateDocs` (hoặc theo quy ước đặt tên của dự án).
-2. Chọn thư mục làm việc của phiên: `D:\work\demo\00_UpdateDocs\`.
+1. Tạo phiên mới, đặt tên `KB_Manager` (hoặc theo quy ước đặt tên của dự án).
+2. Chọn thư mục làm việc của phiên: `D:\work\demo\00_KB_Manager\`.
 3. Trong phiên đó gõ:
 
 ```text
 /q-kb-publish --whoami
 ```
 
-- Lệnh ghi mã phiên vào `00_UpdateDocs/session.json`. Các phiên khác dùng mã này để báo khi có yêu cầu mới.
-- 3 skill ghi KB (`/q-kb-sync`, `/q-kb-add`, `/q-kb-publish`) nằm trong `00_UpdateDocs/.claude/skills/`, nên chỉ có khi làm việc trong thư mục này.
+- Lệnh ghi mã phiên vào `00_KB_Manager/session.json`. Các phiên khác dùng mã này để báo khi có yêu cầu mới.
+- 3 skill ghi KB (`/q-kb-ingest`, `/q-kb-add`, `/q-kb-publish`) nằm trong `00_KB_Manager/.claude/skills/`, nên chỉ có khi làm việc trong thư mục này.
 
 Chưa tạo phiên quản lý:
 
-- Yêu cầu vẫn được lưu trong `00_UpdateDocs/requests/`.
-- KB chưa đổi cho tới khi mở phiên quản lý và xử lý yêu cầu.
+- Tra cứu (`/q-kb-search`) vẫn chạy. Dự án mới thì KB còn rỗng nên chưa có gì để tra.
+- Yêu cầu vẫn được lưu trong `00_KB_Manager/requests/`; `/q-kb-request` báo rõ là chưa có ai xử lý.
+- KB chưa đổi cho tới khi mở phiên quản lý và xử lý yêu cầu. Không có gì hỏng hay mất.
+
+Dùng một mình, không muốn phiên riêng: dạng `solo`
+
+- Cài (hoặc cài lại) kèm `--profile solo`. Phiên Claude Code mở ở gốc dự án ghi KB bằng một lệnh:
+
+| Gõ gì | Làm gì |
+|---|---|
+| `/q-kb-update demo/core` | Nạp nguồn mới hoặc đã đổi của `demo/core`, rồi phát hành |
+| `/q-kb-update demo/core <nội dung>` | Thêm thông tin, rồi phát hành |
+| `/q-kb-update` | Xử lý các yêu cầu đang mở và nguồn mới, rồi phát hành |
+
+- Vẫn giữ: viết nháp trong `staging/`, kiểm tra, tăng phiên bản, ghi changelog, kiểm liên kết hỏng.
+- Bỏ: phiên riêng, bước `--whoami`, vòng gửi yêu cầu rồi chờ.
+- Giới hạn: không còn rào "chỉ 1 phiên được ghi". Hai phiên cùng ghi một lúc có thể ghi đè nhau. Khi có nhiều người hoặc nhiều phiên cùng ghi, cài lại kèm `--profile author`.
+- Đổi qua lại giữa `author` và `solo`: chạy lại `install.py` kèm `--profile`. KB, chỉ mục, yêu cầu giữ nguyên; file skill của dạng cũ không bị xóa (gỡ bằng `--uninstall` vẫn xóa đủ).
+
+Tên từ bản 2.1.0 và tên cũ:
+
+| Mục | Tên cũ (≤ 2.0.5) | Tên mới | Máy đã cài |
+|---|---|---|---|
+| Thư mục quản lý | `00_UpdateDocs` | `00_KB_Manager` | Giữ nguyên thư mục đang có, không đổi tên |
+| Phiên quản lý | `KB_UpdateDocs` | `KB_Manager` | Giữ tên đang ghi trong `kb.config.json` |
+| Skill nạp nguồn | `/q-kb-sync` | `/q-kb-ingest` | Cả hai lệnh đều chạy; lệnh cũ trỏ sang lệnh mới |
+| Dạng cài | `--profile full` | `--profile author` | `full` vẫn được nhận |
 
 Dùng thư mục quản lý tên khác:
 
@@ -373,7 +409,8 @@ Dùng thư mục quản lý tên khác:
 | Nhờ ghi thông tin mới vào KB | `/q-kb-request demo/core <nội dung>` | Phiên làm việc |
 | Báo có tài liệu / code mới (nguồn) | `/q-kb-request sync demo/core` | Phiên làm việc |
 | Góp ý cải tiến quy trình | `/q-kb-request improvement <ý tưởng>` | Phiên làm việc |
-| Nạp nguồn mới vào KB | `/q-kb-sync demo/core` | Phiên quản lý KB |
+| Nạp nguồn mới vào KB | `/q-kb-ingest demo/core` | Phiên quản lý KB |
+| Ghi KB khi dùng một mình (nạp, thêm, phát hành) | `/q-kb-update [demo/core] [nội dung]` | Phiên ở gốc dự án, dạng cài `solo` |
 | Thêm thông tin vào KB | `/q-kb-add demo/core <nội dung>` | Phiên quản lý KB |
 | Phát hành KB (tăng phiên bản, cập nhật chỉ mục) | `/q-kb-publish` | Phiên quản lý KB |
 | Xem KB đang ở phiên bản nào | Đọc file `kb/VERSION` | Phiên bất kỳ |
@@ -465,7 +502,7 @@ Ví dụ dòng khi mở phiên (chế độ `on`):
 📚 KB v2026.01.05-02 · chỉ mục mới · 2 nguồn mới chưa nạp (demo/core) → đã tạo REQ-… · 1 yêu cầu đang mở
 ```
 
-Chế độ hook: khóa `hooks.mode` trong `00_UpdateDocs/kb.config.json`.
+Chế độ hook: khóa `hooks.mode` trong `00_KB_Manager/kb.config.json`.
 
 | Giá trị | Kết quả |
 |---|---|
@@ -476,7 +513,7 @@ Chế độ hook: khóa `hooks.mode` trong `00_UpdateDocs/kb.config.json`.
 - Log (chế độ `observe` và `on`) chỉ có: thời điểm, chế độ, tên hook, sự kiện, mã quy tắc, dòng đã hiện / lẽ ra hiện (chỉ gồm phiên bản, số đếm, tên phạm vi), có nhắc model hay không, thời gian chạy (ms). Không có câu bạn gõ, lệnh, kết quả công cụ hay nội dung KB.
 - Tắt log: `hooks.log` = `false` (mặc định `true`).
 - Đổi chế độ xong: khởi động lại phiên.
-- Hook không sửa KB. Việc ghi duy nhất: tạo file yêu cầu nạp nguồn trong `00_UpdateDocs/requests/` (khi `on`).
+- Hook không sửa KB. Việc ghi duy nhất: tạo file yêu cầu nạp nguồn trong `00_KB_Manager/requests/` (khi `on`).
 - Từ 2.0.3, hook không tạo yêu cầu nạp nguồn cho nguồn đã được một yêu cầu đang mở (`open` / `in-progress`, của bất kỳ ai) ghi tới đúng mức nguồn: chính file trong `docs/`, hoặc cây `src/<tree>` (hay đường dẫn bên trong cây). Nhắc tới thư mục dự án, phần, `docs/` hay `src/` không tính. Dòng trạng thái ghi mã yêu cầu đó: "đã có yêu cầu <mã>" (+ "n yêu cầu khác").
 - Tên file yêu cầu: khóa `request_prefixes` trong `kb.config.json` (mặc định `["REQ-", "KB-REQ-"]` từ 2.0.4). Hook và `/q-kb-request` đọc file có bất kỳ tiền tố nào trong danh sách, file mới dùng tiền tố đầu tiên (`REQ-`). Muốn đổi tên sau này: đặt tiền tố mới lên đầu, giữ tiền tố cũ phía sau.
 - Tắt riêng 1 hook: bỏ khối của hook đó trong `.claude/settings.json`.
@@ -595,7 +632,9 @@ python -E -s -B install.py --target "D:\work\demo" --uninstall --apply --yes
 | `Unknown configuration keys or invalid configuration` | Engine đang cài cũ hơn 2.1.0-c1, từ chối file cấu hình mới | Cài lại gói (mục 3). Giữ nguyên chữ gốc tiếng Anh để tra |
 | Cảnh báo FTS5 khi chạy `doctor` | SQLite của Python không có FTS5 | Vẫn dùng được nhưng chậm hơn. Nên dùng bản Python có FTS5 |
 | Không thấy dòng 📚 khi mở phiên | Hook đang ở `observe` / `off`, hoặc chưa khởi động lại phiên | Xem `hooks.mode`; khởi động lại phiên |
-| Gõ `/q-kb-sync` báo không có lệnh | Đang ở phiên làm việc | 3 lệnh ghi KB chỉ có trong phiên quản lý KB (mục 5) |
+| Gõ `/q-kb-ingest` báo không có lệnh | Đang ở phiên làm việc | 3 lệnh ghi KB chỉ có trong phiên quản lý KB (mục 5). Dùng một mình: cài dạng `solo` rồi gõ `/q-kb-update` |
+| `/q-kb-request` báo yêu cầu đã lưu nhưng chưa có ai xử lý | Chưa tạo phiên quản lý KB, hoặc máy cài dạng `reader` | Tạo phiên quản lý (mục 5), cài dạng `solo`, hoặc chuyển file yêu cầu cho người soạn KB |
+| Gõ `/q-kb-update` báo dự án có phiên quản lý riêng | Dự án cài dạng `author` | Dùng `/q-kb-request`, hoặc cài lại kèm `--profile solo` |
 | Phiên quản lý không nhận được báo có yêu cầu mới | Chưa ghi mã phiên | Trong phiên quản lý gõ `/q-kb-publish --whoami` |
 
 ## 11. Giới hạn đã biết, bảo mật, chạy cùng plugin bảo vệ
