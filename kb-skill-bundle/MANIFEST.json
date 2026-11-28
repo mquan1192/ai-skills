@@ -1,13 +1,13 @@
 {
  "product": "KB-Skill-Bundle",
- "bundle_version": "2.0.5",
+ "bundle_version": "2.0.6",
  "engine_version": "2.1.0-e3",
  "note": "Per-file sha256; this file is not listed. install.py checks every entry before writing.",
  "files": [
   {
    "path": "CHANGELOG.md",
-   "sha256": "65716faf4867507cc374b9aa21e6eff962b76e416ee91c53eb33eaf6bd5c23c4",
-   "bytes": 12365,
+   "sha256": "f0d7561c44dc6b0d0987bb19e40e14dc8be19f3d758496aa2603008581eb01e9",
+   "bytes": 15360,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
@@ -22,16 +22,16 @@
   },
   {
    "path": "README.md",
-   "sha256": "d0442267c133c624b96f3c4fa1598ead35e6d21d665a65403a15bfb1a7601287",
-   "bytes": 10027,
+   "sha256": "a2ae99078dadea0f72e04e4ff6d8aece954c1964b0486113a2d8d6dd378d2a19",
+   "bytes": 10800,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
   },
   {
    "path": "README_VN.md",
-   "sha256": "21f65075554d4af71157d40a71ecd9bc39fb1f53f6b39c55d5aa1b3a3fa6ecea",
-   "bytes": 47330,
+   "sha256": "f1ad65c6845731e2d7eb2af93abc4d1da9c5cb52db809b4918f8f78add653397",
+   "bytes": 48987,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
@@ -46,8 +46,8 @@
   },
   {
    "path": "install.py",
-   "sha256": "941e1238d9c6b4c0f06f6e30a547a43e7cb1a4df43662e1d94d099a6d4133527",
-   "bytes": 57203,
+   "sha256": "1ffc3c5c6e3d8a4aff656175cd8bce53fb8c969434c043172f5dd8935c03d1c2",
+   "bytes": 62089,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
@@ -910,8 +910,8 @@
   },
   {
    "path": "tests/test_models.py",
-   "sha256": "ef2efa0bb24d1fd5f073384238321855ea924c0e80bb39830a6cdf21d7e83c04",
-   "bytes": 15444,
+   "sha256": "ac4e9760eab0a310d6736ddc2d384bfe378479ae90e1e0374c1469906a6fded4",
+   "bytes": 15466,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
@@ -920,6 +920,14 @@
    "path": "tests/test_names.py",
    "sha256": "906891a37bd0f448245ff13e56e74674a0daea5e7f6f78786b1a8e6824804813",
    "bytes": 4605,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
+   "path": "tests/test_pylauncher.py",
+   "sha256": "d18b67279d16c2bda1a560cb4cc1a93d14d474d620c4816e4410fd10820bc019",
+   "bytes": 11568,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
@@ -934,7 +942,7 @@
   },
   {
    "path": "tools/build_manifest.py",
-   "sha256": "34a4c816cb64c1757c1e9a60c595c073ad681a5c394894522c69dbfbb6de2e82",
+   "sha256": "8d49201738b1d2d484ecb265a3407e5f9dc9792e852d7109e206fdc042782cba",
    "bytes": 5462,
    "component": "bundle",
    "dest": null,
@@ -942,16 +950,16 @@
   },
   {
    "path": "tools/download-models.ps1",
-   "sha256": "a35d2f57aa029a7e357b5d96770789e5b316bf3dda10d8b1cfb1bd5d2c20540d",
-   "bytes": 10622,
+   "sha256": "979d2f2800d6f0f5d13c56a792b7b1b7f765d55b011f10e17e988fccf69a1978",
+   "bytes": 11303,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
   },
   {
    "path": "tools/download-models.sh",
-   "sha256": "358e3b45c6e4595f70fba4eb6ac02cbb1897ba6955c1c9caf936aa9f5d83a40c",
-   "bytes": 7847,
+   "sha256": "93c5b085790e382a45acc3f0c4e0c62239ac0251f4abc892b780f0745b08a8d6",
+   "bytes": 8557,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"
@@ -981,9 +989,17 @@
    "mode": "not-installed"
   },
   {
+   "path": "tools/pylauncher.py",
+   "sha256": "c0a44efeab8ea4775a984429a21180639af9aeaeed4684c545c141648c18f941",
+   "bytes": 6676,
+   "component": "bundle",
+   "dest": null,
+   "mode": "not-installed"
+  },
+  {
    "path": "tools/settings_fragment.py",
-   "sha256": "ed87e321a4c2fcfd0e4259adaf3518ad26ef06dbe0b3650e366dd03fbe7da4ce",
-   "bytes": 7178,
+   "sha256": "ad81172dc22b14a86d1961d641fe9f6eeffcddfcce8e0b64bcd8ecdf8d40ad71",
+   "bytes": 8165,
    "component": "bundle",
    "dest": null,
    "mode": "not-installed"

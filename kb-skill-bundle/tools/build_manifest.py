@@ -102,7 +102,7 @@ def known(pairs):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description="Sinh MANIFEST.json của gói.")
-    ap.add_argument("--bundle-version", default="2.0.4")
+    ap.add_argument("--bundle-version", default="2.0.6")
     ap.add_argument("--known", action="append", default=[], metavar="VERSION=FOLDER")
     args = ap.parse_args(argv)
     if args.known:

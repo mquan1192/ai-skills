@@ -1,10 +1,10 @@
 [English](README.md) · Tiếng Việt
 
-# Gói quy trình nhóm (workflow skill bundle) v1.1.1: hướng dẫn
+# Gói quy trình nhóm (workflow skill bundle) v1.1.2: hướng dẫn
 
 Giúp nhiều phiên Claude Code làm việc trên một dự án như một nhóm thật: trưởng nhóm chia việc, thành viên làm, người kiểm soát lại, còn bạn duyệt các bước có rủi ro.
 
-Bản 1.1.1 · Giấy phép: Apache License 2.0 (file `LICENSE`; Copyright 2026 Nguyễn Minh Quân (https://github.com/mquan1192)) · Kho mã: https://github.com/mquan1192/ai-skills
+Bản 1.1.2 · Giấy phép: Apache License 2.0 (file `LICENSE`; Copyright 2026 Nguyễn Minh Quân (https://github.com/mquan1192)) · Kho mã: https://github.com/mquan1192/ai-skills
 
 Gói này là một trong ba gói độc lập của repo ([tổng quan](../README_VN.md)); cài riêng được.
 
@@ -59,7 +59,7 @@ flowchart LR
 
 ### Bắt đầu trong 3 bước
 
-1. Tải `Workflow-Skill-Bundle_v1.1.1_20261125.zip` ở trang [Releases](https://github.com/mquan1192/ai-skills/releases), giải nén ra **ngoài** dự án.
+1. Tải `Workflow-Skill-Bundle_v1.1.2_20261128.zip` ở trang [Releases](https://github.com/mquan1192/ai-skills/releases), giải nén ra **ngoài** dự án.
 2. Mở Claude Code trong dự án và nói: *"Đọc `DOC-TRUOC.md` trong thư mục gói và cài gói này."*
 3. Claude cho xem kế hoạch trước, chỉ cài khi bạn đồng ý.
 
@@ -120,7 +120,7 @@ Trưởng nhóm lập kế hoạch thứ Hai, bạn trả lời một lần. Th�
 
 ### Chỉ cài gói cần dùng
 
-Gói này không cần hai gói kia của repo: gói có `install.py` riêng. Để lấy riêng gói này: tải `Workflow-Skill-Bundle_v1.1.1_20261125.zip` ở trang Releases kèm file `.sha256` để kiểm file tải về, hoặc chép thư mục `workflow-skill-bundle/` từ repo. Nút "Download ZIP" trên trang repo tải cả ba gói.
+Gói này không cần hai gói kia của repo: gói có `install.py` riêng. Để lấy riêng gói này: tải `Workflow-Skill-Bundle_v1.1.2_20261128.zip` ở trang Releases kèm file `.sha256` để kiểm file tải về, hoặc chép thư mục `workflow-skill-bundle/` từ repo. Nút "Download ZIP" trên trang repo tải cả ba gói.
 
 ### Tóm tắt yêu cầu, an toàn, gỡ
 
@@ -152,6 +152,9 @@ Gói không chứa dữ liệu của dự án nào; mọi giá trị riêng nằ
 | `install.py` | Python 3.8+ (chỉ thư viện chuẩn) |
 | Script quy trình | PowerShell 7 (`pwsh`); Windows PowerShell 5.1 bị từ chối |
 | Hook `turnlog.py`, `ctxwatch.py` | Python 3; công cụ AI có hỗ trợ hook kiểu Claude Code (không bắt buộc) |
+
+- Lệnh gọi Python: bộ cài tự dò trên máy. Thứ tự thử: lệnh đang dùng trong dự án, rồi `python`, `python3`, `py -3`; lệnh đầu tiên chạy được sẽ được ghi vào lệnh hook. Trên macOS và Linux, chạy bộ cài bằng `python3`. Muốn tự chọn lệnh: thêm `--python <lệnh hoặc đường dẫn>`.
+- Bản nên dùng: bản đang ở giai đoạn sửa lỗi (bugfix) trên python.org (3.14 và 3.15, tính đến 28/11/2026). Python 3.10 đã hết hỗ trợ từ tháng 10/2026.
 
 ## 3. Cài đặt
 

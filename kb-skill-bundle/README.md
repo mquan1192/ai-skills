@@ -4,7 +4,7 @@ English · [Tiếng Việt](README_VN.md)
 
 Gives Claude Code a "project library": project knowledge kept as readable pages, one owner who updates it, and answers that always name their source.
 
-Version 2.0.5 · Search engine: Q-KnowledgeBase 2.1.0-e3 · License: Apache License 2.0 · Repository: https://github.com/mquan1192/ai-skills
+Version 2.0.6 · Search engine: Q-KnowledgeBase 2.1.0-e3 · License: Apache License 2.0 · Repository: https://github.com/mquan1192/ai-skills
 
 This bundle is one of three independent bundles in this repository ([overview](../README.md)). You can install it on its own.
 
@@ -48,7 +48,7 @@ Questions go through the index and come back with a source. New facts go to the 
 
 ### Get started in 3 steps
 
-1. Download `KB-Skill-Bundle_v2.0.5_20261125.zip` from the [Releases](https://github.com/mquan1192/ai-skills/releases) page and unzip it **outside** your project.
+1. Download `KB-Skill-Bundle_v2.0.6_20261128.zip` from the [Releases](https://github.com/mquan1192/ai-skills/releases) page and unzip it **outside** your project.
 2. Open Claude Code in your project and say: *"Read `README_VN.md` section 3 in the bundle folder and install this bundle."* Claude shows you the plan first and installs only after you agree.
 3. Restart Claude Code, then set up the KB manager session once (`README_VN.md` section 5).
 
@@ -125,8 +125,10 @@ The mode is the `hooks.mode` key in `kb.config.json`. Details: `README_VN.md` se
 
 - Claude Code (command line or desktop app). Tested with 2.1.325; the minimum version is not known.
 - Python 3.10 or later, standard library only, with SQLite full-text search (FTS5).
+- Python command: the installer finds it on your machine. It tries the command already used in the project, then `python`, `python3` and `py -3`, and writes the first one that really runs into the hook commands. On macOS and Linux, start the installer with `python3`. To choose the command yourself, add `--python <command or path>`.
+- Recommended version: a release in the bug-fix phase on python.org (3.14 and 3.15 as of 2026-11-28). Python 3.10 reached end of life in October 2026.
 - Windows, macOS or Linux.
-- The optional model needs `onnxruntime` and `numpy`, installed by IT, and roughly 0.5 to 2.3 GB of disk (estimate).
+- The optional model needs `onnxruntime` and `numpy`, installed by IT, and roughly 0.5 to 2.3 GB of disk (estimate). Use a Python version that `onnxruntime` supports: on 2026-11-28, onnxruntime 1.32.0 on PyPI covers Python 3.11 to 3.14 and not yet 3.15, so use 3.14 with the model. If that Python lives in a virtual environment, install with `--python <path to the venv python>`.
 
 ### Install
 
@@ -142,7 +144,7 @@ Before writing, the installer checks the SHA-256 fingerprint of every bundle fil
 ### Uninstall
 
 ```powershell
-python -E -s -B install.py --target <project folder> --uninstall               # dry run
+python -E -s -B install.py --target <project folder> --uninstall               # dry run (macOS / Linux: python3)
 python -E -s -B install.py --target <project folder> --uninstall --apply --yes   # remove
 ```
 

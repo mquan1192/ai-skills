@@ -27,7 +27,7 @@ Gói này đưa một quy trình làm việc nhóm cho nhiều phiên AI (một 
 ## Hướng dẫn cho AI (khi được giao cài gói này)
 
 1. Giải nén gói ra **ngoài** thư mục dự án, rồi đọc file này, `README_VN.md` và `SECURITY.md`. Gói nằm trong thư mục dự án thì `install.py` dừng.
-2. Chạy thử: `python install.py --target <thư mục dự án>` (không ghi gì). Đọc kế hoạch: file sẽ ghi, xung đột, phần gộp.
+2. Chạy thử: `python install.py --target <thư mục dự án>` (không ghi gì; máy không có lệnh `python` thì dùng `python3` hoặc `py -3`, bộ cài tự ghi lệnh chạy được vào lệnh hook). Đọc kế hoạch: file sẽ ghi, xung đột, phần gộp.
 3. Trình chủ dự án kế hoạch đó (số file, xung đột, những gì đi vào `.workflow/merge/`, và việc **tạo mới** `CLAUDE.md` / `AGENTS.md` / `.claude/settings.json` khi dự án chưa có — có hiệu lực ngay) và hỏi có cài không.
 4. Chỉ khi chủ dự án đồng ý: `python install.py --target <thư mục dự án> --apply`.
 5. Sau khi cài: trình chủ dự án các đoạn trong `.workflow/merge/` (đoạn `CLAUDE.md`, `AGENTS.md`, khối hook); chỉ chèn vào tệp thật khi chủ dự án duyệt từng đoạn. Sửa `.workflow/workflow.config.json` theo dự án (tên phiên, ngưỡng, `guard_rule_enabled`).

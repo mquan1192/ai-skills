@@ -1,27 +1,27 @@
 {
   "product": "writing-style-bundle",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "note": "install.py kiểm SHA-256 mọi file trong danh sách này trước khi cài",
   "files": {
     "CHANGELOG.md": {
-      "sha256": "2a4b2d570c8a0f03d558268b826dfb510a6cce68d006fff2022f45b686c39ea0",
-      "bytes": 10317
+      "sha256": "3bbbed78505aa8bf091d0451a6664b6049b60469d99c4ca57dc73fb396cd1ab2",
+      "bytes": 11952
     },
     "DOC-TRUOC.md": {
-      "sha256": "26110e8d2693c841196166a806b66cb3d87462ae0f0d6a8c1c562d39819b195b",
-      "bytes": 4878
+      "sha256": "3e5aba541144872ca89b4a944a613a63b8ee866da982e41c0f49d0af63723156",
+      "bytes": 5007
     },
     "LICENSE": {
       "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
       "bytes": 11358
     },
     "README.md": {
-      "sha256": "e3d33fd0fe910371f2d57016f74331514d43ce16af69560c1aa680f011550f94",
-      "bytes": 10858
+      "sha256": "dc0f63e8f915506d2d1b9f4b34b413a936c44e5d6ac1fe0c9d47dcf1b6440452",
+      "bytes": 11368
     },
     "README_VN.md": {
-      "sha256": "0f6009e7f4adf1d6b904b9bff4873d3e6810c1b6205144f4225c6947ff8273e4",
-      "bytes": 16987
+      "sha256": "dcd198be1a3ee7de7ef27efaf980360ee27e67a14403e9e3723eb901cbc6e04c",
+      "bytes": 17522
     },
     "SECURITY.md": {
       "sha256": "3462498af438ea3fe0bede0714b6a55deab38c85b793b74b45d5cadd99dcf467",
@@ -48,8 +48,8 @@
       "bytes": 10704
     },
     "install.py": {
-      "sha256": "9446275bee82806c0c9c98e67c446277047001fd0dc0a18484af40dce940c711",
-      "bytes": 25926
+      "sha256": "531389fde05b5ef98d561f79b62ea4dfe005e4e59177fd216bf0fd881c5c204e",
+      "bytes": 28880
     },
     "skills/q-writing-style/NOTICES.md": {
       "sha256": "4b2eadc4f12d2f8b8c2c75f80b93464bb0e7f9eb52459ffcf6dc52f2c7f59f6b",
@@ -136,8 +136,8 @@
       "bytes": 2226
     },
     "tests/test_install.py": {
-      "sha256": "d9d10805b40c6f6d686e684f3c96680f84416784687902f19070ba80f0f5681a",
-      "bytes": 14645
+      "sha256": "68114544799614afce3d7e2a800994bc0a7c65e04d25df0bfd7d6773f2e0ff59",
+      "bytes": 19889
     },
     "tests/test_lint_text.py": {
       "sha256": "a1a3e6b6dee03646b272384de3b0ea4786d818bfbc75c84338430f5c7c797f7f",
@@ -150,6 +150,10 @@
     "tools/make_manifest.py": {
       "sha256": "fa047cee5f9c5ada45720990266693b6ef6d239eaba048ac8d9e58caf311ea8a",
       "bytes": 997
+    },
+    "tools/pylauncher.py": {
+      "sha256": "c0a44efeab8ea4775a984429a21180639af9aeaeed4684c545c141648c18f941",
+      "bytes": 6676
     },
     "tools/scan_terms.py": {
       "sha256": "bcf1ca22dcad368e6717ee9fc820614a8038b88066177d2a29ae4e37e7b27144",

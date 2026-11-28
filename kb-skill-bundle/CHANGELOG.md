@@ -1,5 +1,20 @@
 # Bộ skill KB — lịch sử thay đổi
 
+## 2.0.6 (28/11/2026)
+
+Engine không đổi: Q-KnowledgeBase 2.1.0-e3. File zip model không đổi. Skill, hook, engine giữ nguyên từng byte; đổi `install.py`, `tools/`, tài liệu.
+
+- **Lệnh gọi Python theo máy**: trước đây lệnh hook ghi cứng `python`; máy chỉ có `python3` (macOS / Linux) hoặc chỉ có `py` (một số máy Windows) báo `python: command not found` và hook không chạy. Nay `install.py` thử từng lệnh và ghi lệnh chạy được: lệnh đang dùng trong dự án → `python` → `python3` → `py -3`. Một lệnh được nhận khi chạy thật và đủ phiên bản tối thiểu; lối tắt Microsoft Store và Python 2 bị bỏ qua, dòng đầu của kết quả cài ghi lệnh đã chọn và lý do bỏ từng lệnh. Không lệnh nào chạy được: dừng, chưa ghi gì.
+- **`--python <lệnh hoặc đường dẫn>`**: tự chọn lệnh (ví dụ `python3`, `"py -3"`, python của một venv). Dấu `\` trong đường dẫn được đổi thành `/`.
+- Máy có lệnh `python` chạy được: kết quả cài giống bản trước từng byte.
+- Lệnh đã chọn được ghi vào cả 3 chỗ: lệnh hook và quyền chạy lệnh đọc trong `.claude/settings.json`, `qkb_command` trong `kb.config.json` (chỉ khi còn ở dạng mặc định; lệnh chủ dự án tự viết được giữ). Lệnh phải chạy được Python 3.10+ có SQLite FTS5.
+- **Nâng cấp từ 2.0.5**: chạy lại `install.py`. Lệnh hook / quyền KB đang dùng lệnh không chạy được trên máy được đổi tại chỗ (matcher, timeout và phần còn lại của lệnh giữ nguyên, không thêm khối trùng); lệnh đang chạy được thì giữ, nên nhóm dùng chung `settings.json` không bị đổi qua lại.
+- **Model**: khi cài `--model local` mà lệnh Python đã chọn chưa thấy `onnxruntime` / `numpy`, bộ cài in dòng CHÚ Ý kèm cách xử lý (cài 2 gói cho đúng Python đó, hoặc dùng venv và `--python`).
+- `tools/download-models.sh`: thử `python3` rồi `python` (trước đây chỉ `python3`), bỏ qua bản dưới 3.10; biến `KB_PYTHON` để chỉ định. `tools/download-models.ps1`: thử `python`, `py -3`, `python3`, bỏ qua lối tắt Microsoft Store; biến `KB_PYTHON`. Bản `.ps1` chưa chạy thử trên Windows ở lần phát hành này.
+- `tools/settings_fragment.py`: thêm `--python`. File mới `tools/pylauncher.py` (dò lệnh), `tests/test_pylauncher.py`.
+- Tài liệu: thêm bản Python nên dùng. Ngày 28/11/2026: python.org có 3.15 và 3.14 ở giai đoạn sửa lỗi, 3.10 hết hỗ trợ từ 10/2026; onnxruntime 1.32.0 có bản cho Python 3.11–3.14, chưa có cho 3.15 → dùng model thì chọn 3.14. Bản tối thiểu của gói vẫn là 3.10.
+- `MANIFEST.json` tạo lại bằng `tools/build_manifest.py --bundle-version 2.0.6` (giá trị mặc định trong script nay là 2.0.6).
+
 ## 2.0.5 (25/11/2026)
 
 Engine không đổi: Q-KnowledgeBase 2.1.0-e3. File zip model không đổi. Chỉ đổi tài liệu, không đổi chức năng: skill, hook, engine, script, công cụ, `install.py` giữ nguyên từng byte.
